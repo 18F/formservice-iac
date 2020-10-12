@@ -1,52 +1,48 @@
-# ---------------------------------------------------------------------------
-# Set S3 backend for persisting TF state file remotely (bucket and dynamodb table must exist)
-# ---------------------------------------------------------------------------
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# dev/agency/vpc
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-terraform {
-  required_version = ">=0.12.0"
-  required_providers {
-    aws = ">=3.0.0"
-  }
-  backend "s3" {
-    region  = "us-gov-west-1"
-    profile = "tfuser-faas-dev"
-    key     = "dev/agency/vpc/terraform.tfstate"
-    bucket  = "faas-dev-terraform-state"
-
-    # DynamoDB table name
-    dynamodb_table = "faas-dev-terraform-state-locks"
-    encrypt        = true
-  }
+data "aws_security_group" "default" {
+  name   = "default"
+  vpc_id = module.vpc.vpc_id
 }
-
-provider "aws" {
-  region = var.region
-}
-
-# ---------------------------------------------------------------------------
-# Agency VPC
-# ---------------------------------------------------------------------------
 
 module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
+  source  = "terraform-aws-modules/vpc/aws"
   version = "2.57.0"
 
   name = "agency-vpc"
-  cidr = "10.10.0.0/16"
+  cidr = var.vpc_cidr
 
-  azs              = ["us-gov-west-1a", "us-gov-west-1b"]
-  private_subnets  = ["10.10.1.0/24", "10.10.2.0/24"]
-  public_subnets   = ["10.10.11.0/24", "10.10.12.0/24"]
-  database_subnets = ["10.10.21.0/24", "10.10.22.0/24"]
+  azs              = var.azs
+  public_subnets   = var.public_subnets
+  private_subnets  = var.private_subnets
+  database_subnets = var.database_subnets
 
+  # private subnets
+  private_dedicated_network_acl = true
+  private_acl_tags = {
+    Name = "AgencyPrivateSubnetACL"
+  }
+  # dns
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
+  # nat
   enable_nat_gateway = true
   single_nat_gateway = true
 
+  # s3 endpoint
   enable_s3_endpoint = true
+
+  # VPC Endpoint for ECR API
+  enable_ecr_api_endpoint              = true
+  ecr_api_endpoint_private_dns_enabled = true
+  ecr_api_endpoint_security_group_ids  = [data.aws_security_group.default.id]
 
   tags = {
     Terraform   = "true"
-    Environment = "dev"
+    Environment = var.env
     Name        = "AgencyVPC"
   }
 
