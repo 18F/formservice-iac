@@ -1,6 +1,9 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # dev/agency/vpc
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+provider "aws" {
+  region = var.region
+}
 
 data "aws_security_group" "default" {
   name   = "default"
@@ -23,6 +26,16 @@ module "vpc" {
   private_dedicated_network_acl = true
   private_acl_tags = {
     Name = "AgencyPrivateSubnetACL"
+  }
+
+  # kubernetes EKS Subnet tagging requirements
+  private_subnet_tags = {
+    #"kubernetes.io/cluster/${local.cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb" = "1"
+  }
+  public_subnet_tags = {
+    #"kubernetes.io/cluster/${local.cluster_name}" = "shared"
+    "kubernetes.io/role/elb" = "1"
   }
   # dns
   enable_dns_support   = true
