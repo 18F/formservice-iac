@@ -36,6 +36,7 @@ inputs = {
   allowed_security_groups = [dependency.vpc.outputs.default_security_group_id]
   allowed_cidr_blocks     = [
     "10.20.1.214/32", # bastion
+    "10.1.0.0/16", # mgmt vpc
     "${dependency.vpc.outputs.private_subnets_cidr_blocks[0]}",
     "${dependency.vpc.outputs.private_subnets_cidr_blocks[1]}",
     "${dependency.vpc.outputs.private_subnets_cidr_blocks[2]}"

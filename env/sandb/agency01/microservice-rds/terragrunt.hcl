@@ -10,8 +10,7 @@ locals {
   region  = local.region_vars.locals.aws_region
 }
 
-# Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
-# working directory, into a temporary folder, and execute your Terraform commands in that folder.
+## MODULE
 terraform {
   source = "git@github.com:18F/formservice-iac-modules.git//rds-postgres"
 }
@@ -27,7 +26,7 @@ dependency "vpc" { config_path = "../vpc" }
 
 
 
-# These are the variables we have to pass in to use the module specified in the terragrunt configuration above
+## MAIN
 inputs = {
   ca_cert_identifier = "rds-ca-2017"
   name_prefix        = "${local.name_prefix}-agency01-microservice"
@@ -48,5 +47,5 @@ inputs = {
   # for security group
   vpc_id = dependency.vpc.outputs.vpc_id
   private_subnets_cidr_blocks = dependency.vpc.outputs.private_subnets_cidr_blocks
-  mgmt_subnet_cidr_blocks = ["10.20.1.214/32"]
+  mgmt_subnet_cidr_blocks = ["10.20.1.214/32", "10.1.0.0/16"]
 }

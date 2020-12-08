@@ -10,8 +10,7 @@ locals {
   region  = local.region_vars.locals.aws_region
 }
 
-# Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
-# working directory, into a temporary folder, and execute your Terraform commands in that folder.
+## MODULE
 terraform {
   source = "git@github.com:18F/formservice-iac-modules.git//microservice-eks"
 }
@@ -27,7 +26,7 @@ dependency "vpc" { config_path = "../vpc" }
 
 
 
-# These are the variables we have to pass in to use the module specified in the terragrunt configuration above
+# MAIN
 inputs = {
   name_prefix  = "${local.name_prefix}"
   cluster_name  = "${local.name_prefix}-agency01-eks"
