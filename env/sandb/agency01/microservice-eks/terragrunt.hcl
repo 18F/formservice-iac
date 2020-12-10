@@ -33,6 +33,11 @@ inputs = {
   
   vpc_id = dependency.vpc.outputs.vpc_id
   private_subnet_ids = dependency.vpc.outputs.private_subnet_ids
+  
+  ssh_ingress_cidr_blocks = [      
+    "10.1.0.0/16", # mgmt vpc
+    "10.20.0.0/16", # local vpc traffic
+  ]
 
   map_users = [
     {
