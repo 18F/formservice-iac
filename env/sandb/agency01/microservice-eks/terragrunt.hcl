@@ -33,6 +33,7 @@ inputs = {
   
   vpc_id = dependency.vpc.outputs.vpc_id
   private_subnet_ids = dependency.vpc.outputs.private_subnet_ids
+  key_name = "faas-sandb-bastion"
   
   ssh_ingress_cidr_blocks = [      
     "10.1.0.0/16", # mgmt vpc

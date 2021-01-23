@@ -33,7 +33,7 @@ inputs = {
   windows_ami = "ami-06b37c8d0d65772ba" # CIS Microsoft Windows Server 2016 Benchmark - Level 1"
 
   linux_instance_type = "t3.medium"
-  windows_instance_type = "t3a.medium"
+  windows_instance_type = "t3a.large"
 
   vpc_id = dependency.vpc.outputs.vpc_id
   subnet_id = dependency.vpc.outputs.public_subnet_ids[0]

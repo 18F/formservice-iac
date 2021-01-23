@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: formservice
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: formservice
+  template:
+    metadata:
+      labels:
+        name: formservice
+    spec:
+      containers:
+        - name: app
+          image: 306881650362.dkr.ecr.us-gov-west-1.amazonaws.com/faas-sandb/microservice:latest
+          ports:
+            - containerPort: 818
