@@ -1,0 +1,65 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "certs",
+      "host": {
+        "sourcePath": "/var/app/current/certs"
+      }
+    },
+    {
+      "name": "nginx-proxy-conf",
+      "host": {
+        "sourcePath": "/var/app/current/conf.d"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "api-server",
+      "image": "formio/formio-enterprise:8.0.0-m.17",
+      "environment": [
+        {
+          "name": "MONGO_CA",
+          "value": "/src/certs/rds-combined-ca-us-gov-bundle.pem"
+        },
+        {
+          "name": "PORT",
+          "value": "3000"
+        }
+      ],
+      "memory": 512,
+      "mountPoints": [
+        {
+          "sourceVolume": "certs",
+          "containerPath": "/src/certs",
+          "readOnly": true
+        }
+      ]
+    },
+    {
+      "name": "nginx-proxy",
+      "image": "nginx",
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "api-server"
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "nginx-proxy-conf",
+          "containerPath": "/etc/nginx/conf.d"
+        },
+        {
+          "sourceVolume": "awseb-logs-nginx-proxy",
+          "containerPath": "/var/log/nginx"
+        }
+      ]
+    }
+  ]
+}
