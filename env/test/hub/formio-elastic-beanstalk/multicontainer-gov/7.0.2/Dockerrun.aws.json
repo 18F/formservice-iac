@@ -1,0 +1,91 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "certs",
+      "host": {
+        "sourcePath": "/var/app/current/certs"
+      }
+    },
+    {
+      "name": "nginx-proxy-conf",
+      "host": {
+        "sourcePath": "/var/app/current/conf.d"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "api-server",
+      "image": "formio/formio-enterprise:7.0.2",
+      "environment": [
+        {
+          "name": "MONGO_CA",
+          "value": "/src/certs/rds-combined-ca-us-gov-bundle.pem"
+        },
+        {
+          "name": "PDF_SERVER",
+          "value": "http://pdf-server:4005"
+        },
+        {
+          "name": "PORT",
+          "value": "3000"
+        }
+      ],
+      "links": [
+        "pdf-server"
+      ],
+      "memory": 512,
+      "mountPoints": [
+        {
+          "sourceVolume": "certs",
+          "containerPath": "/src/certs",
+          "readOnly": true
+        }
+      ]
+    },
+    {
+      "name": "pdf-server",
+      "image": "formio/pdf-server:3.0.0",
+      "environment": [
+        {
+          "name": "MONGO_CA",
+          "value": "/src/certs/rds-combined-ca-us-gov-bundle.pem"
+        }
+      ],
+      "memory": 512,
+      "mountPoints": [
+        {
+          "sourceVolume": "certs",
+          "containerPath": "/src/certs",
+          "readOnly": true
+        }
+      ]
+    },
+    {
+      "name": "nginx-proxy",
+      "image": "nginx",
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "api-server",
+        "pdf-server"
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "nginx-proxy-conf",
+          "containerPath": "/etc/nginx/conf.d"
+        },
+        {
+          "sourceVolume": "awseb-logs-nginx-proxy",
+          "containerPath": "/var/log/nginx"
+        }
+      ]
+    }
+  ]
+}
