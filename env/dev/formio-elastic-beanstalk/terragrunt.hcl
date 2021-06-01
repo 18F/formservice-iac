@@ -62,4 +62,10 @@ inputs = {
   FORMIO_S3_KEY    = dependency.formio-s3.outputs.s3_user_key     # pdf user access key
   FORMIO_S3_SECRET = dependency.formio-s3.outputs.s3_user_secret  # pdf user secret key
   
+  PROXY           = "true"
+  DEFAULT_DATABASE  = "formio"
+  PER_PROJECT_DBS = "true"
+  PORT            = "3000"
+  PRIMARY	  = "true"
+  
 }
