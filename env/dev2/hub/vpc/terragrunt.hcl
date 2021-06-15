@@ -21,6 +21,6 @@ include {
 # MAIN
 inputs = {
   name_prefix = "${local.name_prefix}-hub-vpc"
-  vpc_cidr = "10.11.0.0/16"
+  vpc_cidr = "10.30.0.0/16"
   single_nat_gateway = true # set to false for one NAT gateway per subnet
 }
