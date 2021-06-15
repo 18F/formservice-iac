@@ -20,10 +20,10 @@ include {
 
 ## DEPENDENCIES
 dependencies {
-  paths = ["../vpc", "../../../sandb/mgmt/vpc"]
+  paths = ["../vpc", "../../../dev2/mgmt/vpc"]
 }
 dependency "vpc" { config_path = "../vpc" }
-dependency "mgmt-vpc" { config_path = "../../../sandb/mgmt/vpc" }
+dependency "mgmt-vpc" { config_path = "../../../dev2/mgmt/vpc" }
 
 
 # MAIN
