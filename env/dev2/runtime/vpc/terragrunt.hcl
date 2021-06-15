@@ -21,7 +21,7 @@ include {
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
-  name_prefix = "${local.name_prefix}-formsvc-vpc"
-  vpc_cidr = "10.21.0.0/16"
+  name_prefix = "${local.name_prefix}-runtime-vpc"
+  vpc_cidr = "10.31.0.0/16"
   single_nat_gateway = true # set to false for one NAT gateway per subnet
 }
