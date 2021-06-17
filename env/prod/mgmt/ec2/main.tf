@@ -60,6 +60,6 @@ module "ec2_linux" {
 
   tags = {
     "Env"  = "Private"
-    "Name" = "${var.name_prefix}-linux-bastion"
+    "Name" = "${var.name_prefix}-terraform-ec2"
   }
 }
