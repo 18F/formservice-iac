@@ -90,5 +90,3 @@ inputs = {
     Environment = "PROD"
   }
 }
-
-}
