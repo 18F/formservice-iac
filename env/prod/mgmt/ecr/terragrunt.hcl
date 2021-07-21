@@ -8,9 +8,9 @@ locals {
   name_prefix = "${local.project}-${local.env}"
 }
 
-## MODULE
+# MODULE
 terraform {
-  source = "git@github.com:18F/formservice-iac-modules.git//mgmt-vpc"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//ecr"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -19,10 +19,13 @@ include {
 }
 
 ## DEPENDENCIES
+#dependencies {
+#  paths = ["../vpc"]
+#}
+#dependency "vpc" { config_path = "../vpc" }
 
-## MAIN
+
+# MAIN
 inputs = {
-  name_prefix = "${local.name_prefix}-mgmt-vpc"
-  vpc_cidr = "10.2.0.0/16"
-  single_nat_gateway = true # set to false for one NAT gateway per subnet
+ ## no inputs for now
 }

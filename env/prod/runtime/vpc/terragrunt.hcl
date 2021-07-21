@@ -14,18 +14,18 @@ locals {
   name_prefix = "${local.project}-${local.env}-${local.subenv}"
 
   #set VPC CIDR
-  CIDR = "10.1.0.0/16"
+  CIDR = "10.31.0.0/16"
 }
 
-## DEPENDENCIES
-dependencies {
-   paths = ["../transit-gateway"]
- }
- dependency "transit" { config_path = "../transit-gateway" }
+## DEPENDENCIES - No current dependencies for this module
+# dependencies {
+#   paths = ["../vpc"]
+# }
+# dependency "vpc" { config_path = "../vpc" }
 
 ## MODULE
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//mgmt-vpc"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//core-vpc"
 }
 
 ## MAIN
@@ -33,5 +33,4 @@ inputs = {
   name_prefix = "${local.name_prefix}-vpc"
   vpc_cidr = local.CIDR
   single_nat_gateway = true # set to false for one NAT gateway per subnet
-  transit_gateway_id = dependency.transit.outputs.transit_gateway_id
 }

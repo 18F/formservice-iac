@@ -20,6 +20,7 @@ locals {
   aws_region   = local.region_vars.locals.aws_region
   env          = local.environment_vars.locals.environment
   project      = local.environment_vars.locals.project
+  subenv       = local.environment_vars.locals.subenv
 }
 
 # Generate an AWS provider block
