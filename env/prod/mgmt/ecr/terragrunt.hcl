@@ -27,5 +27,32 @@ include {
 
 # MAIN
 inputs = {
- ## no inputs for now
+ ecr_policy = <<EOF
+ {
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowPushPull",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "arn:aws-us-gov:iam::306811362825:root",
+          "arn:aws-us-gov:iam::306881650362:root",
+          "arn:aws-us-gov:iam::306851503416:root"
+        ]
+      },
+      "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:CompleteLayerUpload",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:InitiateLayerUpload",
+        "ecr:PutImage",
+        "ecr:UploadLayerPart"
+      ]
+    }
+  ]
+}
+EOF
+
 }
