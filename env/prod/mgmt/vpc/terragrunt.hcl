@@ -19,7 +19,7 @@ locals {
 
 ## DEPENDENCIES
 dependencies {
-   paths = ["../transit-gateway"]
+   paths = ["../transit-gateway" ]
  }
  dependency "transit" { config_path = "../transit-gateway" }
 
@@ -34,4 +34,5 @@ inputs = {
   vpc_cidr = local.CIDR
   single_nat_gateway = true # set to false for one NAT gateway per subnet
   transit_gateway_id = dependency.transit.outputs.transit_gateway_id
+  environment = local.env
 }

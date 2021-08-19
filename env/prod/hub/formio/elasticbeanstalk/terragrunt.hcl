@@ -15,7 +15,7 @@ locals {
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "git@github.com:18F/formservice-iac-modules.git//elastic-beanstalk"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//elastic-beanstalk"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -25,13 +25,14 @@ include {
 
 # dependencies
 dependencies {
-  paths = ["../../vpc", "../s3", "../documentdb", "../../../mgmt/security", "../../../mgmt/formio-code-bucket"]
+  paths = ["../../vpc", "../s3", "../documentdb", "../../../mgmt/security", "../../../mgmt/formio-code-bucket", "../elasticbeanstalk-app"]
 }
 dependency "vpc" { config_path = "../../vpc" }
 dependency "s3" { config_path = "../s3" }
 dependency "documentdb" { config_path = "../documentdb" }
-dependency "acct-security" { config_path = "../../../mgmt/security"}
-dependency "code-bucket" { config_path = "../../../mgmt/formio-code-bucket"}
+dependency "acct-security" { config_path = "../../../mgmt/security" }
+dependency "code-bucket" { config_path = "../../../mgmt/formio-code-bucket" }
+dependency "ebapp" { config_path = "../elasticbeanstalk-app" }
 
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
@@ -42,8 +43,8 @@ inputs = {
   loadbalancer_subnets = dependency.vpc.outputs.public_subnet_ids
   application_subnets = dependency.vpc.outputs.private_subnet_ids
   allowed_security_groups = dependency.vpc.outputs.default_security_group_id
-  code_bucket      = dependency.code-bucket.outputs.s3_bucket_name
-  code_version     = "formio-hub/multicontainer-gov-7-1-6.zip"
+  app_name = dependency.ebapp.outputs.app_name
+  version_name = dependency.ebapp.outputs.version_name
 
   ssl_cert = "arn:aws-us-gov:acm:us-gov-west-1:306811362825:certificate/78cc35fb-1c63-45fb-991a-3bc92d14b6fe"
 
@@ -52,18 +53,25 @@ inputs = {
   instance_type = "t3.medium"
   autoscale_min = 3
   autoscale_max = 5
+
+  asg_breach_duration = 1
+  asg_lower_breach_scale_increment = -1
+  asg_lower_breach_threshold = 5
+  asg_scaling_measure_name = "RequestCount"
+  asg_scaling_period = 1
+  asg_scaling_statistic = "Average"
+  asg_scaling_unit = "Count/Second"
+  asg_upper_breach_scale_increment = 1
+  asg_upper_breach_threshold = 25
+  DisableIMDSv1 = "true"
+
+
   key_name = dependency.acct-security.outputs.prod_ec2_key_name
 
-  MONGO          = "mongodb://${dependency.documentdb.outputs.master_username}:3Gw2F2Wlqp4579NZ@${dependency.documentdb.outputs.endpoint}:27017/formio?ssl=true"
+  MONGO          = "mongodb://${dependency.documentdb.outputs.master_username}:${get_env("doc_db_master_password")}@${dependency.documentdb.outputs.endpoint}:27017/formio?ssl=true"
   
   PORTAL_ENABLED = "true"
   VPAT           = "true"
-
-  PROXY           = "true"
-  DEFAULT_DATABASE  = "formio-proxy5b"
-  PER_PROJECT_DBS = "true"
-  PORT            = "3000"
-  PRIMARY         = "true"
 
   FORMIO_S3_BUCKET = dependency.s3.outputs.s3_bucket_name  # s3 bucket name
   FORMIO_S3_REGION = local.region
@@ -71,11 +79,13 @@ inputs = {
   FORMIO_S3_SECRET = dependency.s3.outputs.s3_user_secret  # pdf user secret key
 
 
-  ADMIN_EMAIL = get_env("FORMIO_ADMIN_EMAIL")
-  ADMIN_PASS  = get_env("FORMIO_ADMIN_PASS")
-  DB_SECRET   = get_env("FORMIO_DB_SECRET")
-  JWT_SECRET  = get_env("FORMIO_JWT_SECRET")
+  ADMIN_EMAIL    = get_env("ADMIN_EMAIL")
+  ADMIN_PASS     = get_env("ADMIN_PASS")
+  DB_SECRET      = get_env("DB_SECRET")
+  JWT_SECRET     = get_env("JWT_SECRET")
+  ADMIN_KEY      = get_env("ADMIN_KEY")
+  PORTAL_SECRET  = get_env("PORTAL_SECRET")
 
-  LICENSE_KEY    = get_env("FORMIO_LICENSE_KEY")
+  LICENSE_KEY    = get_env("LICENSE_KEY")
   
 }

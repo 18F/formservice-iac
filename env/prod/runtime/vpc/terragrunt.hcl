@@ -18,10 +18,10 @@ locals {
 }
 
 ## DEPENDENCIES - No current dependencies for this module
-# dependencies {
-#   paths = ["../vpc"]
-# }
-# dependency "vpc" { config_path = "../vpc" }
+dependencies {
+   paths = ["../../mgmt/transit-gateway"]
+ }
+ dependency "transit" { config_path = "../../mgmt/transit-gateway" }
 
 ## MODULE
 terraform {
@@ -33,4 +33,6 @@ inputs = {
   name_prefix = "${local.name_prefix}-vpc"
   vpc_cidr = local.CIDR
   single_nat_gateway = true # set to false for one NAT gateway per subnet
+  transit_gateway_id = dependency.transit.outputs.transit_gateway_id
+  environment = local.env
 }
