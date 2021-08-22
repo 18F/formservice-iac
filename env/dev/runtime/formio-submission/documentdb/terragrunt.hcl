@@ -32,7 +32,7 @@ inputs = {
 
   cluster_size            = 3
   master_username         = get_env("doc_db_master_username")
-  master_password         = get_env("doc_db_master_password")
+  master_password         = get_env("doc_db_master_password_sub")
   instance_class          = "db.t3.medium"
   vpc_id                  = dependency.vpc.outputs.vpc_id
   subnet_ids              = dependency.vpc.outputs.database_subnet_ids

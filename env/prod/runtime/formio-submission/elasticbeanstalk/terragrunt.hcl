@@ -66,7 +66,7 @@ inputs = {
 
   key_name = dependency.acct-security.outputs.prod_ec2_key_name
 
-  DB_SECRET          = get_env("DB_SECRET")
+  DB_SECRET          = get_env("DB_SECRET_SUB")
   JWT_SECRET         = get_env("JWT_SECRET")
   LICENSE_KEY        = get_env("LICENSE_KEY")
   MONGO              = "mongodb://${dependency.documentdb.outputs.master_username}:${get_env("doc_db_master_password")}@${dependency.documentdb.outputs.endpoint}:27017/formio?ssl=true"
