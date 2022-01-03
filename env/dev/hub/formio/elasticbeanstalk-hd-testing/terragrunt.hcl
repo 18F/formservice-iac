@@ -8,14 +8,14 @@ locals {
   project     = local.environment_vars.locals.project
   subenv      = local.environment_vars.locals.subenv
   product     = local.environment_vars.locals.product
-  name_prefix = "${local.project}-${local.env}-${local.subenv}-${local.product}"
+  name_prefix = "${local.project}-${local.env}-${local.subenv}-${local.product}-hardened"
   region  = local.region_vars.locals.aws_region
 }
 
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//elastic-beanstalk"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//elastic-beanstalk-hardened-test"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -43,7 +43,7 @@ inputs = {
   application_subnets = dependency.vpc.outputs.private_subnet_ids
   allowed_security_groups = dependency.vpc.outputs.default_security_group_id
   app_name = dependency.ebapp.outputs.app_name
-  version_name = "faas-dev-hub-formio-app-v7.2.1"
+  version_name = "faas-dev-hub-formio-app-v6.2"
 
   ssl_cert = "arn:aws-us-gov:acm:us-gov-west-1:306881650362:certificate/e0ec66c4-945f-4fba-b2dc-81aca66200b0"
 
@@ -87,7 +87,5 @@ inputs = {
   PORTAL_SECRET  = get_env("PORTAL_SECRET")
 
   LICENSE_KEY    = get_env("LICENSE_KEY")
-  
-  FORMIO_VIEWER_ADDRESS = "https://portal-dev.forms.gov/pdf/view/index.html"
   
 }
