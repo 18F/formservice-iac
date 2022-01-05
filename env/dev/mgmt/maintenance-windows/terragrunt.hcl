@@ -15,7 +15,7 @@ include {
 }
 
 // pass variables into module
-inputs {
+inputs = {
   account_num                 = "${local.account_num}"
   env                         = "${local.env}"
   // maintenance window to run every Thursday 7am-9am ET
