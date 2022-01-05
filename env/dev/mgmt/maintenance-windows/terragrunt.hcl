@@ -1,7 +1,11 @@
 locals {
-  // load environment-level variables
-  environment_vars  = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  # Automatically load environment-level variables
   account_vars      = read_terragrunt_config(find_in_parent_folders("account.hcl"))
+  environment_vars  = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+
+  # Extract out common variables for reuse
+  account_num       = local.account_vars.locals.aws_account_id
+  env               = local.environment_vars.locals.environment
 }
 
 // specifiy module source
