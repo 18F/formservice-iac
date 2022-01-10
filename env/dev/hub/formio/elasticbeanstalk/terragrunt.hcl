@@ -63,13 +63,13 @@ inputs = {
   asg_upper_breach_scale_increment = 1
   asg_upper_breach_threshold = 25
   DisableIMDSv1 = true
-  ami_id = "ami-0bf99b3f9a61835a0"
+  ami_id = "ami-0b746db41696b0f8a"
 
 
   key_name = dependency.acct-security.outputs.ec2_key_name
 
   MONGO          = "mongodb://${dependency.documentdb.outputs.master_username}:${get_env("doc_db_master_password")}@${dependency.documentdb.outputs.endpoint}:27017/formio?ssl=true"
-  
+
   PORTAL_ENABLED = "true"
   VPAT           = "true"
 
@@ -87,7 +87,7 @@ inputs = {
   PORTAL_SECRET  = get_env("PORTAL_SECRET")
 
   LICENSE_KEY    = get_env("LICENSE_KEY")
-  
+
   FORMIO_VIEWER_ADDRESS = "https://portal-dev.forms.gov/pdf/view/index.html"
-  
+
 }
