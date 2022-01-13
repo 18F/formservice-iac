@@ -44,7 +44,7 @@ inputs = {
   application_subnets = dependency.vpc.outputs.private_subnet_ids
   allowed_security_groups = dependency.vpc.outputs.default_security_group_id
   app_name = dependency.ebapp.outputs.app_name
-  version_name = "faas-test-hub-formio-app-v7.2.2-u2"
+  version_name = "faas-prod-hub-formio-app-v7.2.2-u2"
 
   ssl_cert = "arn:aws-us-gov:acm:us-gov-west-1:306811362825:certificate/78cc35fb-1c63-45fb-991a-3bc92d14b6fe"
 
