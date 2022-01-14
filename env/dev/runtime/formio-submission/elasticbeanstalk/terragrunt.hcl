@@ -45,7 +45,7 @@ inputs = {
   app_name = dependency.ebapp.outputs.app_name
   version_name = "faas-dev-runtime-submission-app-v9.0.30-awslogs"
 
-  ssl_cert = "arn:aws-us-gov:iam::306881650362:server-certificate/submission-dev.forms.gov"
+  ssl_cert = "arn:aws-us-gov:acm:us-gov-west-1:306881650362:certificate/fde028be-2049-4f75-ba3d-f0acc2fa43d3"
 
   beanstalk_ec2_role = dependency.acct-security.outputs.beanstalk_ec2_role_arn
 
