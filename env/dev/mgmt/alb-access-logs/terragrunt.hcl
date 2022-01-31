@@ -11,7 +11,7 @@ locals {
 
 // specifiy module source
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git#alb-access-logs//alb-access-logs"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//alb-access-logs?ref=alb-access-logs"
 }
 
 // include all settings from the root terragrunt.hcl file
