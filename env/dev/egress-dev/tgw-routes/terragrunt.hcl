@@ -16,10 +16,10 @@ locals {
 
 ## DEPENDENCIES - No current dependencies for this module
 dependencies {
-   paths = ["../../../prod/mgmt/transit-gateway", "../vpc"]
+   paths = ["../../../prod/mgmt/transit-gateway", "../egress-vpc"]
  }
  dependency "transit" { config_path = "../../../prod/mgmt/transit-gateway-dev" }
- dependency "vpc" { config_path = "../vpc" }
+ dependency "vpc" { config_path = "../egress-vpc" }
 
 ## MODULE
 terraform {
@@ -30,11 +30,12 @@ terraform {
 inputs = {
   name_prefix = "${local.name_prefix}"
   transit_gateway_id = dependency.transit.outputs.transit_gateway_id
-  destination_cidr_block = "0.0.0.0/0"
+  destination_cidr_block = "10.0.0.0/8"
   vpc_id = dependency.vpc.outputs.vpc_id
-  private_subnet_ids = dependency.vpc.outputs.private_subnet_ids
+  private_subnet_ids = dependency.vpc.outputs.private_subnets
   default_route_table_id = dependency.vpc.outputs.default_route_table_id
   private_route_table_ids = dependency.vpc.outputs.private_route_table_ids
-  public_route_table_ids = []
+  inspection_route_table_ids = dependency.vpc.outputs.inspection_route_table_ids
+  public_route_table_ids = dependency.vpc.outputs.public_route_table_ids
   appliance_mode_support = "enable"
 }
