@@ -29,8 +29,8 @@ dependency "vpc" { config_path = "../vpc" }
 # MAIN
 inputs = {
   name_prefix = "${local.name_prefix}"
-  
-  linux_ami = "ami-088d8d0c07ace5a6d"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
+
+  linux_ami = "ami-0382f110636a0a582"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
 
   linux_instance_type = "t2.small"
 
