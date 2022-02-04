@@ -23,7 +23,10 @@ generate "provider" {
   contents  = <<EOF
 provider "aws" {
   region = "${local.aws_region}"
-
+  
+  endpoints {
+    networkfirewall = "https://network-firewall-fips.us-gov-west-1.amazonaws.com"
+  }
 }
 EOF
 }

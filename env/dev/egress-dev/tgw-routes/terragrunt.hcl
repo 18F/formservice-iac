@@ -36,6 +36,6 @@ inputs = {
   default_route_table_id = dependency.vpc.outputs.default_route_table_id
   private_route_table_ids = dependency.vpc.outputs.private_route_table_ids
   inspection_route_table_ids = dependency.vpc.outputs.inspection_route_table_ids
-  public_route_table_ids = dependency.vpc.outputs.public_route_table_ids
+  public_route_table_ids = []
   appliance_mode_support = "enable"
 }
