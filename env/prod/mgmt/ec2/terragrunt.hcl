@@ -10,7 +10,7 @@ locals {
 }
 
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//ec2"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//ec2?ref=ec2"
 }
 
 dependencies {
@@ -29,14 +29,16 @@ inputs = {
   iam_instance_profile  = "fass-prod-ssm-instance-role"
   volume_size           = 50
 
-  // copy post-install script from s3 to this instance
-  local_exec            = "<<EOT
-  aws s3 cp
-  EOT"
-
   // run post-install script after instance boots up
   remote_exec           = "<<EOT
+
+  // copy post-install script from s3 to this instance
+  aws s3 cp s3://faas-prod-mgmt-bucket/mgmt-server /home/ssm-user --recursive  --region us-gov-west-1
+
   // update file permissions
+  sudo chmod +x /home/ssm-user/mgmt-server-post-install.sh
+
   // execute script
+  bash /home/ssm-user/mgmt-server-post-install.sh
   EOT"
 }
