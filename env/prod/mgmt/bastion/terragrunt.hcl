@@ -22,6 +22,7 @@ dependency "vpc" {
 }
 
 inputs = {
+  purpose               = "mgmt-server"
   ami                   = "ami-0382f110636a0a582"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
   instance_type         = "t2.small"
   subnet_id             = dependency.vpc.outputs.private_subnet_ids[0]
@@ -30,8 +31,7 @@ inputs = {
 
   // copy post-install script from s3 to this instance
   local_exec            = "<<EOT
-  // install aws cli
-  // copy post-install script from s3 to this instance
+  aws s3 cp
   EOT"
 
   // run post-install script after instance boots up
