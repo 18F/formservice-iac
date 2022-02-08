@@ -19,9 +19,9 @@ locals {
 
 ## DEPENDENCIES
 dependencies {
-   paths = ["../transit-gateway" ]
+   paths = ["../../../prod/mgmt/transit-gateway" ]
  }
- dependency "transit" { config_path = "../transit-gateway" }
+ dependency "transit" { config_path = "../../../prod/mgmt/transit-gateway-dev" }
 
 ## MODULE
 terraform {
