@@ -36,10 +36,10 @@ inputs = {
   volume_size           = 50
 
   // test local-exec provisioner
-  local_exec            = "echo 'This is an example of a local_exec provisioner...'"
+  local_exec_command    = "echo 'This is an example of a local_exec provisioner...'"
 
   // run post-install script after instance boots up
-  remote_exec           = <<EOT
+  remote_exec_command   = <<EOT
 
   // copy post-install script from s3 to this instance
   aws s3 cp s3://faas-prod-mgmt-bucket/mgmt-server /home/ssm-user --recursive  --region us-gov-west-1
