@@ -2,13 +2,13 @@ locals {
   # Automatically load environment-level variables
   account_vars      = read_terragrunt_config(find_in_parent_folders("account.hcl"))
   environment_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
 
   # Extract out common variables for reuse
   account_num = local.account_vars.locals.aws_account_id
   env         = local.environment_vars.locals.environment
   project     = local.environment_vars.locals.project
-  subenv      = local.environment_vars.locals.subenv
-  name_prefix = "${local.project}-${local.env}-${local.subenv}"
+  region      = local.region_vars.locals.aws_region
 }
 
 terraform {
@@ -27,6 +27,7 @@ inputs = {
   account_num           = "${local.account_num}"
   env                   = "${local.env}"
   project               = "${local.project}"
+  region                = "${local.region}"
   purpose               = "mgmt-server-FORMS-344"
   ami                   = "ami-0382f110636a0a582"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
   instance_type         = "t2.small"
