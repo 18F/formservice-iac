@@ -24,6 +24,8 @@ dependency "vpc" {
 }
 
 inputs = {
+  account_num           = "${local.account_num}"
+  env                   = "${local.env}"
   purpose               = "mgmt-server"
   ami                   = "ami-0382f110636a0a582"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
   instance_type         = "t2.small"
