@@ -30,7 +30,7 @@ inputs = {
   volume_size           = 50
 
   // run post-install script after instance boots up
-  remote_exec           = "<<EOT
+  remote_exec           = <<EOT
 
   // copy post-install script from s3 to this instance
   aws s3 cp s3://faas-prod-mgmt-bucket/mgmt-server /home/ssm-user --recursive  --region us-gov-west-1
@@ -40,5 +40,5 @@ inputs = {
 
   // execute script
   bash /home/ssm-user/mgmt-server-post-install.sh
-  EOT"
+  EOT
 }
