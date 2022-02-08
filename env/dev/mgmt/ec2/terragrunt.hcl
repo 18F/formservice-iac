@@ -36,8 +36,8 @@ inputs = {
   volume_size           = 50
 
   // test local-exec provisioner
-  local_exec            = "echo 'This is an example of a local_exec provisioner...'"
+  local_exec            = ""
 
   // run post-install script after instance boots up
-  remote_exec           = "echo 'Test'"
+  remote_exec           = ""
 }
