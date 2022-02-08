@@ -35,9 +35,4 @@ inputs = {
   iam_instance_profile  = "AmazonSSMRoleForInstancesQuickSetup"
   volume_size           = 50
 
-  // test local-exec provisioner
-  local_exec            = ""
-
-  // run post-install script after instance boots up
-  remote_exec           = ""
 }
