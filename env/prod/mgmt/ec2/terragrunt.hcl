@@ -33,6 +33,9 @@ inputs = {
   iam_instance_profile  = "fass-prod-ssm-instance-role"
   volume_size           = 50
 
+  // test local-exec provisioner
+  local_exec            = "echo 'This is an example of a local_exec provisioner...'"
+
   // run post-install script after instance boots up
   remote_exec           = <<EOT
 
