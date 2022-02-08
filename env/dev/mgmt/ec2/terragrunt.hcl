@@ -31,7 +31,7 @@ inputs = {
   purpose               = "mgmt-server-FORMS-439"
   ami                   = "ami-0382f110636a0a582"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
   instance_type         = "t2.small"
-  subnet_id             = "subnet-00e100a42cc46801c" # dependency.vpc.outputs.private_subnet_ids[0]
+  subnet_id             = dependency.vpc.outputs.private_subnet_ids[0]
   iam_instance_profile  = "fass-prod-ssm-instance-role"
   volume_size           = 50
 
