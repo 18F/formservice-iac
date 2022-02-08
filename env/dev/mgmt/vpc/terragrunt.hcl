@@ -17,14 +17,15 @@ locals {
   CIDR = "10.12.0.0/16"
 }
 
+## DEPENDENCIES
 dependencies {
-   paths = ["../../../prod/mgmt/transit-gateway"]
+   paths = ["../transit-gateway" ]
  }
- dependency "transit" { config_path = "../../../prod/mgmt/transit-gateway-dev" }
+ dependency "transit" { config_path = "../transit-gateway" }
 
 ## MODULE
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//core-vpc"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//mgmt-vpc"
 }
 
 ## MAIN
