@@ -12,27 +12,28 @@ locals {
   project     = local.environment_vars.locals.project
   subenv      = local.environment_vars.locals.subenv
   name_prefix = "${local.project}-${local.env}-${local.subenv}"
-
-  #set VPC CIDR
-  CIDR = "10.12.0.0/16"
 }
 
-## DEPENDENCIES
+## DEPENDENCIES - No current dependencies for this module
 dependencies {
-   paths = ["../../../prod/mgmt/transit-gateway-dev" ]
+   paths = ["../../../prod/mgmt/transit-gateway-dev", "../vpc"]
  }
  dependency "transit" { config_path = "../../../prod/mgmt/transit-gateway-dev" }
+ dependency "vpc" { config_path = "../vpc" }
 
 ## MODULE
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//mgmt-vpc"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//tgw-routes"
 }
 
 ## MAIN
 inputs = {
-  name_prefix = "${local.name_prefix}-vpc"
-  vpc_cidr = local.CIDR
-  single_nat_gateway = true # set to false for one NAT gateway per subnet
+  name_prefix = "${local.name_prefix}"
   transit_gateway_id = dependency.transit.outputs.transit_gateway_id
-  environment = local.env
+  destination_cidr_block = "0.0.0.0/0"
+  vpc_id = dependency.vpc.outputs.vpc_id
+  private_subnet_ids = dependency.vpc.outputs.private_subnet_ids
+  default_route_table_id = dependency.vpc.outputs.default_route_table_id
+  private_route_table_ids = dependency.vpc.outputs.private_route_table_ids
+  public_route_table_ids = dependency.vpc.outputs.public_route_table_ids
 }
