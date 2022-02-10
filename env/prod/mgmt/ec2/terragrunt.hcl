@@ -34,5 +34,5 @@ inputs = {
   subnet_id             = "subnet-00e100a42cc46801c" # dependency.vpc.outputs.private_subnet_ids[0]
   iam_instance_profile  = "fass-prod-ssm-instance-role"
   volume_size           = 50
-
+  security_groups       = ["sg-055fa27138ff14804"]
 }
