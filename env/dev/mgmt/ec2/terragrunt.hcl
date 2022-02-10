@@ -28,11 +28,10 @@ inputs = {
   env                   = "${local.env}"
   project               = "${local.project}"
   region                = "${local.region}"
-  purpose               = "mgmt-server-FORMS-439"
-  ami                   = "ami-0382f110636a0a582"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
+  purpose               = "mgmt-server"
+  ami                   = "ami-0218486b38f895d8d"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
   instance_type         = "t2.small"
   subnet_id             = dependency.vpc.outputs.private_subnet_ids[0]
   iam_instance_profile  = "AmazonSSMRoleForInstancesQuickSetup"
   volume_size           = 50
-
 }
