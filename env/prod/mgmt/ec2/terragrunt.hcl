@@ -12,7 +12,7 @@ locals {
 }
 
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//ec2?ref=ec2"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//ec2"
 }
 
 dependencies {
@@ -28,7 +28,7 @@ inputs = {
   env                   = "${local.env}"
   project               = "${local.project}"
   region                = "${local.region}"
-  purpose               = "mgmt-server-FORMS-344"
+  purpose               = "mgmt-server"
   ami                   = "ami-0218486b38f895d8d"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
   instance_type         = "t2.small"
   subnet_id             = "subnet-00e100a42cc46801c" # dependency.vpc.outputs.private_subnet_ids[0]
