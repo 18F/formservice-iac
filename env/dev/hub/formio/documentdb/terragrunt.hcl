@@ -39,6 +39,7 @@ inputs = {
   # allowed_security_groups = ["${dependency.security.outputs.documentdb_sg_id}"]
   allowed_cidr_blocks     = [
     "10.1.0.0/16", # mgmt vpc
+    "10.12.0.0/16", # dev mgmt vpc
     "${dependency.vpc.outputs.private_subnets_cidr_blocks[0]}",
     "${dependency.vpc.outputs.private_subnets_cidr_blocks[1]}",
     "${dependency.vpc.outputs.private_subnets_cidr_blocks[2]}"
