@@ -12,7 +12,7 @@ locals {
 }
 
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//ec2?ref=ec2"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//ec2"
 }
 
 dependencies {
@@ -28,26 +28,11 @@ inputs = {
   env                   = "${local.env}"
   project               = "${local.project}"
   region                = "${local.region}"
-  purpose               = "mgmt-server-FORMS-344"
-  ami                   = "ami-0382f110636a0a582"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
+  purpose               = "mgmt-server-2022-02-17-tmp"
+  ami                   = "ami-0218486b38f895d8d"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
   instance_type         = "t2.small"
   subnet_id             = "subnet-00e100a42cc46801c" # dependency.vpc.outputs.private_subnet_ids[0]
   iam_instance_profile  = "fass-prod-ssm-instance-role"
   volume_size           = 50
-
-  // test local-exec provisioner
-  local_exec_command    = "echo 'This is an example of a local_exec provisioner...'"
-
-  // run post-install script after instance boots up
-  remote_exec_command   = <<EOT
-
-  // copy post-install script from s3 to this instance
-  aws s3 cp s3://faas-prod-mgmt-bucket/mgmt-server /home/ssm-user --recursive  --region us-gov-west-1
-
-  // update file permissions
-  sudo chmod +x /home/ssm-user/mgmt-server-post-install.sh
-
-  // execute script
-  bash /home/ssm-user/mgmt-server-post-install.sh
-  EOT
+  security_groups       = ["sg-055fa27138ff14804"]
 }
