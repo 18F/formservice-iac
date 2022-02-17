@@ -1,55 +1,38 @@
 locals {
   # Automatically load environment-level variables
+  account_vars      = read_terragrunt_config(find_in_parent_folders("account.hcl"))
   environment_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
 
   # Extract out common variables for reuse
+  account_num = local.account_vars.locals.aws_account_id
   env         = local.environment_vars.locals.environment
   project     = local.environment_vars.locals.project
-  subenv      = local.environment_vars.locals.subenv
-  name_prefix = "${local.project}-${local.env}-${local.subenv}"
+  region      = local.region_vars.locals.aws_region
 }
 
-# MODULE
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//mgmt-hosts"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//ec2"
 }
 
-# Include all settings from the root terragrunt.hcl file
-include {
-  path = find_in_parent_folders()
-}
-
-## DEPENDENCIES
 dependencies {
   paths = ["../vpc"]
 }
-dependency "vpc" { config_path = "../vpc" }
 
+dependency "vpc" {
+  config_path = "../vpc"
+}
 
-# MAIN
 inputs = {
-  name_prefix = "${local.name_prefix}"
-
-  linux_ami = "ami-0382f110636a0a582"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
-
-  linux_instance_type = "t2.small"
-
-  vpc_id = dependency.vpc.outputs.vpc_id
-  subnet_id = dependency.vpc.outputs.private_subnet_ids[0]
-
-  #linux_monitoring = "true"
-
-  linux_root_block_size = "50"
-
-  iam_instance_profile = "fass-prod-ssm-instance-role"
-
-  user_data = <<EOF
-		#! /bin/bash
-		sudo yum install -y yum-utils
-    sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
-    sudo yum -y install git terraform
-	EOF
-
-  #kms_key = "arn:aws-us-gov:kms:us-gov-west-1:XXXXXX:key/62ffe5b2-f736-4376-acde-b9d1b6b863e0"
-  #windows_tls_ingress_cidr_blocks = ["0.0.0.0/0"]
+  account_num           = "${local.account_num}"
+  env                   = "${local.env}"
+  project               = "${local.project}"
+  region                = "${local.region}"
+  purpose               = "mgmt-server-2022-02-17-tmp"
+  ami                   = "ami-0218486b38f895d8d"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
+  instance_type         = "t2.small"
+  subnet_id             = "subnet-00e100a42cc46801c" # dependency.vpc.outputs.private_subnet_ids[0]
+  iam_instance_profile  = "fass-prod-ssm-instance-role"
+  volume_size           = 50
+  security_groups       = ["sg-055fa27138ff14804"]
 }
