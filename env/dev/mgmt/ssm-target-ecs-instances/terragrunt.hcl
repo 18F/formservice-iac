@@ -6,6 +6,7 @@ locals {
   # Extract out common variables for reuse
   account_num       = local.account_vars.locals.aws_account_id
   env               = local.environment_vars.locals.environment
+  window_id         = module.ssm-window-thurs-7am-et.id
 }
 
 // specifiy module source
@@ -31,7 +32,7 @@ inputs = {
   account_num                 = "${local.account_num}"
   env                         = "${local.env}"
   // maintenance window target for hub-formio and runtime-submission ecs instances
-  window_id     = module.ssm-window-thurs-7am-et.id
+  window_id     = local.window_id
   name          = "ecs-instances"
   resource_type = "INSTANCE"
   key           = "tag:Name"
