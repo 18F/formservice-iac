@@ -18,20 +18,20 @@ include {
   path = find_in_parent_folders()
 }
 
-// depends on maintenance window
-dependencies {
-  paths = [ "../ssm-window-thurs-7am-et" ]
-}
-dependency "ssm-window-thurs-7am-et" {
-  config_path = "../ssm-window-thurs-7am-et"
-}
+// // depends on maintenance window
+// dependencies {
+//   paths = [ "../ssm-window-thurs-7am-et" ]
+// }
+// dependency "ssm-window-thurs-7am-et" {
+//   config_path = "../ssm-window-thurs-7am-et"
+// }
 
 // pass variables into module
 inputs = {
   account_num                 = "${local.account_num}"
   env                         = "${local.env}"
   // maintenance window target for hub-formio and runtime-submission ecs instances
-  window_id     = dependency.ssm-window-thurs-7am-et.id
+  window_id     = module.ssm-window-thurs-7am-et.id
   name          = "ecs-instances"
   resource_type = "INSTANCE"
   key           = "tag:Name"
