@@ -6,7 +6,6 @@ locals {
   # Extract out common variables for reuse
   account_num       = local.account_vars.locals.aws_account_id
   env               = local.environment_vars.locals.environment
-  window_id         = module.ssm-window-thurs-7am-et.id
 }
 
 // specifiy module source
@@ -19,20 +18,20 @@ include {
   path = find_in_parent_folders()
 }
 
-// // depends on maintenance window
-// dependencies {
-//   paths = [ "../ssm-window-thurs-7am-et" ]
-// }
-// dependency "ssm-window-thurs-7am-et" {
-//   config_path = "../ssm-window-thurs-7am-et"
-// }
+// depends on maintenance window
+dependencies {
+  paths = [ "../ssm-window-thurs-7am-et" ]
+}
+dependency "ssm-window-thurs-7am-et" {
+  config_path = "../ssm-window-thurs-7am-et"
+}
 
 // pass variables into module
 inputs = {
   account_num                 = "${local.account_num}"
   env                         = "${local.env}"
   // maintenance window target for hub-formio and runtime-submission ecs instances
-  window_id     = local.window_id
+  window_id     = dependency.ssm-window-thurs-7am-et.outputs.id
   name          = "ecs-instances"
   resource_type = "INSTANCE"
   key           = "tag:Name"
