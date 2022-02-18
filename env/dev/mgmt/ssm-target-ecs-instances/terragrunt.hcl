@@ -19,9 +19,6 @@ include {
 }
 
 // depends on maintenance window
-// dependencies {
-//   paths = [ "../ssm-window-thurs-7am-et" ]
-// }
 dependency "ssm-window-thurs-7am-et" {
   config_path = "../ssm-window-thurs-7am-et"
 }
