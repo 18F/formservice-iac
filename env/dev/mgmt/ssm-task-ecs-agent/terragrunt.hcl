@@ -40,7 +40,7 @@ inputs = {
   task_type                 = "RUN_COMMAND"
   window_id                 = dependency.ssm-window-thurs-7am-et.outputs.id
   target_type               = "WindowTargetIds"
-  target_ids                = [dependency.aws_ssm_maintenance_window_target.outputs.id]
+  target_ids                = [dependency.ssm-target-ecs-instances.outputs.id]
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
   commands                  = ["if [[ \"$(sudo yum update -y ecs-init)\" == *\"download\"* ]] ; then sudo service docker restart && sudo start ecs ; fi"]
