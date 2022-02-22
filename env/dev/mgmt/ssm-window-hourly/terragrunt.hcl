@@ -23,7 +23,7 @@ inputs = {
   account_num                 = "${local.account_num}"
   env                         = "${local.env}"
   // maintenance window to run every hour
-  name     = "every-hour"
+  name     = "hourly"
   schedule = "cron(0 * * * *)"
   duration = "1"
   cutoff   = "1"
