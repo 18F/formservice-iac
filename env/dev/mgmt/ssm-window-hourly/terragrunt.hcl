@@ -25,6 +25,6 @@ inputs = {
   // maintenance window to run every hour
   name     = "hourly"
   schedule = "cron(0 * * * *)"
-  duration = "1"
-  cutoff   = "1"
+  duration = 2
+  cutoff   = 1
 }

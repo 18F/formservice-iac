@@ -25,6 +25,6 @@ inputs = {
   // maintenance window to run every Thursday 7am-9am ET
   name     = "thurs-7am-et"
   schedule = "cron(0 0 7 ? * THU *)"
-  duration = "2"
-  cutoff   = "1"
+  duration = 2
+  cutoff   = 1
 }
