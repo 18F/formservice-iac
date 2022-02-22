@@ -24,7 +24,7 @@ inputs = {
   env                         = "${local.env}"
   // maintenance window to run every hour
   name     = "hourly"
-  schedule = "cron(0 * * * *)"
+  schedule = "cron(0 * * * ? *)"
   duration = 2
   cutoff   = 1
 }
