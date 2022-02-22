@@ -8,7 +8,7 @@ locals {
   env               = local.environment_vars.locals.environment
 }
 
-// specifiy module source
+// specify module source
 terraform {
   source = "git@github.com-gsa:18F/formservice-iac-modules.git//maintenance-window-task?ref=maintenance-window"
 }
