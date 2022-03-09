@@ -43,7 +43,7 @@ inputs = {
   application_subnets = dependency.vpc.outputs.private_subnet_ids
   allowed_security_groups = dependency.vpc.outputs.default_security_group_id
   app_name = dependency.ebapp.outputs.app_name
-  version_name = "faas-dev-hub-formio-app-v7.3.1-cis-5.12"
+  version_name = "faas-dev-hub-formio-app-v7.3.1-pdf-v3.3.1"
 
   ssl_cert = "arn:aws-us-gov:acm:us-gov-west-1:306881650362:certificate/e0ec66c4-945f-4fba-b2dc-81aca66200b0"
 
@@ -63,7 +63,7 @@ inputs = {
   asg_upper_breach_scale_increment = 1
   asg_upper_breach_threshold = 25
   DisableIMDSv1 = true
-  ami_id = "ami-0e6c5f1607b4253ab"
+  ami_id = "ami-0b746db41696b0f8a"
 
 
   key_name = dependency.acct-security.outputs.ec2_key_name
