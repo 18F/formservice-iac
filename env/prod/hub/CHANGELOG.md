@@ -6,9 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- 2022-03-22 deployed CIS docker controls cis-5.12, cis-5.25 to test
 - 2022-03-17 deployed CIS docker controls cis-5.12, cis-5.25 to dev
 
 ### Changed
+- 2022-03-22 deployed ami-08f23b677a6ee3765 to test
+  - this ami configures/enables selinux on the docker daemon on the host machine
 - 2022-03-17 deployed ami-08f23b677a6ee3765 to dev
   - this ami configures/enables selinux on the docker daemon on the host machine
 
