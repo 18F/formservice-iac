@@ -70,7 +70,7 @@ inputs = {
 
   MONGO          = "mongodb://${dependency.documentdb.outputs.master_username}:${get_env("doc_db_master_password")}@${dependency.documentdb.outputs.endpoint}:27017/formio?ssl=true"
 
-  PORTAL_ENABLED = "false"
+  PORTAL_ENABLED = "true"
   VPAT           = "true"
 
   FORMIO_S3_BUCKET = dependency.s3.outputs.s3_bucket_name  # s3 bucket name
