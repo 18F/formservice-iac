@@ -65,7 +65,7 @@ inputs = {
   DisableIMDSv1 = "true"
 ami_id = "ami-08f23b677a6ee3765"
 
-  key_name = dependency.acct-security.outputs.prod_ec2_key_name
+  key_name = dependency.acct-security.outputs.ec2_key_name
 
   DB_SECRET          = get_env("DB_SECRET_SUB")
   JWT_SECRET         = get_env("JWT_SECRET")
