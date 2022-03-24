@@ -66,7 +66,7 @@ inputs = {
   DisableIMDSv1 = "true"
   ami_id = "ami-08f23b677a6ee3765"
 
-  key_name = dependency.acct-security.outputs.prod_ec2_key_name
+  key_name = dependency.acct-security.outputs.ec2_key_name
 
   MONGO          = "mongodb://${dependency.documentdb.outputs.master_username}:${get_env("doc_db_master_password")}@${dependency.documentdb.outputs.endpoint}:27017/formio?ssl=true"
 
