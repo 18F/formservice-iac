@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- 2022-03-29 FORMS-617 deployed nginx:1.21.6-alpine to test
+- 2022-03-29 FORMS-617 deployed pdf-server:3.3.5 to test
 - 2022-03-24 FORMS-617 deployed nginx:1.21.6-alpine to dev
 - 2022-03-24 FORMS-617 deployed pdf-server:3.3.5 to dev
 
