@@ -44,7 +44,7 @@ inputs = {
   application_subnets = dependency.vpc.outputs.private_subnet_ids
   allowed_security_groups = dependency.vpc.outputs.default_security_group_id
   app_name = dependency.ebapp.outputs.app_name
-  version_name = "faas-prod-hub-formio-app-v7.2.2-u2"
+  version_name = "faas-prod-hub-formio-app-v7.3.1"
 
   ssl_cert = "arn:aws-us-gov:acm:us-gov-west-1:306811362825:certificate/78cc35fb-1c63-45fb-991a-3bc92d14b6fe"
 
@@ -64,9 +64,9 @@ inputs = {
   asg_upper_breach_scale_increment = 1
   asg_upper_breach_threshold = 25
   DisableIMDSv1 = "true"
-  ami_id = "ami-0b746db41696b0f8a"
+  ami_id = "ami-08f23b677a6ee3765"
 
-  key_name = dependency.acct-security.outputs.prod_ec2_key_name
+  key_name = dependency.acct-security.outputs.ec2_key_name
 
   MONGO          = "mongodb://${dependency.documentdb.outputs.master_username}:${get_env("doc_db_master_password")}@${dependency.documentdb.outputs.endpoint}:27017/formio?ssl=true"
 

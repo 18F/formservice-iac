@@ -10,7 +10,7 @@ locals {
 
 // specifiy module source
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//maintenance-windows"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//maintenance-window-target"
 }
 
 // include all settings from the root terragrunt.hcl file
@@ -18,13 +18,19 @@ include {
   path = find_in_parent_folders()
 }
 
+// depends on maintenance window
+dependency "ssm-window-thurs-7am-et" {
+  config_path = "../ssm-window-thurs-7am-et"
+}
+
 // pass variables into module
 inputs = {
   account_num                 = "${local.account_num}"
   env                         = "${local.env}"
-  // maintenance window to run every Thursday 7am-9am ET
-  maintenance_window_name     = "thursdays-7am-et"
-  maintenance_window_schedule = "cron(0 0 7 ? * THU *)"
-  maintenance_window_duration = "2"
-  maintenance_window_cutoff   = "1"
+  // maintenance window target for hub-formio and runtime-submission ecs instances
+  window_id     = dependency.ssm-window-thurs-7am-et.outputs.id
+  name          = "ecs-thurs-7am-et"
+  resource_type = "INSTANCE"
+  key           = "tag:Name"
+  values        = ["faas-${local.env}-runtime-submission-env","faas-${local.env}-hub-formio-env"]
 }
