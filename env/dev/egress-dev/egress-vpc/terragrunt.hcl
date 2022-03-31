@@ -29,7 +29,7 @@ terraform {
 inputs = {
   name_prefix = "${local.name_prefix}-vpc"
   vpc_cidr = local.CIDR
-  single_nat_gateway = true # set to false for one NAT gateway per subnet
+  single_nat_gateway = false # set to false for one NAT gateway per subnet
   environment = local.env
   project = local.project
 

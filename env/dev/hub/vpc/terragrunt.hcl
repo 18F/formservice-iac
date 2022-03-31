@@ -19,13 +19,13 @@ locals {
 
 ## DEPENDENCIES - No current dependencies for this module
 dependencies {
-   paths = ["../../prod/mgmt/transit-gateway"]
+   paths = ["../../../prod/mgmt/transit-gateway-dev"]
  }
  dependency "transit" { config_path = "../../../prod/mgmt/transit-gateway-dev" }
 
 ## MODULE
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//core-vpc"
+  source = "git@github.com-gsa:18F/formservice-iac-modules.git//core-vpc-refactor"
 }
 
 ## MAIN
