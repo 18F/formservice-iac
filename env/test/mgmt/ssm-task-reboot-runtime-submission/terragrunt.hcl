@@ -24,8 +24,8 @@ dependency "ssm-window-daily-2am-et" {
 }
 
 // depends on maintenance window target
-dependency "ssm-target-ecs-daily-2am-et" {
-  config_path = "../ssm-target-ecs-daily-2am-et"
+dependency "ssm-target-daily-2am-et" {
+  config_path = "../ssm-target-daily-2am-et"
 }
 
 // pass variables into module
