@@ -32,5 +32,5 @@ inputs = {
   name          = "ecs-daily-2am-et"
   resource_type = "INSTANCE"
   key           = "tag:Name"
-  values        = ["faas-${local.env}-runtime-submission-env","faas-${local.env}-hub-formio-env"]
+  values        = ["faas-${local.env}-runtime-submission-env"]
 }
