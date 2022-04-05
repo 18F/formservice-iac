@@ -23,8 +23,8 @@ inputs = {
   account_num                 = "${local.account_num}"
   env                         = "${local.env}"
   // maintenance window to run daily at 2am ET
-  name     = "daily-7am-et"
-  schedule = "cron(0 0 7 ? * * *)"
+  name     = "daily-2am-et"
+  schedule = "cron(0 0 2 ? * * *)"
   duration = 2
   cutoff   = 1
 }
