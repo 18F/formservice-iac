@@ -43,7 +43,7 @@ inputs = {
   application_subnets = dependency.vpc.outputs.private_subnet_ids
   allowed_security_groups = dependency.vpc.outputs.default_security_group_id
   app_name = dependency.ebapp.outputs.app_name
-  version_name = "faas-test-runtime-submission-app-v9.0.32"
+  version_name = "faas-test-runtime-submission-app-v9.0.33-nginx-1.21.6-alpine"
 
   ssl_cert = "arn:aws-us-gov:acm:us-gov-west-1:306851503416:certificate/90fa06bd-3742-43a3-a85e-9f8b3dd6fb35"
 
@@ -63,7 +63,7 @@ inputs = {
   asg_upper_breach_scale_increment = 1
   asg_upper_breach_threshold = 25
   DisableIMDSv1 = "true"
-  ami_id = "ami-08f23b677a6ee3765"
+  ami_id = "ami-03a0f325a864730cb"
 
   key_name = dependency.acct-security.outputs.ec2_key_name
 
