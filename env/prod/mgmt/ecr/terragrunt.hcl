@@ -10,7 +10,7 @@ locals {
 
 # MODULE
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//ecr"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//ecr"
 }
 
 # Include all settings from the root terragrunt.hcl file

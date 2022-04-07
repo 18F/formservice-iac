@@ -11,7 +11,7 @@ locals {
 
 // specifiy module source
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//network-fw-rules"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//network-fw-rules"
 }
 
 // include all settings from the root terragrunt.hcl file

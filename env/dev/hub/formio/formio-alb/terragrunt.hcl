@@ -15,7 +15,7 @@ locals {
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//formio-alb"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//formio-alb"
 }
 
 # Include all settings from the root terragrunt.hcl file

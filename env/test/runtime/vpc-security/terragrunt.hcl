@@ -22,7 +22,7 @@ dependencies {
 
 ## MODULE
 terraform {
-  source = "git@github.com-gsa:18F/formservice-iac-modules.git//vpc-security"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//vpc-security"
 }
 
 ## MAIN
