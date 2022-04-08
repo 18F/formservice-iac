@@ -12,7 +12,7 @@ locals {
 }
 
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//ec2?ref=ec2"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//ec2"
 }
 
 dependencies {
