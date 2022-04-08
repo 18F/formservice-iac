@@ -34,4 +34,5 @@ inputs = {
   subnet_id             = dependency.vpc.outputs.private_subnet_ids[0]
   iam_instance_profile  = "AmazonSSMRoleForInstancesQuickSetup"
   volume_size           = 50
+  security_groups       = ["default"]
 }
