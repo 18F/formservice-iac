@@ -8,7 +8,7 @@ locals {
   env               = local.environment_vars.locals.environment
 }
 
-// specifiy module source
+// specify module source
 terraform {
   source = "git::https://github.com/18F/formservice-iac-modules.git//ssm-task"
 }
@@ -32,16 +32,15 @@ dependency "ssm-target-ecs-thurs-7am-et" {
 inputs = {
   account_num                 = "${local.account_num}"
   env                         = "${local.env}"
-  // maintenance window task: update ecs agent
   max_concurrency           = 1
   max_errors                = 1
   priority                  = 1
-  task_arn                  = "AWS-RunShellScript"
+  task_arn                  = "AWS-RunPatchBaseline"
   task_type                 = "RUN_COMMAND"
   window_id                 = dependency.ssm-window-thurs-7am-et.outputs.id
   target_type               = "WindowTargetIds"
   target_ids                = [dependency.ssm-target-ecs-thurs-7am-et.outputs.id]
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
-  commands                  = ["sudo find /var/log -type f -exec chmod g-wx,o-rwx {} +"]
+  commands                  = ["if [[ \"$(sudo yum update -y ecs-init)\" == *\"download\"* ]] ; then sudo service docker restart && sudo start ecs ; fi"]
 }
