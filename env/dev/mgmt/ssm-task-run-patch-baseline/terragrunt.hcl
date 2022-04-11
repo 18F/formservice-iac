@@ -10,7 +10,7 @@ locals {
 
 // specify module source
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//ssm-task"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//ssm-task?ref=patch"
 }
 
 // include all settings from the root terragrunt.hcl file
@@ -42,5 +42,9 @@ inputs = {
   target_ids                = [dependency.ssm-target-ecs-thurs-7am-et.outputs.id]
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
-  commands                  = ["if [[ \"$(sudo yum update -y ecs-init)\" == *\"download\"* ]] ; then sudo service docker restart && sudo start ecs ; fi"]
+  parameters                = {
+    Operation             = "This is required..."
+    BaselineOverride      = ""
+    RebootOption          = "RebootIfNeeded"
+  }
 }
