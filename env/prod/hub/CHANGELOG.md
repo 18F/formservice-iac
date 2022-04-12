@@ -5,7 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Removed
+- 2022-04-12 FORMS-708 removed cis docker recommendation 5.12 from test environment
+- 2022-04-07 FORMS-706 removed cis docker recommendation 5.12 from dev environment
+
+## [1.0.3] - 2022-04-07
 ### Changed
+- 2022-04-07 FORMS-696 deployed ami-03a0f325a864730cb to prod
+- 2022-04-07 FORMS-696 deployed pdf-server:3.3.6 to prod
 - 2022-04-05 FORMS-691 deployed ami-03a0f325a864730cb to test
 - 2022-04-05 FORMS-691 deployed pdf-server:3.3.6 to test
 - 2022-04-01 FORMS-687 deployed ami-03a0f325a864730cb to dev
