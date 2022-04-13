@@ -43,5 +43,7 @@ inputs = {
   target_ids                = [dependency.ssm-target-ecs-thurs-7am-et.outputs.id]
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
-  commands                  = ["sudo find /var/log -type f -exec chmod g-wx,o-rwx {} +"]
+  parameters {
+    commands                = ["sudo find /var/log -type f -exec chmod g-wx,o-rwx {} +"]
+  }
 }
