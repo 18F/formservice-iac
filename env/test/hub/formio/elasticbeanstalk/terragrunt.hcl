@@ -45,7 +45,7 @@ inputs = {
   app_name = dependency.ebapp.outputs.app_name
   version_name = "faas-test-hub-formio-app-v7.3.1-pdf-server-3.3.6"
 
-  ssl_cert = "arn:aws-us-gov:acm:us-gov-west-1:306851503416:certificate/5946a3a3-838b-4f62-a27d-8778f6964a6c"
+  ssl_cert = "arn:aws-us-gov:acm:us-gov-west-1:306851503416:certificate/74c9472a-9e35-4a06-b17e-7bfa5b8ba9a0"
 
   beanstalk_ec2_role = dependency.acct-security.outputs.beanstalk_ec2_role_arn
 
