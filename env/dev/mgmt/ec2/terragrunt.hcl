@@ -12,7 +12,7 @@ locals {
 }
 
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//ec2?ref=ec2"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//ec2"
 }
 
 dependencies {
@@ -29,9 +29,10 @@ inputs = {
   project               = "${local.project}"
   region                = "${local.region}"
   purpose               = "mgmt-server"
-  ami                   = "ami-0218486b38f895d8d"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
+  ami                   = "ami-0b994ae2d6200158e"   # CIS Amazon Linux 2 Benchmark v1.0.0.29
   instance_type         = "t2.small"
   subnet_id             = dependency.vpc.outputs.private_subnet_ids[0]
   iam_instance_profile  = "AmazonSSMRoleForInstancesQuickSetup"
   volume_size           = 50
+  security_groups       = ["sg-029bc3267bf59fcba"]
 }
