@@ -10,7 +10,7 @@ locals {
 
 // specifiy module source
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//maintenance-window"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//ssm-window"
 }
 
 // include all settings from the root terragrunt.hcl file
