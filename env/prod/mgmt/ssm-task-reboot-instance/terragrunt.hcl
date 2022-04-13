@@ -48,9 +48,11 @@ inputs = {
   target_ids                = [dependency.ssm-target-ecs-hourly.outputs.id]
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
-  commands                  = [
-    "if [[ \"$(sudo service docker status)\" == *\"dead\"* ]] ; then aws sns publish --topic-arn arn:aws-us-gov:sns:us-gov-west-1:${local.account_num}:Forms-Service-Issue-Alert --message 'The docker daemon is dead on an ec2 instance in the prod environment. AWS Systems Manager is rebooting the instance now. This message and reboot command was triggered by an AWS Systems Manager maintenance window task.' && sudo reboot ; fi"
-  ]
+  parameters                = {
+    commands                = [
+      "if [[ \"$(sudo service docker status)\" == *\"dead\"* ]] ; then aws sns publish --topic-arn arn:aws-us-gov:sns:us-gov-west-1:${local.account_num}:Forms-Service-Issue-Alert --message 'The docker daemon is dead on an ec2 instance in the prod environment. AWS Systems Manager is rebooting the instance now. This message and reboot command was triggered by an AWS Systems Manager maintenance window task.' && sudo reboot ; fi"
+    ]
+  }
   // attach iam policy to iam role
   iam_role                  = dependency.acct-security.outputs.beanstalk_ec2_role_name
   iam_policy_name           = "AllowPublishToTopicSSMTaskRebootInstance"
