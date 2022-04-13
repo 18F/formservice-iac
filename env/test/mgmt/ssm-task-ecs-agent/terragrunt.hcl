@@ -43,5 +43,7 @@ inputs = {
   target_ids                = [dependency.ssm-target-ecs-thurs-7am-et.outputs.id]
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
-  commands                  = ["if [[ \"$(sudo yum update -y ecs-init)\" == *\"download\"* ]] ; then sudo service docker restart && sudo start ecs ; fi"]
+  parameters                = {
+      commands              = ["if [[ \"$(sudo yum update -y ecs-init)\" == *\"download\"* ]] ; then sudo service docker restart && sudo start ecs ; fi"]
+  }
 }

@@ -43,5 +43,7 @@ inputs = {
   target_ids                = [dependency.ssm-target-daily-2am-et.outputs.id]
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
-  commands                  = ["sudo reboot"]
+  parameters                = {
+      commands              = ["sudo reboot"]
+  }
 }
