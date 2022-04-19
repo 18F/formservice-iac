@@ -29,7 +29,7 @@ inputs = {
   env                         = "${local.env}"
   // maintenance window target for hub-formio and runtime-submission ecs instances
   window_id     = dependency.ssm-window-thurs-7am-et.outputs.id
-  name          = "ecs-thurs-7am-et"
+  name          = "mgmt-server"
   resource_type = "INSTANCE"
   key           = "tag:Name"
   values        = ["faas-${local.env}-mgmt-server*"]
