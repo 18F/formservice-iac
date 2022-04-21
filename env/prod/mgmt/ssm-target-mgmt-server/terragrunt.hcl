@@ -32,5 +32,5 @@ inputs = {
   name          = "mgmt-server"
   resource_type = "INSTANCE"
   key           = "tag:Name"
-  values        = ["faas-${local.env}-mgmt-server*"]
+  values        = ["faas-${local.env}-mgmt-server"]
 }
