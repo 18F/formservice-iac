@@ -22,11 +22,11 @@ include {
 }
 
 # dependencies
-dependencies      { paths = ["../ecs-cluster", "../efs", "../formio-alb", "../../vpc"] }
-dependency "vpc"  { config_path = "../../vpc" }
-dependency "alb"  { config_path = "../formio-alb" }
-dependency "ecs"  { config_path = "../ecs-cluster" }
-dependency "efs"  { config_path = "../efs" }
+dependencies      { paths = ["../../ecs-cluster", "../../efs", "../../formio-alb", "../../../vpc"] }
+dependency "vpc"  { config_path = "../../../vpc" }
+dependency "alb"  { config_path = "../../formio-alb" }
+dependency "ecs"  { config_path = "../../ecs-cluster" }
+dependency "efs"  { config_path = "../../efs" }
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
@@ -45,7 +45,15 @@ inputs = {
   efs_file_system_id          = dependency.efs.outputs.fs_id
   efs_access_point_id         = dependency.efs.outputs.fsap_id
 
-
+  vpc_id                      = dependency.vpc.outputs.vpc_id
+  load_balancing_algo         = "least_outstanding_requests"
+  health_path                 = "/health"
+  healthy_threshold           = 3
+  unhealth_threshold          = 3
+  health_timeout              = 5
+  health_interval             = 30
+  formio_alb_listener_arn     = dependency.alb.outputs.faas_formio_alb_listener
+  customer_url                = "epa.formsservice-dev.forms.gov"
 
   #dependency.security.outputs.documentdb_key_arn
 
