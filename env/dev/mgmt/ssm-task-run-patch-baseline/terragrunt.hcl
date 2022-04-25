@@ -30,8 +30,8 @@ dependency "ssm-target-ecs-thurs-7am-et" {
 
 // pass variables into module
 inputs = {
-  account_num                 = "${local.account_num}"
-  env                         = "${local.env}"
+  account_num               = "${local.account_num}"
+  env                       = "${local.env}"
   max_concurrency           = 1
   max_errors                = 1
   priority                  = 1
@@ -43,8 +43,7 @@ inputs = {
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
   parameters                = {
-    Operation             = "This is required..."
-    BaselineOverride      = ""
-    RebootOption          = "RebootIfNeeded"
+    Operation               = "Install"
+    RebootOption            = "RebootIfNeeded"
   }
 }
