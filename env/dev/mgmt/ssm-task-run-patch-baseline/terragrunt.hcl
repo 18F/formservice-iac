@@ -30,7 +30,7 @@ dependency "ssm-target-ecs-thurs-7am-et" {
 
 // pass variables into module
 inputs = {
-  name                      = "Run patch baseline"
+  name                      = "run-patch-baseline"
   description               = "A task that runs the default baseline to patch instances. FORMS-346"
   account_num               = "${local.account_num}"
   env                       = "${local.env}"
