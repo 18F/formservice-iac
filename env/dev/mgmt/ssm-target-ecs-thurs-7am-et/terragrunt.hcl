@@ -25,12 +25,15 @@ dependency "ssm-window-thurs-7am-et" {
 
 // pass variables into module
 inputs = {
-  account_num                 = "${local.account_num}"
-  env                         = "${local.env}"
-  // maintenance window target for hub-formio and runtime-submission ecs instances
+  account_num   = "${local.account_num}"
+  env           = "${local.env}"
   window_id     = dependency.ssm-window-thurs-7am-et.outputs.id
   name          = "ecs-thurs-7am-et"
   resource_type = "INSTANCE"
   key           = "tag:Name"
-  values        = ["faas-${local.env}-runtime-submission-env","faas-${local.env}-hub-formio-env"]
+  values        = [
+    "faas-${local.env}-hub-formio-env",
+    "faas-${local.env}-runtime-submission-env",
+    "faas-${local.env}-runtime-submission-epa-env"
+  ]
 }
