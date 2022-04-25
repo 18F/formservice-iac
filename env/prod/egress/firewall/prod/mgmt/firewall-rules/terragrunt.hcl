@@ -28,5 +28,5 @@ inputs = {
   rule_type = "ALLOWLIST"
   capacity = 100
   home_networks = ["${dependency.vpc.outputs.vpc_cidr_block}"]
-  filtered_domains = [ "arsenal.us-gov-west-1.amazonaws.com","objects.githubusercontent.com",".twistlock.com", ".github.com", ".releases.hashicorp.com", ".repo.mongodb.org", ".registry.terraform.io", "amazon-ssm-packages-us-gov-west-1.s3.us-gov-east-1.amazonaws.com", ".checkpoint-api.hashicorp.com", "iam.us-gov.amazonaws.com", "ec2-instance-connect.us-gov-west-1.amazonaws.com", "network-firewall-fips.us-gov-west-1.amazonaws.com"]
+  filtered_domains = [ "arsenal.us-gov-west-1.amazonaws.com","objects.githubusercontent.com",".twistlock.com", ".github.com", ".releases.hashicorp.com", ".repo.mongodb.org", ".registry.terraform.io", "amazon-ssm-packages-us-gov-west-1.s3.us-gov-east-1.amazonaws.com", ".checkpoint-api.hashicorp.com", "iam.us-gov.amazonaws.com", "ec2-instance-connect.us-gov-west-1.amazonaws.com", "network-firewall-fips.us-gov-west-1.amazonaws.com", "www.example.com"]
 }
