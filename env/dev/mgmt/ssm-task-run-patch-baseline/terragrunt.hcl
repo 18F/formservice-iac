@@ -43,7 +43,7 @@ inputs = {
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
   parameters                = {
-    Operation               = "Install"
-    RebootOption            = "RebootIfNeeded"
+    Operation               = ["Install"]
+    RebootOption            = ["RebootIfNeeded"]
   }
 }
