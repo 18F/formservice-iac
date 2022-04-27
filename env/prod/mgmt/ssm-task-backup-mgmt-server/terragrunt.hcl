@@ -19,8 +19,8 @@ include {
 }
 
 // depends on maintenance window
-dependency "ssm-window-thurs-7am-et" {
-  config_path = "../ssm-window-thurs-7am-et"
+dependency "ssm-window-hourly" {
+  config_path = "../ssm-window-hourly"
 }
 
 // depends on maintenance window target
@@ -30,9 +30,10 @@ dependency "ssm-target-mgmt-server" {
 
 // pass variables into module
 inputs = {
-  account_num                 = "${local.account_num}"
-  env                         = "${local.env}"
-  // maintenance window task: backup mgmt server
+  name                      = "backup-mgmt-server"
+  description               = "A maintenance window task that backs up faas-prod-mgmt-server files to s3; FORMS-531"
+  account_num               = "${local.account_num}"
+  env                       = "${local.env}"
   max_concurrency           = 1
   max_errors                = 1
   priority                  = 1
