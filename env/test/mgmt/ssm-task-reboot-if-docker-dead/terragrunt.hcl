@@ -35,9 +35,10 @@ dependency "acct-security" {
 
 // pass variables into module
 inputs = {
+  name                      = "reboot-if-docker-dead"
+  description               = "A task that reboots the instance if the docker daemon is dead; FORMS-462"
   account_num               = "${local.account_num}"
   env                       = "${local.env}"
-  // maintenance window task: update ecs agent
   max_concurrency           = 1
   max_errors                = 1
   priority                  = 1
