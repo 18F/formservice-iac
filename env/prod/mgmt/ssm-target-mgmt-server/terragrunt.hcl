@@ -19,8 +19,8 @@ include {
 }
 
 // depends on maintenance window
-dependency "ssm-window-thurs-7am-et" {
-  config_path = "../ssm-window-thurs-7am-et"
+dependency "ssm-window-hourly" {
+  config_path = "../ssm-window-hourly"
 }
 
 // pass variables into module
@@ -28,7 +28,7 @@ inputs = {
   account_num                 = "${local.account_num}"
   env                         = "${local.env}"
   // maintenance window target for hub-formio and runtime-submission ecs instances
-  window_id     = dependency.ssm-window-thurs-7am-et.outputs.id
+  window_id     = dependency.ssm-window-hourly.outputs.id
   name          = "mgmt-server"
   resource_type = "INSTANCE"
   key           = "tag:Name"

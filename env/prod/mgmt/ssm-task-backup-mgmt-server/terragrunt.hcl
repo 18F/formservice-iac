@@ -45,12 +45,10 @@ inputs = {
   cloudwatch_output_enabled = true
   parameters                = {
     commands               = [
-      "aws s3 cp /home/ssm-user/.aws s3://faas-prod-mgmt-bucket/mgmt-server/.aws/ --recursive --region us-gov-west-1",
-      "aws s3 cp /home/ssm-user/.ssh s3://faas-prod-mgmt-bucket/mgmt-server/.ssh/ --recursive --region us-gov-west-1",
-      "aws s3 cp /home/ssm-user/certs s3://faas-prod-mgmt-bucket/mgmt-server/certs/ --recursive --region us-gov-west-1",
-      "aws s3 cp /home/ssm-user/documentDB s3://faas-prod-mgmt-bucket/mgmt-server/documentDB/ --recursive --region us-gov-west-1",
-      "aws s3 cp /home/ssm-user/packer s3://faas-prod-mgmt-bucket/mgmt-server/packer/ --recursive --region us-gov-west-1",
-      "aws s3 cp /home/ssm-user/terraform s3://faas-prod-mgmt-bucket/mgmt-server/terraform/ --recursive --region us-gov-west-1"
+      "aws s3 sync /home/ssm-user/.aws s3://faas-prod-mgmt-bucket/mgmt-server/.aws/ --region us-gov-west-1",
+      "aws s3 sync /home/ssm-user/.ssh s3://faas-prod-mgmt-bucket/mgmt-server/.ssh/ --region us-gov-west-1",
+      "aws s3 sync /home/ssm-user/certs s3://faas-prod-mgmt-bucket/mgmt-server/certs/ --region us-gov-west-1",
+      "aws s3 sync /home/ssm-user/documentDB s3://faas-prod-mgmt-bucket/mgmt-server/documentDB/ --region us-gov-west-1"
     ]
   }
 }
