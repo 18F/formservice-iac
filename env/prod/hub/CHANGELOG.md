@@ -5,20 +5,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- 2022-04-28 FORMS-779 deployed pdf-server:3.3.7 to dev
 
-## [1.0.6] - 2022-04-28
+## [1.1.2] - 2022-04-28
 ### Changed
 - 2022-04-28 FORMS-778 deployed ami-0968bfb2bef6a026e to prod
 - 2022-04-26 FORMS-776 deployed ami-0968bfb2bef6a026e to test
 - 2022-04-21 FORMS-748 deployed ami-0968bfb2bef6a026e to dev
 
-## [1.0.5] - 2022-04-21
+## [1.1.1] - 2022-04-21
 ### Changed
 - 2022-04-21 FORMS-747 deployed formio-enterprise:7.3.2 to prod
 - 2022-04-19 FORMS-738 deployed formio-enterprise:7.3.2 to test
 - 2022-04-14 FORMS-717 deployed formio-enterprise:7.3.2 to dev
 
-## [1.0.4] - 2022-04-14
+## [1.1.0] - 2022-04-14
 ### Removed
 - 2022-04-14 FORMS-709 removed cis docker recommendation 5.12 from prod
 - 2022-04-12 FORMS-708 removed cis docker recommendation 5.12 from test

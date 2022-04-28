@@ -5,8 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- 2022-04-28 FORMS-779 deployed pdf-server:3.3.7 to runtime-submission-epa dev
 
-## [1.0.3]
+## [1.1.0] - 2022-04-28
 ### Changed
 - 2022-04-28 FORMS-778 deployed formio-enterprise:7.3.2 to runtime-submission-epa prod
 
