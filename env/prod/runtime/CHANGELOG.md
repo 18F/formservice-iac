@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3]
+### Changed
+- 2022-04-28 FORMS-778 deployed formio-enterprise:7.3.2 to runtime-submission-epa prod
+
+### Changed
+- 2022-04-28 FORMS-778 deployed ami-0968bfb2bef6a026e to prod
+- 2022-04-26 FORMS-776 deployed ami-0968bfb2bef6a026e to test
+- 2022-04-21 FORMS-748 deployed ami-0968bfb2bef6a026e to dev
+
 ## [1.0.2] - 2022-04-07
 ### Changed
 - 2022-04-07 FORMS-696 deployed ami-03a0f325a864730cb to prod
