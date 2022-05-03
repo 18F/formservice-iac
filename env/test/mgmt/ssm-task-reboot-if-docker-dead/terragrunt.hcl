@@ -56,7 +56,7 @@ inputs = {
   }
   // attach iam policy to iam role
   iam_role                  = dependency.acct-security.outputs.beanstalk_ec2_role_name
-  iam_policy_name           = "AllowPublishToTopicSSMTaskRebootInstance"
+  iam_policy_name           = "AllowPublishToFormsServiceIssueAlert"
   iam_policy_document       = <<EOF
 {
     "Version": "2012-10-17",
