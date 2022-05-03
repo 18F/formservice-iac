@@ -30,9 +30,10 @@ dependency "ssm-target-daily-2am-et" {
 
 // pass variables into module
 inputs = {
-  account_num                 = "${local.account_num}"
-  env                         = "${local.env}"
-  // maintenance window task: update ecs agent
+  name                      = "reboot-runtime-submission"
+  description               = "Reboot runtime-submission instances daily during EPA development; FORMS-699"
+  account_num               = "${local.account_num}"
+  env                       = "${local.env}"
   max_concurrency           = 1
   max_errors                = 1
   priority                  = 1
