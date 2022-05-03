@@ -30,9 +30,10 @@ dependency "ssm-target-ecs-thurs-7am-et" {
 
 // pass variables into module
 inputs = {
-  account_num                 = "${local.account_num}"
-  env                         = "${local.env}"
-  // maintenance window task: update ecs agent
+  name                      = "update-ecs-agent"
+  description               = "If there's an update available for the ecs agent, then install it, restart docker, and start ecs; FORMS-142"
+  account_num               = "${local.account_num}"
+  env                       = "${local.env}"
   max_concurrency           = 1
   max_errors                = 1
   priority                  = 1
@@ -44,6 +45,6 @@ inputs = {
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
   parameters                = {
-    commands               = ["if [[ \"$(sudo yum update -y ecs-init)\" == *\"download\"* ]] ; then sudo service docker restart && sudo start ecs ; fi"]
+      commands              = ["if [[ \"$(sudo yum update -y ecs-init)\" == *\"download\"* ]] ; then sudo service docker restart && sudo start ecs ; fi"]
   }
 }
