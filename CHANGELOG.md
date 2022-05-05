@@ -5,8 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- 2022-04-28 FORMS-779 deployed pdf-server:3.3.7 to hub-formio dev
-- 2022-04-28 FORMS-779 deployed pdf-server:3.3.7 to runtime-submission-epa dev
+
+## [1.1.3] - 2022-05-05
+### Added
+- 2022-05-05 FORMS-815 deployed ssm-task-run-patch-baseline to the prod environment
+- 2022-05-03 FORMS-804 deployed ssm-task-run-patch-baseline to the test environment
+- 2022-04-26 FORMS-346 deployed ssm-task-run-patch-baseline to the dev environment
+
+### Removed
+- 2022-05-04 FORMS-805 removed awslogs log driver from runtime-submission-epa app in prod
+- 2022-05-03 FORMS-801 removed awslogs log driver from hub-formio and runtime-submission apps in the test environment
 
 ## [1.1.2] - 2022-04-28
 ### Changed
