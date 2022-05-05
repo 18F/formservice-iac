@@ -31,7 +31,7 @@ dependency "ssm-target-ecs-thurs-7am-et" {
 // pass variables into module
 inputs = {
   name                      = "set-logfile-permissions"
-  description               = "Ensure permissions on all logfiles are configured; CIS control 4.2.4; FORMS-284"
+  description               = "A maintenance window task sets appropriate permissions on logfiles; FORMS-284"
   account_num               = "${local.account_num}"
   env                       = "${local.env}"
   max_concurrency           = 1

@@ -36,7 +36,7 @@ dependency "acct-security" {
 // pass variables into module
 inputs = {
   name                      = "reboot-if-docker-dead"
-  description               = "A task that reboots the instance if the docker daemon is dead; FORMS-462"
+  description               = "A maintenance window task that reboots the instance if the docker daemon is dead; FORMS-462"
   account_num               = "${local.account_num}"
   env                       = "${local.env}"
   max_concurrency           = 1
@@ -51,7 +51,7 @@ inputs = {
   cloudwatch_output_enabled = true
   parameters                = {
     commands                = [
-      "if [[ \"$(sudo service docker status)\" == *\"dead\"* ]] ; then aws sns publish --topic-arn arn:aws-us-gov:sns:us-gov-west-1:${local.account_num}:Forms-Service-Issue-Alert --message 'The docker daemon is dead on an ec2 instance in the test environment. AWS Systems Manager is rebooting the instance now. This message and reboot command was triggered by an AWS Systems Manager maintenance window task.' && sudo reboot ; fi"
+      "if [[ \"$(sudo service docker status)\" == *\"dead\"* ]] ; then aws sns publish --topic-arn arn:aws-us-gov:sns:us-gov-west-1:${local.account_num}:Forms-Service-Issue-Alert --message 'The docker daemon is dead on an ec2 instance in the dev environment. AWS Systems Manager is rebooting the instance now. This message and reboot command was triggered by an AWS Systems Manager maintenance window task.' && sudo reboot ; fi"
     ]
   }
   // attach iam policy to iam role
