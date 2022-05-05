@@ -9,10 +9,16 @@ ssm-window-hourly
 │ a maintenance window that runs every hour, on the hour
 │
 └───ssm-target-ecs-hourly
-    │ a maintenance window target that targets all ec2 instances running formio applications
-    │
-    └───ssm-task-reboot-if-docker-dead
-          a maintenance window task that reboots the instance if the docker daemon is dead; FORMS-462
+│   │ a maintenance window target that targets all ec2 instances running formio applications
+│   │
+│   └───ssm-task-reboot-if-docker-dead
+│         a maintenance window task that reboots the instance if the docker daemon is dead; FORMS-462
+│
+└───ssm-target-mgmt-server
+    │  a maintenance window target that targets the mgmt-server
+    │  
+    └───ssm-task-backup-mgmt-server
+          a maintenance window task that backs up faas-prod-mgmt-server files to s3; FORMS-531
 
 ssm-window-thurs-7am-et
 │ a maintenance window that runs Thursdays at 7am ET
