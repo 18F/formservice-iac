@@ -31,7 +31,7 @@ dependency "ssm-target-ecs-thurs-7am-et" {
 // pass variables into module
 inputs = {
   name                      = "update-ecs-agent"
-  description               = "If there's an update available for the ecs agent, then install it, restart docker, and start ecs; FORMS-142"
+  description               = "A maintenance window task that installs available updates for the ecs agent, then restarts docker and starts ecs; FORMS-142"
   account_num               = "${local.account_num}"
   env                       = "${local.env}"
   max_concurrency           = 1
