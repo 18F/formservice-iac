@@ -1,7 +1,7 @@
 # formservice-iac
 
 ## AWS Systems Manager (SSM)
-We use [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html) (formerly known as "Amazon Simple Systems Manager (SSM)") to run automated tasks on the ec2 instances that host the running formio containers.
+We use [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html) (formerly known as *Amazon Simple Systems Manager (SSM)*) to run automated tasks on the ec2 instances that host the running formio containers.
 
 We keep our SSM tasks in the `mgmt` directory for each environment. The following is a summary of the current state of Systems Manager in the `prod` environment:
 ```
