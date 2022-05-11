@@ -29,7 +29,7 @@ inputs = {
   env                         = "${local.env}"
   // maintenance window target for hub-formio and runtime-submission ecs instances
   window_id     = dependency.ssm-window-hourly.outputs.id
-  name          = "ecs-hourly"
+  name          = "runtime-submission-epa-hourly"
   resource_type = "INSTANCE"
   key           = "tag:Name"
   values        = ["faas-${local.env}-runtime-submission-epa-env"]
