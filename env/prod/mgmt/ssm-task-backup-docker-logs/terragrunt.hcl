@@ -6,7 +6,6 @@ locals {
   # Extract out common variables for reuse
   account_num       = local.account_vars.locals.aws_account_id
   env               = local.environment_vars.locals.environment
-  bucket_arn        = dependency.s3-bucket-epa-docker-logs.outputs.arn
 }
 
 // specify module source
@@ -55,7 +54,7 @@ inputs = {
 
 echo 'Hello world!'
 
-echo "${local.bucket_arn}"
+echo "${dependency.s3-bucket-epa-docker-logs.outputs.arn}"
 
 EOT
     ]
