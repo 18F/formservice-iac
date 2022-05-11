@@ -21,4 +21,5 @@ inputs = {
   // create a lifecycle configuration to delete objects after 183 days (6 months)
   lifecycle_configuration_rule_id   = "expiration"
   expiration_days                   = 183
+  status                            = "Enabled"
 }
