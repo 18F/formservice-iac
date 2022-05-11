@@ -45,10 +45,11 @@ inputs = {
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
   parameters                = {
-    commands               = <<-EOT
+    commands               = ["<<-EOT
 
     echo 'Hello world!'
 
     EOT
+    "]
   }
 }
