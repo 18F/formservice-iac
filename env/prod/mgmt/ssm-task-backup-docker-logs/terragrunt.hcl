@@ -53,3 +53,22 @@ EOT
     ]
   }
 }
+
+
+// create s3 bucket to store runtime-submission-epa docker logs
+resource "aws_s3_bucket" "this" {
+  bucket_prefix = "epa-docker-logs"
+}
+
+// create a lifecycle configuration to delete objects after 183 days (6 months)
+resource "aws_s3_bucket_lifecycle_configuration" "this" {
+  bucket = aws_s3_bucket.this.bucket
+
+  rule {
+    id = "expiration"
+
+    expiration {
+      days = 183
+    }
+  }
+}
