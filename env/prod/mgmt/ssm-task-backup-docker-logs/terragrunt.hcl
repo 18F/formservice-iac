@@ -6,6 +6,7 @@ locals {
   # Extract out common variables for reuse
   account_num       = local.account_vars.locals.aws_account_id
   env               = local.environment_vars.locals.environment
+  bucket_arn        = dependency.s3-bucket-epa-docker-logs.outputs.arn
 }
 
 // specify module source
@@ -26,6 +27,11 @@ dependency "ssm-window-hourly" {
 // depends on maintenance window target
 dependency "ssm-target-runtime-submission-epa-hourly" {
   config_path = "../ssm-target-runtime-submission-epa-hourly"
+}
+
+// depends on s3 bucket
+dependency "s3-bucket-epa-docker-logs" {
+  config_path = "../s3-bucket-epa-docker-logs"
 }
 
 // pass variables into module
@@ -49,19 +55,9 @@ inputs = {
 
 echo 'Hello world!'
 
+echo "${local.bucket_arn}"
+
 EOT
     ]
-  }
-}
-
-terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//s3-bucket"
-
-  inputs {
-    // create s3 bucket to store runtime-submission-epa docker logs
-    bucket_prefix                     = "epa-docker-logs"
-    // create a lifecycle configuration to delete objects after 183 days (6 months)
-    lifecycle_configuration_rule_id   = "expiration"
-    expiration_days                   = 183
   }
 }
