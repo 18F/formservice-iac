@@ -70,11 +70,12 @@ do
   # create datestamp
   DATESTAMP=$(echo "$(date +%F)-$(date +%T)" | sed -E 's/-|://g')
 
-  # create logfile
+  # create directory and logfile
+  mkdir -p /home/ssm-user/epa-docker-logs/$CONTAINER_ID/
   touch /home/ssm-user/epa-docker-logs/$CONTAINER_ID/$DATESTAMP
 
   # append the last 65 minutes of docker logs to logfile
-  docker logs $CONTAINER_ID --since 65m
+  sudo docker logs $CONTAINER_ID --since 65m >> /home/ssm-user/epa-docker-logs/$CONTAINER_ID/$DATESTAMP
 
   # copy logfiles to s3
   aws s3 cp /home/ssm-user/epa-docker-logs/$CONTAINER_ID/$DATESTAMP s3://${dependency.s3-bucket-epa-docker-logs.outputs.bucket}/$CONTAINER_ID/$DATESTAMP
