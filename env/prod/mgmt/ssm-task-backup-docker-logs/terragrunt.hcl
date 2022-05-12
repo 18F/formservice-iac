@@ -57,7 +57,32 @@ inputs = {
   parameters                = {
     commands                = [<<EOT
 
-echo "${dependency.s3-bucket-epa-docker-logs.outputs.arn}"
+# for each container, api and pdf
+for container in api pdf
+do
+
+  # get container id
+  CONTAINER_ID=$(docker ps --filter name=^.*$container.*$ -q)
+
+  # get s3 bucket arn
+  BUCKET_ARN="${dependency.s3-bucket-epa-docker-logs.outputs.arn}"
+
+  # create datestamp
+  DATESTAMP=$(echo "$(date +%F)-$(date +%T)" | sed -E 's/-|://g')
+
+  # create logfile
+  touch /home/ssm-user/epa-docker-logs/$container/$DATESTAMP
+
+  # append the last 65 minutes of docker logs to logfile
+  docker logs $CONTAINER_API --since 65m
+
+  # copy logfiles to s3
+  aws s3 cp /home/ssm-user/epa-docker-logs/$container/$DATESTAMP s3://${dependency.s3-bucket-epa-docker-logs.outputs.bucket}/$container/$DATESTAMP
+
+  # delete local logfiles
+  rm -rf /home/ssm-user/docker-logs/$container/$DATESTAMP
+
+done
 
 EOT
     ]
