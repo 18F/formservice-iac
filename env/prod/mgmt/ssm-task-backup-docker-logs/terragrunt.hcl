@@ -33,6 +33,11 @@ dependency "s3-bucket-epa-docker-logs" {
   config_path = "../s3-bucket-epa-docker-logs"
 }
 
+// depends on iam role
+dependency "acct-security" {
+  config_path = "../security"
+}
+
 // pass variables into module
 inputs = {
   name                      = "backup-docker-logs"
