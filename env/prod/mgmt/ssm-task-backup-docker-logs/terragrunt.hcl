@@ -52,11 +52,26 @@ inputs = {
   parameters                = {
     commands                = [<<EOT
 
-echo 'Hello world!'
-
 echo "${dependency.s3-bucket-epa-docker-logs.outputs.arn}"
 
 EOT
     ]
   }
+  // attach iam policy to iam role; allow instances to upload objects to s3-bucket-epa-docker-logs
+  iam_role                  = dependency.acct-security.outputs.beanstalk_ec2_role_name
+  iam_policy_name           = "AllowPutObjectToS3BucketEPADockerLogs"
+  iam_policy_document       = <<EOF
+{
+   "Version":"2012-10-17",
+   "Statement":[
+      {
+         "Effect":"Allow",
+         "Action":[
+            "s3:PutObject"
+         ],
+         "Resource":"${dependency.s3-bucket-epa-docker-logs.outputs.arn}*"
+      }
+   ]
+}
+EOF
 }
