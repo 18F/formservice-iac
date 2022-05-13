@@ -71,17 +71,17 @@ do
   DATESTAMP=$(echo "$(date +%F)-$(date +%T)" | sed -E 's/-|://g')
 
   # create directory and logfile
-  sudo mkdir -p /home/ssm-user/epa-docker-logs/$CONTAINER_ID/
-  sudo touch /home/ssm-user/epa-docker-logs/$CONTAINER_ID/$DATESTAMP
+  sudo mkdir -p /home/ssm-user/epa-docker-logs/$container/$CONTAINER_ID/
+  sudo touch /home/ssm-user/epa-docker-logs/$container/$CONTAINER_ID/$DATESTAMP
 
   # append the last 65 minutes of docker logs to logfile
-  sudo docker logs $CONTAINER_ID --since 65m | sudo tee -a /home/ssm-user/epa-docker-logs/$CONTAINER_ID/$DATESTAMP
+  sudo docker logs $CONTAINER_ID --since 65m | sudo tee -a /home/ssm-user/epa-docker-logs/$container/$CONTAINER_ID/$DATESTAMP
 
   # copy logfiles to s3
-  sudo aws s3 cp /home/ssm-user/epa-docker-logs/$CONTAINER_ID/$DATESTAMP s3://${dependency.s3-bucket-epa-docker-logs.outputs.bucket}/$CONTAINER_ID/$DATESTAMP
+  sudo aws s3 cp /home/ssm-user/epa-docker-logs/$container/$CONTAINER_ID/$DATESTAMP s3://${dependency.s3-bucket-epa-docker-logs.outputs.bucket}/$container/$CONTAINER_ID/$DATESTAMP
 
   # delete local logfiles
-  sudo rm -rf /home/ssm-user/epa-docker-logs/$CONTAINER_ID/$DATESTAMP
+  sudo rm -rf /home/ssm-user/epa-docker-logs/$container/$CONTAINER_ID/$DATESTAMP
 
 done
 
