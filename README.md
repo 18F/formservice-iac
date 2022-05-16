@@ -31,10 +31,16 @@ ssm-window-hourly
 │         a maintenance window task that reboots the instance if the docker daemon is dead; FORMS-462
 │
 └───ssm-target-mgmt-server
-    │  a maintenance window target that targets the mgmt-server
-    │  
-    └───ssm-task-backup-mgmt-server
-          a maintenance window task that backs up faas-prod-mgmt-server files to s3; FORMS-531
+│   │  a maintenance window target that targets the mgmt-server
+│   │  
+│   └───ssm-task-backup-mgmt-server
+│         a maintenance window task that backs up faas-prod-mgmt-server files to s3; FORMS-531
+│
+└───ssm-target-runtime-submission-epa-hourly
+    │  a maintenance window target that targets runtime-submission-epa instances
+    │
+    └───ssm-task-backup-docker-logs
+          a maintenance window task that backs up runtime-submission-epa docker logs to s3; FORMS-820
 
 ssm-window-thurs-7am-et
 │ a maintenance window that runs Thursdays at 7am ET
