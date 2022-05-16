@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- 2022-05-16 FORMS-845 update api-server, pdf-server container definitions and node memory allocation to `2048` for the hub-formio app in the dev environment
+- 2022-05-13 FORMS-845 upgraded ec2 instances from t3.medium to t3.large for the hub-formio app in the dev environment
+  - this is to accommodate formio's recommendation on memory requirements
 - 2022-05-12 FORMS-832 deployed pdf-server:3.3.8 to the hub-formio app in the dev environment
   - this image has fewer vulnerabilities than the previous version, pdf-server:3.3.6
 - 2022-05-05 FORMS-798 deployed ami-0fea79bafb589ff8e to all formio instances in the dev environment
