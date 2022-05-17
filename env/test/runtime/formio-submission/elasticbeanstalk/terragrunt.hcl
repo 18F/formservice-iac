@@ -63,7 +63,7 @@ inputs = {
   asg_upper_breach_scale_increment = 1
   asg_upper_breach_threshold = 25
   DisableIMDSv1 = "true"
-  ami_id = "ami-0968bfb2bef6a026e"
+  ami_id = "ami-0fea79bafb589ff8e"
 
   key_name = dependency.acct-security.outputs.ec2_key_name
 
