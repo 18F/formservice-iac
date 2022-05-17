@@ -49,7 +49,7 @@ inputs = {
 
   beanstalk_ec2_role = dependency.acct-security.outputs.beanstalk_ec2_role_arn
 
-  instance_type = "t3.medium"
+  instance_type = "t3.large"
   autoscale_min = 3
   autoscale_max = 5
 
