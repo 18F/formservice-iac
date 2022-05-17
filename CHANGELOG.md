@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- 2022-05-17 FORMS-845 update submission-server, redis container definitions and node memory allocation to `2048` for the runtime-submission app in the dev environment
 - 2022-05-16 FORMS-845 update api-server, pdf-server container definitions and node memory allocation to `2048` for the hub-formio app in the dev environment
 - 2022-05-13 FORMS-845 upgraded ec2 instances from t3.medium to t3.large for the hub-formio app in the dev environment
   - this is to accommodate formio's recommendation on memory requirements
