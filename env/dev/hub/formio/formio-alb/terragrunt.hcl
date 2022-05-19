@@ -45,7 +45,7 @@ inputs = {
   access_logs_bucket_name = ""
 
   ssl_policy = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
-  certificate_arn = "arn:aws-us-gov:acm:us-gov-west-1:306881650362:certificate/e0ec66c4-945f-4fba-b2dc-81aca66200b0"
+  certificate_arn = "arn:aws-us-gov:acm:us-gov-west-1:306881650362:certificate/5d3010f4-fcb4-4380-b992-822822dd794c"
   load_balancing_algo = "least_outstanding_requests"
 
   health_path = "/health"

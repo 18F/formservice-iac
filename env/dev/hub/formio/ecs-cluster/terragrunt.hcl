@@ -29,6 +29,6 @@ include {
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
   name_prefix        = "${local.name_prefix}"
-  enable_container_insights = "disabled"
+  enable_container_insights = "enabled"
 
 }
