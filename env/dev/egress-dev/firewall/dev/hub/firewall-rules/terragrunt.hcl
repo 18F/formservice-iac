@@ -29,5 +29,5 @@ inputs = {
   rule_type = "ALLOWLIST"
   capacity = 100
   home_networks = ["${dependency.vpc.outputs.vpc_cidr_block}"]
-  filtered_domains = [ "portal-dev.forms.gov", "license.form.io", "secure.login.gov", ".raw.githubusercontent.com", ".identitysandbox.gov", "api.sam.gov", ".twistlock.com", "pro.formview.io", "amazon-ssm-packages-us-gov-west-1.s3.us-gov-east-1.amazonaws.com", "epa.submission-dev.forms.gov"]
+  filtered_domains = [ "portal-dev.forms.gov", "license.form.io", "secure.login.gov", ".raw.githubusercontent.com", ".identitysandbox.gov", "api.sam.gov", ".twistlock.com", "pro.formview.io", "amazon-ssm-packages-us-gov-west-1.s3.us-gov-east-1.amazonaws.com", "epa.submission-dev.forms.gov", "pdf-dev.service.forms.gov", ".amazonaws.com"]
 }

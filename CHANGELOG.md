@@ -1,13 +1,31 @@
 # Changelog
-All notable changes to this project will be documented in this file. Changes to the dev and test environment are documented in the **Unreleased** section; changes to the prod environment are documented with the updated version and date the change was deployed.
+All notable changes to this project will be documented in this file. Changes to the dev and test environments are documented in the **Unreleased** section; changes to the prod environment are documented with the updated version and date the change was deployed.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 ### Changed
+- 2022-05-18 FORMS-850 Replace documentdb tls certificates in dev, test, and prod
+  - we replaced the documentdb tls certificates in each environment
+- 2022-05-17 FORMS-845 updated submission-server, redis container definitions and node memory allocation to `2048` for the runtime-submission app in the dev environment
+- 2022-05-16 FORMS-845 updated api-server, pdf-server container definitions and node memory allocation to `2048` for the hub-formio app in the dev environment
+- 2022-05-13 FORMS-845 upgraded ec2 instances from t3.medium to t3.large for the hub-formio app in the dev environment
+  - this is to accommodate formio's recommendation on memory requirements
+- 2022-05-12 FORMS-832 deployed pdf-server:3.3.8 to the hub-formio app in the dev environment
+  - this image has fewer vulnerabilities than the previous version, pdf-server:3.3.6
 - 2022-05-05 FORMS-798 deployed ami-0fea79bafb589ff8e to all formio instances in the dev environment
   - this ami has 6 fewer known exploited vulnerabilities than the previous ami
+
+## [1.1.4] - 2022-05-13
+### Added
+- 2022-05-13 FORMS-820 deployed ssm-task-backup-docker-logs to the runtime-submission-epa app in the prod environment
+    - `env/prod/mgmt/ssm-task-backup-docker-logs` is an AWS Systems Manager maintenance window task that backs up runtime-submission-epa docker logs to s3
+    - `env/prod/mgmt/s3-bucket-epa-docker-logs` creates an s3 bucket to host the logfiles
+    - this is a stop-gap measure to collect logs from the running containers considering we removed the awslogs log driver on 2022-05-04 due to performance issues
+### Removed
+- 2022-05-13 FORMS-820 removed the elastic beanstalk environment variable `DEBUG=*` to turn off debug mode in the runtime-submission-epa app in the prod environment
+    - we believe this environment variable was generating significantly more docker logs, which caused the `docker logs` command to hang and cpu to spike
 
 ## [1.1.3] - 2022-05-05
 ### Added
