@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- 2022-05-18 FORMS-850 Replace documentdb tls certificates in dev, test, and prod
+- 2022-05-18 FORMS-242 deployed image nginx:1.21.6-alpine-nonroot-user to the hub-formio, runtime-submission, and runtime-submission-epa apps in the dev environment
+  - this image runs nginx:1.21.6-alpine as an unprivileged user to comply with CIS_Docker_v1.2.0 - 4.1
+- 2022-05-18 FORMS-850 replaced documentdb tls certificates in dev, test, and prod
   - we replaced the documentdb tls certificates in each environment
 - 2022-05-17 FORMS-845 updated submission-server, redis container definitions and node memory allocation to `2048` for the runtime-submission app in the dev environment
 - 2022-05-16 FORMS-845 updated api-server, pdf-server container definitions and node memory allocation to `2048` for the hub-formio app in the dev environment
