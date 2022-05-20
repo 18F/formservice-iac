@@ -48,7 +48,7 @@ inputs = {
   target_type               = "WindowTargetIds"
   target_ids                = [
     dependency.ssm-target-ecs-thurs-7am-et.outputs.id,
-    dependency.ssm-target-mgmt-server.outputs.id
+    dependency.ssm-target-mgmt-server-thurs-7am-et.outputs.id
   ]
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
