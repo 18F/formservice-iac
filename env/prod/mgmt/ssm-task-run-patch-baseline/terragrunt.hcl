@@ -28,6 +28,11 @@ dependency "ssm-target-ecs-thurs-7am-et" {
   config_path = "../ssm-target-ecs-thurs-7am-et"
 }
 
+// depends on maintenance window target
+dependency "ssm-target-mgmt-server" {
+  config_path = "../ssm-target-mgmt-server"
+}
+
 // pass variables into module
 inputs = {
   name                      = "run-patch-baseline"
@@ -41,7 +46,10 @@ inputs = {
   task_type                 = "RUN_COMMAND"
   window_id                 = dependency.ssm-window-thurs-7am-et.outputs.id
   target_type               = "WindowTargetIds"
-  target_ids                = [dependency.ssm-target-ecs-thurs-7am-et.outputs.id]
+  target_ids                = [
+    dependency.ssm-target-ecs-thurs-7am-et.outputs.id,
+    dependency.ssm-target-mgmt-server.outputs.id
+  ]
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
   parameters                = {

@@ -34,7 +34,10 @@ ssm-window-hourly
 │   │  a maintenance window target that targets the mgmt-server
 │   │  
 │   └───ssm-task-backup-mgmt-server
-│         a maintenance window task that backs up faas-prod-mgmt-server files to s3; FORMS-531
+│   │     a maintenance window task that backs up faas-prod-mgmt-server files to s3; FORMS-531
+│   │
+│   └───ssm-task-run-patch-baseline
+│         a maintenance window task that applies the default baseline to patch instances, then reboots the instances; FORMS-346
 │
 └───ssm-target-runtime-submission-epa-hourly
     │  a maintenance window target that targets runtime-submission-epa instances
