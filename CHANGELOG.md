@@ -6,18 +6,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- 2022-05-20 FORMS-845 downgraded ec2 instances from t3.large to t3.medium for the hub-formio and runtime-submission apps in the dev environment
 - 2022-05-18 FORMS-242 deployed image nginx:1.21.6-alpine-nonroot-user to the hub-formio, runtime-submission, and runtime-submission-epa apps in the dev environment
   - this image runs nginx:1.21.6-alpine as an unprivileged user to comply with CIS_Docker_v1.2.0 - 4.1
-- 2022-05-18 FORMS-850 replaced documentdb tls certificates in dev, test, and prod
-  - we replaced the documentdb tls certificates in each environment
+- 2022-05-18 FORMS-845 updated submission-server, redis container definitions and node memory allocation to `1024` for the runtime-submission app in the dev environment
+- 2022-05-18 FORMS-845 updated api-server, pdf-server container definitions and node memory allocation to `1024` for the hub-formio app in the dev environment
 - 2022-05-17 FORMS-845 updated submission-server, redis container definitions and node memory allocation to `2048` for the runtime-submission app in the dev environment
 - 2022-05-16 FORMS-845 updated api-server, pdf-server container definitions and node memory allocation to `2048` for the hub-formio app in the dev environment
-- 2022-05-13 FORMS-845 upgraded ec2 instances from t3.medium to t3.large for the hub-formio app in the dev environment
+- 2022-05-13 FORMS-845 upgraded ec2 instances from t3.medium to t3.large for the hub-formio and runtime-submission apps in the dev environment
   - this is to accommodate formio's recommendation on memory requirements
 - 2022-05-12 FORMS-832 deployed pdf-server:3.3.8 to the hub-formio app in the dev environment
   - this image has fewer vulnerabilities than the previous version, pdf-server:3.3.6
 - 2022-05-05 FORMS-798 deployed ami-0fea79bafb589ff8e to all formio instances in the dev environment
   - this ami has 6 fewer known exploited vulnerabilities than the previous ami
+
+## [1.1.5] - 2022-05-20
+### Added
+- 2022-05-20 FORMS-859 added ssm-task-run-patch-baseline to ssm-target-mgmt-server-thurs-7am-et in the dev and prod environments
+  - this runs the default patch baseline on the dev-mgmt-server and prod-mgmt-server each week on Thursdays at 7am ET
+- 2022-05-18 FORMS-850 replaced documentdb tls certificates in dev, test, and prod
+  - we replaced the documentdb tls certificates in each environment
 
 ## [1.1.4] - 2022-05-13
 ### Added
