@@ -6,19 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- 2022-05-25 FORMS-885 added `.cdn.form.io` to `faas-<env>-hub-allowed-domains` in dev, test, prod
+  - in the date/time form field, timezones are loaded from `cdn.form.io`
+  - when a user attempted to render a pdf in the dev environment, this cdn was blocked by our firewall and the pdf-server container crashed the application
+- 2022-05-25 FORMS-881 deployed formio-enterprise:7.3.3 to the hub-formio app and runtime-submission-epa apps in the dev environment
+- 2022-05-25 FORMS-832 redeployed pdf-server:3.3.8 to the hub-formio app in the dev environment
 - 2022-05-24 FORMS-854 deployed image nginx:1.21.6-alpine-nonroot-user to the hub-formio and runtime-submission apps in the test environment
 - 2022-05-18 FORMS-242 deployed image nginx:1.21.6-alpine-nonroot-user to the hub-formio, runtime-submission, and runtime-submission-epa apps in the dev environment
   - this image runs nginx:1.21.6-alpine as an unprivileged user to comply with CIS_Docker_v1.2.0 - 4.1
 - 2022-05-24 FORMS-861 deployed ami-0fea79bafb589ff8e to the hub-formio and runtime-submission apps in the test environment
 - 2022-05-05 FORMS-798 deployed ami-0fea79bafb589ff8e to all formio instances in the dev environment
   - this ami has 6 fewer known exploited vulnerabilities than the previous ami
-- 2022-05-20 FORMS-845 downgraded ec2 instances from t3.large to t3.medium for the hub-formio and runtime-submission apps in the dev environment
-- 2022-05-18 FORMS-845 updated submission-server, redis container definitions and node memory allocation to `1024` for the runtime-submission app in the dev environment
-- 2022-05-18 FORMS-845 updated api-server, pdf-server container definitions and node memory allocation to `1024` for the hub-formio app in the dev environment
-- 2022-05-17 FORMS-845 updated submission-server, redis container definitions and node memory allocation to `2048` for the runtime-submission app in the dev environment
-- 2022-05-16 FORMS-845 updated api-server, pdf-server container definitions and node memory allocation to `2048` for the hub-formio app in the dev environment
-- 2022-05-13 FORMS-845 upgraded ec2 instances from t3.medium to t3.large for the hub-formio and runtime-submission apps in the dev environment
-  - this is to accommodate formio's recommendation on memory requirements
 - 2022-05-12 FORMS-832 deployed pdf-server:3.3.8 to the hub-formio app in the dev environment
   - this image has fewer vulnerabilities than the previous version, pdf-server:3.3.6
 
