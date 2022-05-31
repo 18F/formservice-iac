@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- 2022-05-31 FORMS-883 deployed pdf-server:3.3.8 to the hub-formio app in the test environment
+- 2022-05-31 FORMS-884 deployed formio-enterprise:7.3.3 to hub-formio in test
 - 2022-05-25 FORMS-885 added `.cdn.form.io` to `faas-<env>-hub-allowed-domains` in dev, test, prod
   - in the date/time form field, timezones are loaded from `cdn.form.io`
   - when a user attempted to render a pdf in the dev environment, this cdn was blocked by our firewall and the pdf-server container crashed the application
