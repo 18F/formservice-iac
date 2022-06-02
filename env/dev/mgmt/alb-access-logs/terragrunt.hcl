@@ -24,5 +24,4 @@ inputs = {
   env               = "${local.env}"
   project           = "${local.project}"
   account_num       = "${local.account_num}"
-  expiration_days   = 180
 }
