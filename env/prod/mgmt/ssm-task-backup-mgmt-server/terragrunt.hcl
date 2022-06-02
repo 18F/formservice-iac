@@ -24,8 +24,8 @@ dependency "ssm-window-hourly" {
 }
 
 // depends on maintenance window target
-dependency "ssm-target-mgmt-server" {
-  config_path = "../ssm-target-mgmt-server"
+dependency "ssm-target-mgmt-server-hourly" {
+  config_path = "../ssm-target-mgmt-server-hourly"
 }
 
 // pass variables into module
@@ -41,7 +41,7 @@ inputs = {
   task_type                 = "RUN_COMMAND"
   window_id                 = dependency.ssm-window-hourly.outputs.id
   target_type               = "WindowTargetIds"
-  target_ids                = [dependency.ssm-target-mgmt-server.outputs.id]
+  target_ids                = [dependency.ssm-target-mgmt-server-hourly.outputs.id]
   timeout_seconds           = 600
   cloudwatch_output_enabled = true
   parameters                = {

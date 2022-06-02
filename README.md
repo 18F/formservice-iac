@@ -30,11 +30,14 @@ ssm-window-hourly
 │   └───ssm-task-reboot-if-docker-dead
 │         a maintenance window task that reboots the instance if the docker daemon is dead; FORMS-462
 │
-└───ssm-target-mgmt-server
+└───ssm-target-mgmt-server-hourly
 │   │  a maintenance window target that targets the mgmt-server
 │   │  
 │   └───ssm-task-backup-mgmt-server
-│         a maintenance window task that backs up faas-prod-mgmt-server files to s3; FORMS-531
+│   │     a maintenance window task that backs up faas-prod-mgmt-server files to s3; FORMS-531
+│   │
+│   └───ssm-task-run-patch-baseline
+│         a maintenance window task that applies the default baseline to patch instances, then reboots the instances; FORMS-346
 │
 └───ssm-target-runtime-submission-epa-hourly
     │  a maintenance window target that targets runtime-submission-epa instances
@@ -46,14 +49,21 @@ ssm-window-thurs-7am-et
 │ a maintenance window that runs Thursdays at 7am ET
 │  
 └───ssm-target-ecs-thurs-7am-et
-    │ a maintenance window target that targets all ec2 instances running formio applications
+│   │ a maintenance window target that targets all ec2 instances running formio applications
+│   │
+│   └───ssm-task-run-patch-baseline
+│   │     a maintenance window task that applies the default baseline to patch instances, then reboots the instances; FORMS-346
+│   │
+│   └───ssm-task-set-logfile-permissions
+│   │     a maintenance window task sets appropriate permissions on logfiles; FORMS-284
+│   │
+│   └───ssm-task-update-ecs-agent
+│         a maintenance window task that installs available updates for the ecs agent, then restarts docker and starts ecs; FORMS-142
+│
+└───ssm-target-mgmt-server-thurs-7am-et
+    │  a maintenance window target that targets the mgmt-server
     │
     └───ssm-task-run-patch-baseline
-    │     a maintenance window task that applies the default baseline to patch instances, then reboots the instances; FORMS-346
-    │
-    └───ssm-task-set-logfile-permissions
-    │     a maintenance window task sets appropriate permissions on logfiles; FORMS-284
-    │
-    └───ssm-task-update-ecs-agent
-          a maintenance window task that installs available updates for the ecs agent, then restarts docker and starts ecs; FORMS-142
+          a maintenance window task that applies the default baseline to patch instances, then reboots the instances; FORMS-859
+
 ```

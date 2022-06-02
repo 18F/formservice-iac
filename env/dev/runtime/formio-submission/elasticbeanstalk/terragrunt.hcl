@@ -43,13 +43,13 @@ inputs = {
   application_subnets = dependency.vpc.outputs.private_subnet_ids
   allowed_security_groups = dependency.vpc.outputs.default_security_group_id
   app_name = dependency.ebapp.outputs.app_name
-  version_name = "faas-dev-runtime-submission-app-v9.0.33-nginx-1.21.6-alpine"
+  version_name = "faas-dev-runtime-submission-app-v9.0.33-nginx-1.21.6-alpine-nonroot-user"
 
   ssl_cert = "arn:aws-us-gov:acm:us-gov-west-1:306881650362:certificate/dfe30a62-2de3-427c-9f9d-f00d04cbc666"
 
   beanstalk_ec2_role = dependency.acct-security.outputs.beanstalk_ec2_role_arn
 
-  instance_type = "t3.large"
+  instance_type = "t3.medium"
   autoscale_min = 3
   autoscale_max = 5
 
