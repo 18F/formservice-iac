@@ -33,11 +33,7 @@ dependency "vpc"  { config_path = "../../vpc" }
 inputs = {
   name_prefix = "${local.name_prefix}"
 
-  vpc_id = dependency.vpc.outputs.vpc_id
-
   account_num = "${local.account_num}"
   region = "${local.region}"
-
-  formio_alb_allowed_cidr_blocks     = "0.0.0.0/0"
 
 }

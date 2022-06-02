@@ -28,7 +28,6 @@ dependency "vpc"  { config_path = "../../../../vpc" }
 dependency "alb"  { config_path = "../../../formio-alb" }
 dependency "ecs"  { config_path = "../../../ecs-cluster" }
 dependency "efs"  { config_path = "../../../efs" }
-dependency "formio-security" { config_path = "../../../security" }
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
@@ -40,7 +39,7 @@ inputs = {
   enterprise_task_cpu         = 1024
   enterprise_task_memory      = 3072
   enterprise_image            = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/enterprise:7.3.2"
-  nginx_image                 = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/nginx:1.21.6-alpine"
+  nginx_image                 = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/nginx:1.21.6-alpine-nonroot-user"
   tw_image                    = "registry-auth.twistlock.com/tw_luffe4fptzg0s6epk8cem9vzuxcqrzib/twistlock/defender:defender_22_01_882"
   enterpise_ephemeral_storage = 25
 
@@ -67,7 +66,7 @@ inputs = {
   health_timeout              = 5
   health_interval             = 30
   formio_alb_listener_arn     = dependency.alb.outputs.faas_formio_alb_listener
-  formio_alb_sg_id            = dependency.formio-security.outputs.formio_alb_sg
+  formio_alb_sg_id            = dependency.alb.outputs.formio_alb_sg
   host_header_value           = "dev"
 
 
@@ -80,7 +79,6 @@ inputs = {
   force_new_deployment              = true
   health_check_grace_period_seconds = 120
   service_private_subnets           = dependency.vpc.outputs.private_subnet_ids
-  service_security_group            = [dependency.formio-security.outputs.formio_ecs_sg]
   service_autoscaling_max           = 8
   service_autoscaling_min           = 2
   scaling_metric_target_value       = 1250
