@@ -23,16 +23,18 @@ include {
 
 # dependencies
 dependencies      { paths = ["../../vpc"] }
-dependency "vpc"  { config_path = "../../vpc" }
+dependency "this_vpc"  { config_path = "../../vpc" }
+dependency "mgmt_vpc"  { config_path = "../../../mgmt/vpc" }
 
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
   name_prefix        = "${local.name_prefix}"
   creation_token     = "${local.name_prefix}"
-  private_subnet_ids = dependency.vpc.outputs.private_subnet_ids
+  vpc_id             = dependency.this_vpc.outputs.vpc_id
+  private_subnet_ids = dependency.this_vpc.outputs.private_subnet_ids
   kms_key_id         = "" 
-  allowed_security_groups = ["sg-002096ab9c07fb5b4"]
+  efs_allowed_subnet_cidrs = concat(dependency.this_vpc.outputs.private_subnets_cidr_blocks, dependency.mgmt_vpc.outputs.private_subnets_cidr_blocks)
   #dependency.security.outputs.documentdb_key_arn
 
 
