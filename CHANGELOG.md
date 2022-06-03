@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- 2022-06-01 FORMS-893 deployed redis:6.2.7-alpine3.16 to runtime-submission in dev
+
+## [1.1.6] - 2022-06-03
+### Changed
+- 2022-06-03 FORMS-892 deployed formio-enterprise:7.3.3 to hub-formio and runtime-submission-epa apps in prod
+- 2022-06-03 FORMS-891 deployed pdf-server:3.3.8 to the hub-formio and runtime-submission-epa apps in the prod environment
+- 2022-06-03 FORMS-863 deployed nginx:1.21.6-alpine-nonroot-user to hub-formio and runtime-submission apps in prod environment
+- 2022-06-03 FORMS-862 deployed ami-0fea79bafb589ff8e to all formio instances in prod environment
 - 2022-05-31 FORMS-883 deployed pdf-server:3.3.8 to the hub-formio app in the test environment
 - 2022-05-31 FORMS-884 deployed formio-enterprise:7.3.3 to hub-formio in test
 - 2022-05-25 FORMS-885 added `.cdn.form.io` to `faas-<env>-hub-allowed-domains` in dev, test, prod
@@ -17,10 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 2022-05-18 FORMS-242 deployed image nginx:1.21.6-alpine-nonroot-user to the hub-formio, runtime-submission, and runtime-submission-epa apps in the dev environment
   - this image runs nginx:1.21.6-alpine as an unprivileged user to comply with CIS_Docker_v1.2.0 - 4.1
 - 2022-05-24 FORMS-861 deployed ami-0fea79bafb589ff8e to the hub-formio and runtime-submission apps in the test environment
-- 2022-05-05 FORMS-798 deployed ami-0fea79bafb589ff8e to all formio instances in the dev environment
-  - this ami has 6 fewer known exploited vulnerabilities than the previous ami
 - 2022-05-12 FORMS-832 deployed pdf-server:3.3.8 to the hub-formio app in the dev environment
   - this image has fewer vulnerabilities than the previous version, pdf-server:3.3.6
+- 2022-05-05 FORMS-798 deployed ami-0fea79bafb589ff8e to all formio instances in the dev environment
+  - this ami has 6 fewer known exploited vulnerabilities than the previous ami
 
 ## [1.1.5] - 2022-05-20
 ### Added
