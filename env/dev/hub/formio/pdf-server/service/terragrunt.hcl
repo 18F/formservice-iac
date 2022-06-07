@@ -23,11 +23,12 @@ include {
 }
 
 # dependencies
-dependencies      { paths = ["../../ecs-cluster", "../../efs", "../../formio-alb", "../../../vpc"] }
+dependencies      { paths = ["../../ecs-cluster", "../../efs", "../../formio-alb", "../../../vpc", "../../../../../prod/mgmt/alerts-sns-topic"] }
 dependency "vpc"  { config_path = "../../../vpc" }
 dependency "alb"  { config_path = "../../formio-alb" }
 dependency "ecs"  { config_path = "../../ecs-cluster" }
 dependency "efs"  { config_path = "../../efs" }
+dependency "sns"  { config_path = "../../../../../prod/mgmt/alerts-sns-topic" }
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
@@ -87,7 +88,7 @@ inputs = {
   scaling_metric_scale_out_cooldown = 300
   alb_resource_label                = dependency.alb.outputs.faas_formio_autoscaling_prefix
 
-  #dependency.security.outputs.documentdb_key_arn
-
-
+  alarm_threshold                   = 2
+  alarm_actions_enabled             = true
+  alarm_sns_topic                   = dependency.sns.outputs.sns_topic_arn
 }
