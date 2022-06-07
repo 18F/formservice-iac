@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- 2022-06-07 FORMS-903 deployed redis:6.2.7-alpine3.16 to runtime-submission in the test environment
+- 2022-06-07 FORMS-902 deployed nginx:1.22.0-alpine-nonroot-user to all formio apps in test environment
+- 2022-06-07 FORMS-901 deployed ami-04372bb35fbf4e9d3 to all formio instances in the test environment
+- 2022-06-03 FORMS-898 deployed ami-04372bb35fbf4e9d3 to all formio instances in the dev environment
+- 2022-06-03 FORMS-894 deployed nginx:1.22.0-alpine-nonroot-user to all formio apps in dev environment
 - 2022-06-01 FORMS-893 deployed redis:6.2.7-alpine3.16 to runtime-submission in dev
 
 ## [1.1.6] - 2022-06-03
