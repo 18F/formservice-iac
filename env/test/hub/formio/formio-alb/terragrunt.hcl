@@ -45,7 +45,7 @@ inputs = {
   access_logs_bucket_name = dependency.alb-logs.outputs.bucket_name
 
   ssl_policy = "ELBSecurityPolicy-FS-1-2-Res-2020-10"
-  certificate_arn = "arn:aws-us-gov:acm:us-gov-west-1:306881650362:certificate/5d3010f4-fcb4-4380-b992-822822dd794c"
+  certificate_arn = "arn:aws-us-gov:acm:us-gov-west-1:306851503416:certificate/5bb968f2-c8a4-4a7d-b877-de181ac1481d"
   load_balancing_algo = "least_outstanding_requests"
 
   health_path = "/health"
