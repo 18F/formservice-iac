@@ -16,6 +16,11 @@ terraform {
   source = "git::https://github.com/18F/formservice-iac-modules.git//sns-topic"
 }
 
+# Include all settings from the root terragrunt.hcl file
+include {
+  path = find_in_parent_folders()
+}
+
 inputs = {
   name_prefix      = "${local.name_prefix}-alerts"
   account_num      = "${local.account_num}"
