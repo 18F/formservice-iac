@@ -36,11 +36,11 @@ inputs = {
   task_secrets           = "faas-dev-hub-formio-enterprise-secrets"
   aws_region             = "us-gov-west-1"
   log_stream_prefix      = "enterprise"
-  
+
   enterprise_task_cpu         = 1024
   enterprise_task_memory      = 3072
-  enterprise_image            = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/enterprise:7.3.2"
-  nginx_image                 = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/nginx:1.21.6-alpine-nonroot-user"
+  enterprise_image            = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/enterprise:7.3.3"
+  nginx_image                 = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/nginx:1.22.0-alpine-nonroot-user"
   tw_image                    = "registry-auth.twistlock.com/tw_luffe4fptzg0s6epk8cem9vzuxcqrzib/twistlock/defender:defender_22_01_882"
   enterpise_ephemeral_storage = 25
 
