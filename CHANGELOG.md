@@ -5,7 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.1.7] - 2022-06-09
 ### Changed
+- 2022-06-09 FORMS-915 deployed nginx:1.22.0-alpine-nonroot-user to all formio apps in prod environment
+- 2022-06-09 FORMS-916 deployed redis:6.2.7-alpine3.16 to runtime-submission in the prod environment
+- 2022-06-09 FORMS-914 deployed ami-04372bb35fbf4e9d3 to all formio instances in the prod environment
 - 2022-06-07 FORMS-903 deployed redis:6.2.7-alpine3.16 to runtime-submission in the test environment
 - 2022-06-07 FORMS-902 deployed nginx:1.22.0-alpine-nonroot-user to all formio apps in test environment
 - 2022-06-07 FORMS-901 deployed ami-04372bb35fbf4e9d3 to all formio instances in the test environment
