@@ -14,7 +14,6 @@ Forms Service is a shared platform-as-a-service web product built and maintained
     - domain: portal.forms.gov
 - electronic signature portal for agency staff to securely send ad-hoc documents for signature
 
-
 ## Infrastructure Deployment
 This section describes how to deploy the cloud infrastructure that runs the Forms Service application.
 
@@ -46,7 +45,50 @@ This section describes how to deploy the cloud infrastructure that runs the Form
 to do
 
 ### Deploy updated images to the existing cloud infrastructure
-to do
+1. Update the appropriate image tag in the following file `env/<environment>/hub/formio/tenants/<tenant>/service/terragrunt.hcl`
+    ```
+    inputs = {
+      enterprise_image = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/enterprise:7.3.2"
+    }
+    ```
+1. Commit and push the update to the github repository
+1. Connect to the mgmt-server
+1. Pull the update from github to the repository on the mgmt-server
+1. Navigate to the appropriate directory: `~/terraform/formservice-iac/env/<environment>/hub/formio/tenants/<tenant>/service`
+1. Export the appropriate TERRAGRUNT_IAM_ROLE
+1. Run `terragrunt plan`
+1. Review the plan output
+    1. Verify the plan output matches the expected changes
+    1. Match the Jira ticket, the Google Calendar Invite, and the terragrunt plan output together - all of the following details should match:
+        - Date and time of deployment
+        - Target environment
+        - Image version
+1. Log in to the AWS Console to review the infrastructure before starting the deployment
+    1. Navigate to `AWS Console > EC2 > Target Groups`
+        - Before running `terragrunt apply`, we expect there to be two healthy registered targets for the target group
+            - `faas-<environment>-hub-<tenant>-formio-tg`
+    1. In another tab, navigate to `AWS Console > ECS > Clusters`
+    1. Click on the appropriate cluster
+        - `faas-<environment>-hub-formio-ecs-cluster`
+    1. Click on the appropriate service
+        - `faas-<environment>-hub-<tenant>-formio-service`
+    1. Click on the **Tasks** tab
+        - Before running `terragrunt apply`, we expect there to be at least two running tasks for the service
+1. Run `terragrunt apply` if the output of the plan matches the expected changes
+    - When working with terragrunt/terraform, review the output of `terragrunt apply` before approving the apply with `yes`
+1. Verify the deployment completes successfully
+    1. Navigate to `AWS Console > EC2 > Target Groups`
+        - After running `terragrunt apply`, we expect there to be two healthy registered targets for the target group and another two registered targets will begin provisioning
+        - Eventually, we expect the original two healthy registered targets to drain and traffic will be routed to the two new healthy registered targets
+    1. In another tab, navigate to `AWS Console > ECS > Clusters`
+    1. Click on the appropriate cluster
+        - `faas-<environment>-hub-formio-ecs-cluster`
+    1. Click on the appropriate service
+        - `faas-<environment>-hub-<tenant>-formio-service`
+    1. Click on the **Tasks** tab
+        - After running `terragrunt apply`, we expect there to be at least ***four*** running tasks for the service
+        - Eventually, we expect the original two running tasks to be marked for termination
+1. Run smoke tests on the application
 
 ### Deploy bastion host mgmt-server
 We use an EC2 instance as a bastion host for miscellaneous management of the cloud infrastructure.
