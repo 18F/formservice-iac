@@ -44,7 +44,9 @@ This section describes how to deploy the cloud infrastructure that runs the Form
 ### Deploy new cloud infrastructure
 to do
 
-### Deploy updated images to the existing cloud infrastructure
+### Deploy new images to the existing cloud infrastructure in Forms Service v1.2
+This section describes how to deploy the latest image to Fargate Elastic Container Service (ECS) in Forms Service v1.2.
+
 1. Update the appropriate image tag in the following file `env/<environment>/hub/formio/tenants/<tenant>/service/terragrunt.hcl`
     ```
     inputs = {
@@ -52,8 +54,13 @@ to do
     }
     ```
 1. Commit and push the update to the github repository
-1. Connect to the mgmt-server
+      - `git add env/<environment>/hub/formio/tenants/<tenant>/service/terragrunt.hcl`
+      - `git commit -m "<Commit message>"`
+      - `git push`
+1. Connect to the mgmt-server via AWS Session Manager
 1. Pull the update from github to the repository on the mgmt-server
+      - `cd ~/terraform/formservice-iac/`
+      - `git pull`
 1. Navigate to the appropriate directory: `~/terraform/formservice-iac/env/<environment>/hub/formio/tenants/<tenant>/service`
 1. Export the appropriate TERRAGRUNT_IAM_ROLE
 1. Run `terragrunt plan`
