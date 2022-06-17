@@ -36,14 +36,14 @@ inputs = {
   task_secrets           = "faas-dev-hub-formio-pdf-secrets"
   aws_region             = "us-gov-west-1"
   log_stream_prefix      = "pdf"
-  
+
   pdf_task_cpu          = 1024
   pdf_task_memory       = 3072
-  pdf_image             = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/pdf-server:3.3.8"
-  nginx_image           = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/nginx:1.21.6-alpine-nonroot-user"
+  pdf_image             = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/pdf-server:3.3.9"
+  nginx_image           = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/nginx:1.22.0-alpine-nonroot-user"
   tw_image              = "registry-auth.twistlock.com/tw_luffe4fptzg0s6epk8cem9vzuxcqrzib/twistlock/defender:defender_22_01_882"
   pdf_ephemeral_storage = 25
-  
+
   efs_file_system_id              = dependency.efs.outputs.fs_id
 
   container_mount_path            = "/src/certs"
@@ -57,7 +57,7 @@ inputs = {
   nginx_certs_volume_name         = "nginx-certs"
   nginx_certs_volume_path         = "/src/certs"
   nginx_certs_efs_access_point_id = dependency.efs.outputs.nginx_certs_fsap_id
- 
+
 
   vpc_id                      = dependency.vpc.outputs.vpc_id
   service_discovery_namespace = "formio-${local.env}.local"
