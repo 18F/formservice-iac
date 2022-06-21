@@ -72,8 +72,10 @@ This section describes how to deploy the latest image to Fargate Elastic Contain
         - Image version
 1. Log in to the AWS Console to review the infrastructure before starting the deployment
     1. Navigate to `AWS Console > EC2 > Target Groups`
-        - Before running `terragrunt apply`, we expect there to be two healthy registered targets for the target group
+        - Select the relevant target group
             - `faas-<environment>-hub-<tenant>-formio-tg`
+        - Click the **Targets** tab
+        - Before running `terragrunt apply`, we expect there to be two healthy registered targets for the target group
     1. In another tab, navigate to `AWS Console > ECS > Clusters`
     1. Click on the appropriate cluster
         - `faas-<environment>-hub-formio-ecs-cluster`
