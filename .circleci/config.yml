@@ -65,9 +65,6 @@ jobs:
           name: Run terragrunt plan
           command: |
 
-            # use bash
-            bash
-
             # get current git commit
             SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
 
@@ -96,22 +93,22 @@ jobs:
 
               echo 3
 
-              # # if any our deployment files were commited, change to that directory and run terragrunt plan
-              # if [[ " ${DEPLOYMENT_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
-              #
-              #   echo "in if statement"
-              #
-              #   # # get directory of changed file
-              #   # DIRECTORY=$(dirname "${CHANGED_FILE}")
-              #   #
-              #   # # change into that directory
-              #   # cd $DIRECTORY
-              #   #
-              #   # # run terragrunt plan
-              #   # terragrunt plan
-              # else
-              #   echo "not in if statement"
-              # fi
+              # if any our deployment files were commited, change to that directory and run terragrunt plan
+              if [[ " ${DEPLOYMENT_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
+
+                echo "in if statement"
+
+                # # get directory of changed file
+                # DIRECTORY=$(dirname "${CHANGED_FILE}")
+                #
+                # # change into that directory
+                # cd $DIRECTORY
+                #
+                # # run terragrunt plan
+                # terragrunt plan
+              else
+                echo "not in if statement"
+              fi
             done
 workflows:
   docker:
