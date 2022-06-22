@@ -52,13 +52,9 @@ jobs:
       - run:
           name: Run terragrunt plan
           command: |
-            #!/bin/bash
-
-            # use bash
-            source $BASH_ENV
 
             # install dependencies
-            apk add git
+            apk add git bash
 
             # install terraform
             wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip && unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod uo+x /usr/bin/terraform
