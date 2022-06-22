@@ -52,6 +52,9 @@ jobs:
       - run:
           name: Get git
           command: |
+            # install dependencies
+            apk add git
+            
             # get current git commit
             echo $CIRCLE_SHA1
             SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
