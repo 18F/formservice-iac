@@ -55,6 +55,16 @@ jobs:
             # install dependencies
             apk add git
 
+            # install terraform
+            wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_arm64.zip && unzip terraform.zip && rm terraform.zip
+            echo $PATH
+            mv /terraform /usr/bin/terraform
+            terraform version
+
+            # install terragrunt
+            wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.8/terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt && chmod uo+x /usr/bin/terragrunt
+            terragrunt version
+
             # get current git commit
             SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
 
