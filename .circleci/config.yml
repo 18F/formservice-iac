@@ -63,4 +63,7 @@ workflows:
   docker:
     jobs:
       # - push-image
-      # - apply-terragrunt
+      - apply-terragrunt
+          filters:
+            branches:
+              only: circleci
