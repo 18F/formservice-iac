@@ -79,8 +79,17 @@ jobs:
 
               echo "in for loop"
 
+              DEPLOYMENT_FILES=(
+                env/dev/hub/formio/tenants/epa/service/terragrunt.hcl
+                env/dev/hub/formio/tenants/irs/service/terragrunt.hcl
+                env/dev/hub/formio/tenants/portal/service/terragrunt.hcl
+                env/dev/hub/formio/pdf-server/service/terragrunt.hcl
+              )
+
               # if any our deployment files were commited, change to that directory and run terragrunt plan
-              if [[ " ${CHANGED_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
+              if [[ " ${DEPLOYMENT_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
+
+                echo "in if statement"
 
                 # get directory of changed file
                 DIRECTORY=$(dirname "${CHANGED_FILE}")
@@ -90,6 +99,8 @@ jobs:
 
                 # run terragrunt plan
                 terragrunt plan
+              else
+                echo "not in if statement"
               fi
             done
 workflows:
