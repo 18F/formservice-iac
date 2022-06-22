@@ -58,7 +58,7 @@ jobs:
             # install terraform
             wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_arm64.zip && unzip terraform.zip && rm terraform.zip
             echo $PATH
-            mv /terraform /usr/bin/terraform
+            mv terraform /usr/bin/terraform
             terraform version
 
             # install terragrunt
