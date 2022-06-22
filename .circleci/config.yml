@@ -44,13 +44,13 @@ jobs:
 
             # run docker.sh
             ./docker.sh
-  apply-terragrunt:
+  terragrunt-plan:
     docker:
       - image: alpine:3.16
     steps:
       - checkout
       - run:
-          name: Get git
+          name: terragrunt plan
           command: |
             # install dependencies
             apk add git
@@ -59,13 +59,15 @@ jobs:
             wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip && unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod uo+x /usr/bin/terraform
 
             # install terragrunt
-            wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.8/terragrunt_linux_amd64
-            echo "terragrunt downloaded"
-            mv terragrunt_linux_amd64 /usr/bin/terragrunt
-            echo "terragrunt moved"
-            chmod uo+x /usr/bin/terragrunt
-            echo "terragrunt permissions changed"
-            terragrunt version
+            wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.8/terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt && chmod uo+x /usr/bin/terragrunt
+
+            # verify terragrunt
+            pwd
+            ls -l
+            echo 1
+            ls -l ~
+            echo 2
+            ls -l /
 
             # get current git commit
             SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
@@ -80,7 +82,7 @@ workflows:
   docker:
     jobs:
       # - push-image
-      - apply-terragrunt:
+      - terragrunt-plan:
           filters:
             branches:
               only: circleci
