@@ -50,9 +50,15 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Hello World
+          name: Get git
           command: |
-            echo "Hello, world!"
+            # get current git commit
+            echo $CIRCLE_SHA1
+            SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
+            echo $SHORT_GIT_HASH
+
+            # show all files changed with this current git commit
+            git diff-tree --no-commit-id --name-only -r $SHORT_GIT_HASH
 workflows:
   docker:
     jobs:
