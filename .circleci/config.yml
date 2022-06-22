@@ -1,5 +1,4 @@
 version: 2.1
-
 jobs:
   push-image:
     docker:
@@ -46,10 +45,12 @@ jobs:
             # run docker.sh
             ./docker.sh
   apply-terragrunt:
+    docker:
+      - image: alpine:3.16
     steps:
       - checkout
       - run:
-          name: "Hello world"
+          name: Hello World
           command: |
             echo "Hello, world!"
 workflows:
