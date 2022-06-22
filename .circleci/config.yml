@@ -64,6 +64,10 @@ jobs:
       - run:
           name: Run terragrunt plan
           command: |
+
+            # use bash
+            bash
+
             # get current git commit
             SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
 
