@@ -50,7 +50,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Run terragrunt plan
+          name: Install dependencies
           command: |
 
             # install dependencies
@@ -61,7 +61,9 @@ jobs:
 
             # install terragrunt
             wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.8/terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt && chmod uo+x /usr/bin/terragrunt
-
+      - run:
+          name: Run terragrunt plan
+          command: |
             # get current git commit
             SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
 
