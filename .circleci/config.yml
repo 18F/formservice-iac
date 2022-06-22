@@ -56,13 +56,15 @@ jobs:
             apk add git
 
             # install terraform
-            wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip && unzip terraform.zip && rm terraform.zip
-            echo $PATH
-            mv terraform /usr/bin/terraform
-            terraform version
+            wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip && unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod uo+x /usr/bin/terraform
 
             # install terragrunt
-            wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.8/terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt && chmod uo+x /usr/bin/terragrunt
+            wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.8/terragrunt_linux_amd64
+            echo "terragrunt downloaded"
+            mv terragrunt_linux_amd64 /usr/bin/terragrunt
+            echo "terragrunt moved"
+            chmod uo+x /usr/bin/terragrunt
+            echo "terragrunt permissions changed"
             terragrunt version
 
             # get current git commit
