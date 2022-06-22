@@ -54,14 +54,16 @@ jobs:
           command: |
             # install dependencies
             apk add git
-            
+
             # get current git commit
-            echo $CIRCLE_SHA1
             SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
-            echo $SHORT_GIT_HASH
 
             # show all files changed with this current git commit
-            git diff-tree --no-commit-id --name-only -r $SHORT_GIT_HASH
+            CHANGED_FILES=git diff-tree --no-commit-id --name-only -r $SHORT_GIT_HASH
+
+            for CHANGED_FILE in $CHANGED_FILES; do
+              echo $CHANGED_FILE
+            done
 workflows:
   docker:
     jobs:
