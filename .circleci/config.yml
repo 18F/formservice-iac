@@ -59,7 +59,7 @@ jobs:
             SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
 
             # show all files changed with this current git commit
-            CHANGED_FILES=git diff-tree --no-commit-id --name-only -r $SHORT_GIT_HASH
+            CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r $SHORT_GIT_HASH)
 
             for CHANGED_FILE in $CHANGED_FILES; do
               echo $CHANGED_FILE
