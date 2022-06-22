@@ -64,6 +64,6 @@ workflows:
     jobs:
       # - push-image
       - apply-terragrunt
-          filters:
+          filters
             branches:
               only: circleci
