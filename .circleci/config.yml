@@ -119,10 +119,10 @@ jobs:
                 echo "not in if statement"
               fi
             done
-        - persist_to_workspace:
-            root: workspace
-            paths:
-              - plan.tf
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - plan.tf
   terragrunt-apply:
     docker:
       - image: ubuntu:latest
