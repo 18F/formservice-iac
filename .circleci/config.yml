@@ -61,9 +61,13 @@ jobs:
 
             # install terragrunt
             wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.8/terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt && chmod uo+x /usr/bin/terragrunt
+
       - run:
           name: Run terragrunt plan
           command: |
+
+            # print environment variables
+            env
 
             # get current git commit
             SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
@@ -97,12 +101,37 @@ jobs:
                 # change into that directory
                 cd $DIRECTORY
 
+                # list present working directory
+                pwd
+
+                # export terragrunt role
+                export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning"
+
+                # make directory for terragrunt plan
+                mkdir -p /tmp/workspace/
+
                 # run terragrunt plan
-                terragrunt plan
+                terragrunt plan -out /tmp/workspace/plan.tf
+
+                cat /tmp/workspace/plan.tf
+
               else
                 echo "not in if statement"
               fi
             done
+        - persist_to_workspace:
+            root: workspace
+            paths:
+              - plan.tf
+  terragrunt-apply:
+    docker:
+      - image: ubuntu:latest
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: |
+          cat /tmp/workspace/plan.tf
+
 workflows:
   docker:
     jobs:
@@ -110,4 +139,11 @@ workflows:
       - terragrunt-plan:
           filters:
             branches:
-              only: circleci
+              only: circleci # only run circleci pipeline on the circleci github branch
+      - terragrunt-apply:
+          type: approval # this sets the job to a status of "On Hold" and requires manual approval in the CircleCI web application
+          requires:
+            - terragrunt plan # only run the job terragrunt-apply if the job terragrunt-plan suceeds
+          filters:
+            branches:
+              only: circleci # only run circleci pipeline on the circleci github branch
