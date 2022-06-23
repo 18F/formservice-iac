@@ -143,7 +143,7 @@ workflows:
       - terragrunt-apply:
           type: approval # this sets the job to a status of "On Hold" and requires manual approval in the CircleCI web application
           requires:
-            - terragrunt plan # only run the job terragrunt-apply if the job terragrunt-plan suceeds
+            - terragrunt-plan # only run the job terragrunt-apply if the job terragrunt-plan suceeds
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
