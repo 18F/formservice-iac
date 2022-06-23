@@ -73,7 +73,7 @@ jobs:
 
             echo $CHANGED_FILES
 
-
+            ARRAY=(one two three)
 
 
             echo $DEPLOYMENT_FILES
