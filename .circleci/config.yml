@@ -73,7 +73,7 @@ jobs:
 
             echo $CHANGED_FILES
 
-            DEPLOYMENT_FILES=(1 2 3)
+
 
 
             echo $DEPLOYMENT_FILES
