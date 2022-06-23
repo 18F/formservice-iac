@@ -90,6 +90,8 @@ jobs:
               # if any our deployment files were commited, change to that directory and run terragrunt plan
               if [[ " ${DEPLOYMENT_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
 
+                echo "in if statement"
+
                 # # get directory of changed file
                 # DIRECTORY=$(dirname "${CHANGED_FILE}")
                 #
