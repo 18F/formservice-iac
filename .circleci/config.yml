@@ -54,13 +54,13 @@ jobs:
           command: |
 
             # install dependencies
-            apt update && apt install -y git wget
+            apt update && apt install -y git wget curl
 
             # # install terraform for alpine
             # wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip && unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod uo+x /usr/bin/terraform
 
             # install terraform for ubuntu
-            curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+            curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
             apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
             apt-get update && sudo apt-get install terraform
 
