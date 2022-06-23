@@ -66,9 +66,6 @@ jobs:
           name: Run terragrunt plan
           command: |
 
-            # print environment variables
-            env
-
             # get current git commit
             SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
 
@@ -107,8 +104,9 @@ jobs:
                 # export terragrunt role
                 export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning"
 
-                # make directory for terragrunt plan
+                # make directory and file for terragrunt plan
                 mkdir -p /tmp/workspace/
+                touch /tmp/workspace/plan.tf
 
                 # run terragrunt plan
                 terragrunt plan -out /tmp/workspace/plan.tf
