@@ -82,7 +82,7 @@ jobs:
             # for each changed file in this current commit
             for CHANGED_FILE in $CHANGED_FILES; do
 
-              echo $DEPLOYMENT_FILES[*]
+              echo "${DEPLOYMENT_FILES[*]}"
 
               echo $CHANGED_FILE
 
