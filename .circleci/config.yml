@@ -80,26 +80,28 @@ jobs:
               env/dev/hub/formio/pdf-server/service/terragrunt.hcl
             )
 
-            echo $DEPLOYMENT_FILES
+            # for each changed file in this current commit
+            for CHANGED_FILE in $CHANGED_FILES; do
 
-            # # for each changed file in this current commit
-            # for CHANGED_FILE in $CHANGED_FILES; do
-            #
-            #   # if any our deployment files were commited, change to that directory and run terragrunt plan
-            #   if [[ " ${DEPLOYMENT_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
-            #
-            #     # # get directory of changed file
-            #     # DIRECTORY=$(dirname "${CHANGED_FILE}")
-            #     #
-            #     # # change into that directory
-            #     # cd $DIRECTORY
-            #     #
-            #     # # run terragrunt plan
-            #     # terragrunt plan
-            #   else
-            #     echo "not in if statement"
-            #   fi
-            # done
+              echo $DEPLOYMENT_FILES[@]
+
+              echo $CHANGED_FILE
+
+              # if any our deployment files were commited, change to that directory and run terragrunt plan
+              if [[ " ${DEPLOYMENT_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
+
+                # # get directory of changed file
+                # DIRECTORY=$(dirname "${CHANGED_FILE}")
+                #
+                # # change into that directory
+                # cd $DIRECTORY
+                #
+                # # run terragrunt plan
+                # terragrunt plan
+              else
+                echo "not in if statement"
+              fi
+            done
 workflows:
   docker:
     jobs:
