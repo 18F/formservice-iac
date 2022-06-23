@@ -80,6 +80,9 @@ jobs:
               env/dev/hub/formio/pdf-server/service/terragrunt.hcl
             )
 
+            # list present working directory
+            pwd
+
             # make directory and file for terragrunt plan
             mkdir -p /tmp/workspace/
             touch /tmp/workspace/plan.tf
@@ -102,9 +105,6 @@ jobs:
                 # change into that directory
                 cd $DIRECTORY
 
-                # list present working directory
-                pwd
-
                 # export terragrunt role
                 export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning"
 
@@ -122,7 +122,7 @@ jobs:
               fi
             done
       - persist_to_workspace:
-          root: workspace
+          root: /tmp/workspace
           paths:
             - plan.tf
   terragrunt-apply:
