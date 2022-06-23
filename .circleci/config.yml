@@ -54,12 +54,12 @@ jobs:
           command: |
 
             # install dependencies
-            apt update && apt install -y git wget curl
+            apt update && apt install -y git wget unzip
 
             # install terraform
             wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip && unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod uo+x /usr/bin/terraform
             terraform version
-            
+
 
             # # install terraform for ubuntu
             # curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
