@@ -71,8 +71,7 @@ jobs:
             # show all files changed with this current git commit
             CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r $SHORT_GIT_HASH)
 
-            echo $CHANGED_FILES
-
+            # list our deployment files
             DEPLOYMENT_FILES=(
               env/dev/hub/formio/tenants/epa/service/terragrunt.hcl
               env/dev/hub/formio/tenants/irs/service/terragrunt.hcl
@@ -83,7 +82,7 @@ jobs:
             # for each changed file in this current commit
             for CHANGED_FILE in $CHANGED_FILES; do
 
-              echo $DEPLOYMENT_FILES[@]
+              echo $DEPLOYMENT_FILES[*]
 
               echo $CHANGED_FILE
 
