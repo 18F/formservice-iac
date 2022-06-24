@@ -118,21 +118,13 @@ jobs:
                 # create aws profile
                 mkdir -p /root/.aws/
                 touch /root/.aws/config
-                echo -e "[profile dev]\nregion = us-gov-west-1\nrole_arn = arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning\n" >> /root/.aws/config
-
-                # export aws profile
-                export AWS_PROFILE=dev
+                echo -e "[profile dev]\nrole_arn = arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform\nsource_profile = default" >> /root/.aws/config
 
                 # troubleshoot aws authentication
                 aws configure list
 
                 # verify aws login
-                aws iam get-login-profile --user-name circleci-apply-terraform
-
-                # export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning"
-
-                # list current environment variables
-                env
+                aws iam get-login-profile --user-name circleci-apply-terraform --profile dev
 
                 # make directory and file for terragrunt plan
                 mkdir -p /tmp/workspace/
