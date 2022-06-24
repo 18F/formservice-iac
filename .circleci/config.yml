@@ -113,7 +113,7 @@ jobs:
                 pwd
 
                 # verify aws login
-                aws iam get-login-profile circleci-apply-terraform
+                aws iam get-login-profile --user-name fcircleci-apply-terraform
 
                 # create aws profile
                 echo -e "[profile dev]\nregion = us-gov-west-1\nrole_arn = arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning\n" >> /root/.aws/config
