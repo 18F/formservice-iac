@@ -118,7 +118,7 @@ jobs:
                 # create aws profile
                 mkdir -p /root/.aws/
                 touch /root/.aws/config
-                echo -e "[profile dev]\nrole_arn = arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform\nsource_profile = default" >> /root/.aws/config
+                echo -e "[profile dev]\nrole_arn = arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform" >> /root/.aws/config
 
                 # troubleshoot aws authentication
                 aws configure list
