@@ -112,6 +112,9 @@ jobs:
                 # list present working directory
                 pwd
 
+                # troubleshoot aws authentication
+                aws configure list
+
                 # verify aws login
                 aws iam get-login-profile --user-name fcircleci-apply-terraform
 
@@ -120,6 +123,9 @@ jobs:
 
                 # export aws profile
                 export AWS_PROFILE=dev
+
+                # troubleshoot aws authentication
+                aws configure list
 
                 # verify aws login
                 aws iam get-login-profile circleci-apply-terraform
