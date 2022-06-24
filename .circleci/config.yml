@@ -54,13 +54,18 @@ jobs:
           command: |
 
             # install dependencies
-            apt update && apt install -y git wget unzip
+            apt update && apt install -y git wget unzip curl
 
             # install terraform
             wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip && unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod uo+x /usr/bin/terraform
 
             # install terragrunt
             wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.8/terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt && chmod uo+x /usr/bin/terragrunt
+
+            # install aws cli
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install
 
       - run:
           name: Run terragrunt plan
@@ -91,6 +96,8 @@ jobs:
 
               # echo $CHANGED_FILE
 
+              pwd
+
               # if any our deployment files were commited, change to that directory and run terragrunt plan
               if [[ " ${DEPLOYMENT_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
 
@@ -105,8 +112,23 @@ jobs:
                 # list present working directory
                 pwd
 
-                # export terragrunt role
-                export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning"
+                # verify aws login
+                aws iam get-login-profile circleci-apply-terraform
+
+                # create aws profile
+                cat <<EOT>> /root/.aws/config
+                [profile dev]
+                region = us-gov-west-1
+                role_arn = arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning
+                credential_source = Ec2InstanceMetadata
+                EOT
+
+                export AWS_PROFILE=dev
+
+                # verify aws login
+                aws iam get-login-profile circleci-apply-terraform
+
+                # export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning"
 
                 # list current environment variables
                 env
