@@ -116,13 +116,9 @@ jobs:
                 aws iam get-login-profile circleci-apply-terraform
 
                 # create aws profile
-                cat <<EOT>> /root/.aws/config
-                [profile dev]
-                region = us-gov-west-1
-                role_arn = arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning
-                credential_source = Ec2InstanceMetadata
-                EOT
+                echo -e "[profile dev]\nregion = us-gov-west-1\nrole_arn = arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning\n" >> /root/.aws/config
 
+                # export aws profile
                 export AWS_PROFILE=dev
 
                 # verify aws login
