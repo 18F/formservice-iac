@@ -127,7 +127,7 @@ jobs:
                 aws configure list
 
                 # verify aws login
-                aws iam get-login-profile circleci-apply-terraform
+                aws iam get-login-profile --user-name circleci-apply-terraform
 
                 # export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning"
 
