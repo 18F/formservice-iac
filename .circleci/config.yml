@@ -116,7 +116,7 @@ jobs:
                 aws configure list
 
                 # create aws profile
-                mkdir -p /root/.aws/config
+                mkdir -p /root/.aws/
                 touch /root/.aws/config
                 echo -e "[profile dev]\nregion = us-gov-west-1\nrole_arn = arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning\n" >> /root/.aws/config
 
