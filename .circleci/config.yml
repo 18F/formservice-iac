@@ -80,9 +80,6 @@ jobs:
               env/dev/hub/formio/pdf-server/service/terragrunt.hcl
             )
 
-            # list present working directory
-            pwd
-
             # make directory and file for terragrunt plan
             mkdir -p /tmp/workspace/
             touch /tmp/workspace/plan.tf
@@ -90,9 +87,9 @@ jobs:
             # for each changed file in this current commit
             for CHANGED_FILE in $CHANGED_FILES; do
 
-              echo "${DEPLOYMENT_FILES[*]}"
+              # echo "${DEPLOYMENT_FILES[*]}"
 
-              echo $CHANGED_FILE
+              # echo $CHANGED_FILE
 
               # if any our deployment files were commited, change to that directory and run terragrunt plan
               if [[ " ${DEPLOYMENT_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
@@ -105,11 +102,13 @@ jobs:
                 # change into that directory
                 cd $DIRECTORY
 
+                # list present working directory
                 pwd
 
                 # export terragrunt role
                 export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning"
 
+                # list current environment variables
                 env
 
                 # make directory and file for terragrunt plan
