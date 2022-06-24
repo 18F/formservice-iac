@@ -105,8 +105,12 @@ jobs:
                 # change into that directory
                 cd $DIRECTORY
 
+                pwd
+
                 # export terragrunt role
                 export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::306881650362:role/TF-CrossAccountProvisioning"
+
+                env
 
                 # make directory and file for terragrunt plan
                 mkdir -p /tmp/workspace/
