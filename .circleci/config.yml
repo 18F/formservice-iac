@@ -114,6 +114,10 @@ jobs:
                 echo ${ENVIRONMENT_NAME}
                 echo $ENVIRONMENT_NAME
 
+                touch caller-identity.txt
+                aws sts get-caller-identity >> caller-identity.txt
+                cat caller-identity.txt
+
                 # get session token for prod environment
                 AWS_CREDENTIALS=$(aws sts get-session-token)
 
