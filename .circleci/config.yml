@@ -138,18 +138,20 @@ jobs:
                   echo ${AWS_CREDENTIALS} | jq -r '.Credentials.AccessKeyId'
                 fi
 
-                echo "After if statement"
+                echo "After dev if statement"
 
                 # set aws credentials for each environment
                 ## if prod
-                if [ "${ENVIRONMENT_NAME}"=="prod" ]; then
+                if [[ $ENVIRONMENT_NAME == "prod" ]]; then
                   AWS_CREDENTIALS=$(aws sts get-session-token)
                 fi
 
                 ## if test
-                if [ "${ENVIRONMENT_NAME}"=="test" ]; then
+                if [[ $ENVIRONMENT_NAME == "test" ]]; then
                   AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306851503416:role/circleci-apply-terraform" --role-session-name "credentials")
                 fi
+
+                echo "After test if statement"
 
 
 
