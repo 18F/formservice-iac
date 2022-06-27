@@ -109,7 +109,7 @@ jobs:
                 echo ${DIRECTORY}
 
                 # get environment name from directory of changed file
-                ENVIRONMENT_NAME=$(echo ${DIRECTORY} | awk -F/ '{ print $5 }')
+                ENVIRONMENT_NAME=$(echo ${DIRECTORY} | awk -F/ '{ print $1 }')
 
                 echo ${ENVIRONMENT_NAME}
 
