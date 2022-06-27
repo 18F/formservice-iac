@@ -111,15 +111,15 @@ jobs:
 
                 # set credentials for dev, test, and prod
                 ## if prod
-                if [ "${ENVIRONMENT_NAME}"=="prod" ] then
+                if [ "${ENVIRONMENT_NAME}"=="prod" ]; then
                   AWS_CREDENTIALS=$(aws sts get-session-token)
 
                   ## if test
-                  elif [ "${ENVIRONMENT_NAME}"=="test" ] then
+                  elif [ "${ENVIRONMENT_NAME}"=="test" ]; then
                     AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306851503416:role/circleci-apply-terraform" --role-session-name "credentials")
 
                   ## if dev
-                  elif [ "${ENVIRONMENT_NAME}"=="dev" ] then
+                  elif [ "${ENVIRONMENT_NAME}"=="dev" ]; then
                     AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform" --role-session-name "credentials")
 
                 else
