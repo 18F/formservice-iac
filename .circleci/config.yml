@@ -105,13 +105,6 @@ jobs:
                 # get environment name from directory of changed file
                 ENVIRONMENT_NAME=$(echo ${DIRECTORY} | awk -F/ '{ print $2 }')
 
-                # touch caller-identity.txt
-                # aws sts get-caller-identity >> caller-identity.txt
-                # cat caller-identity.txt
-
-                # get session token for prod environment
-                # AWS_CREDENTIALS=$(aws sts get-session-token)
-
                 # set aws credentials for each environment
                 ## if prod
                 if [[ $ENVIRONMENT_NAME == "prod" ]]; then
@@ -140,6 +133,8 @@ jobs:
 
                 # list present working directory
                 pwd
+                ls -la
+                terragrunt plan
 
                 # make directory and file for terragrunt plan
                 mkdir -p /tmp/workspace/
