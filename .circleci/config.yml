@@ -106,6 +106,8 @@ jobs:
                 # get directory of changed file
                 DIRECTORY=$(dirname "${CHANGED_FILE}")
 
+                echo ${DIRECTORY}
+
                 # get environment name from directory of changed file
                 ENVIRONMENT_NAME=$(echo ${DIRECTORY} | awk -F/ '{ print $5 }')
 
