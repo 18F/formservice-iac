@@ -111,6 +111,18 @@ jobs:
                 # get environment name from directory of changed file
                 ENVIRONMENT_NAME=$(echo ${DIRECTORY} | awk -F/ '{ print $2 }')
 
+                echo ${ENVIRONMENT_NAME}
+                echo $ENVIRONMENT_NAME
+
+                ## if dev
+                if [[ $ENVIRONMENT_NAME == *"dev"* ]]; then
+                  echo "In dev if statement"
+                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform" --role-session-name "credentials")
+                  echo ${AWS_CREDENTIALS} | jq -r '.Credentials.AccessKeyId'
+                fi
+
+                echo "After if statement"
+
                 # set aws credentials for each environment
                 ## if prod
                 if [ "${ENVIRONMENT_NAME}"=="prod" ]; then
@@ -122,15 +134,7 @@ jobs:
                   AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306851503416:role/circleci-apply-terraform" --role-session-name "credentials")
                 fi
 
-                echo ${ENVIRONMENT_NAME}
-                echo $ENVIRONMENT_NAME
 
-                ## if dev
-                if [[ $ENVIRONMENT_NAME == *"dev"* ]]; then
-                  echo "In dev if statement"
-                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform" --role-session-name "credentials")
-                  echo ${AWS_CREDENTIALS} | jq -r '.Credentials.AccessKeyId'
-                fi
 
                 # extract and export aws credentials
 
