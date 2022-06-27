@@ -113,22 +113,22 @@ jobs:
 
                 echo ${ENVIRONMENT_NAME}
 
-                # set credentials for dev, test, and prod
+                # set aws credentials for each environment
                 ## if prod
                 if [ "${ENVIRONMENT_NAME}"=="prod" ]; then
                   AWS_CREDENTIALS=$(aws sts get-session-token)
+                fi
 
-                  ## if test
-                  elif [ "${ENVIRONMENT_NAME}"=="test" ]; then
-                    AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306851503416:role/circleci-apply-terraform" --role-session-name "credentials")
+                ## if test
+                if [ "${ENVIRONMENT_NAME}"=="test" ]; then
+                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306851503416:role/circleci-apply-terraform" --role-session-name "credentials")
+                fi
 
-                  ## if dev
-                  elif [ "${ENVIRONMENT_NAME}"=="dev" ]; then
-                    AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform" --role-session-name "credentials")
-                    echo ${AWS_CREDENTIALS} | jq -r '.Credentials.AccessKeyId'
-                    echo "In dev elif statement"
-                else
-                  echo "Unable to set AWS credentials. The directory of the changed file is off."
+                ## if dev
+                if [ "${ENVIRONMENT_NAME}"=="dev" ]; then
+                  echo "In dev elif statement"
+                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform" --role-session-name "credentials")
+                  echo ${AWS_CREDENTIALS} | jq -r '.Credentials.AccessKeyId'
                 fi
 
                 # extract and export aws credentials
