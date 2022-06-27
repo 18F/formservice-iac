@@ -54,7 +54,7 @@ jobs:
           command: |
 
             # install dependencies
-            apt update && apt install -y git wget unzip curl
+            apt update && apt install -y git wget unzip curl jq
 
             # install terraform
             wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip && unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod uo+x /usr/bin/terraform
@@ -106,25 +106,36 @@ jobs:
                 # get directory of changed file
                 DIRECTORY=$(dirname "${CHANGED_FILE}")
 
-                # change into that directory
+                # get environment name from directory of changed file
+                ENVIRONMENT_NAME=$(echo ${DIRECTORY} | awk -F/ '{ print $5 }')
+
+                # set credentials for dev, test, and prod
+                ## if prod
+                if [ "${ENVIRONMENT_NAME}"=="prod" ] then
+                  AWS_CREDENTIALS=$(aws sts get-session-token)
+
+                ## if test
+                elif [ "${ENVIRONMENT_NAME}"=="test" ] then
+                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306851503416:role/circleci-apply-terraform" --role-session-name "credentials")
+
+                ## if dev
+                elif [ "${ENVIRONMENT_NAME}"=="dev" ] then
+                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform" --role-session-name "credentials")
+
+                else
+                  echo "Unable to set AWS credentials. The directory of the changed file is off."
+                fi
+
+                # extract and export aws credentials
+                export AWS_ACCESS_KEY_ID=$(echo ${AWS_CREDENTIALS} | jq -r '.Credentials.AccessKeyId')
+                export AWS_SECRET_ACCESS_KEY=$(echo ${AWS_CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')
+                export AWS_SESSION_TOKEN=$(echo ${AWS_CREDENTIALS} | jq -r '.Credentials.SessionToken')
+
+                # change into directory of changed file
                 cd $DIRECTORY
 
                 # list present working directory
                 pwd
-
-                # troubleshoot aws authentication
-                aws configure list
-
-                # create aws profile
-                mkdir -p /root/.aws/
-                touch /root/.aws/config
-                echo -e "[profile dev]\nrole_arn = arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform\ncredential_source = Environment" >> /root/.aws/config
-
-                # troubleshoot aws authentication
-                aws configure list
-
-                # verify aws login
-                aws iam get-login-profile --user-name circleci-apply-terraform --profile dev
 
                 # make directory and file for terragrunt plan
                 mkdir -p /tmp/workspace/
