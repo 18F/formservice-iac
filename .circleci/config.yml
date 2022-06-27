@@ -133,7 +133,11 @@ jobs:
 
                 # list present working directory
                 pwd
-                ls -la
+
+                # list environment variables
+                env | sort
+
+                # simple terragrunt plan
                 terragrunt plan
 
                 # make directory and file for terragrunt plan
