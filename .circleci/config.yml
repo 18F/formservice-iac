@@ -110,7 +110,7 @@ jobs:
                 # cat caller-identity.txt
 
                 # get session token for prod environment
-                AWS_CREDENTIALS=$(aws sts get-session-token)
+                # AWS_CREDENTIALS=$(aws sts get-session-token)
 
                 # set aws credentials for each environment
                 ## if prod
