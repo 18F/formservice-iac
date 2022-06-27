@@ -109,6 +109,8 @@ jobs:
                 # get environment name from directory of changed file
                 ENVIRONMENT_NAME=$(echo ${DIRECTORY} | awk -F/ '{ print $5 }')
 
+                echo ${ENVIRONMENT_NAME}
+
                 # set credentials for dev, test, and prod
                 ## if prod
                 if [ "${ENVIRONMENT_NAME}"=="prod" ]; then
@@ -121,12 +123,16 @@ jobs:
                   ## if dev
                   elif [ "${ENVIRONMENT_NAME}"=="dev" ]; then
                     AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform" --role-session-name "credentials")
-
+                    echo ${AWS_CREDENTIALS} | jq -r '.Credentials.AccessKeyId'
+                    echo "In dev elif statement"
                 else
                   echo "Unable to set AWS credentials. The directory of the changed file is off."
                 fi
 
                 # extract and export aws credentials
+
+                echo ${AWS_CREDENTIALS} | jq -r '.Credentials.AccessKeyId'
+
                 export AWS_ACCESS_KEY_ID=$(echo ${AWS_CREDENTIALS} | jq -r '.Credentials.AccessKeyId')
                 export AWS_SECRET_ACCESS_KEY=$(echo ${AWS_CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')
                 export AWS_SESSION_TOKEN=$(echo ${AWS_CREDENTIALS} | jq -r '.Credentials.SessionToken')
