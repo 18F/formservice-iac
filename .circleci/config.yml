@@ -125,7 +125,7 @@ jobs:
                 fi
 
                 ## if dev
-                if [ "${ENVIRONMENT_NAME}"=="dev" ]; then
+                if [[ "${ENVIRONMENT_NAME}"=="dev" ]]; then
                   echo "In dev elif statement"
                   AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform" --role-session-name "credentials")
                   echo ${AWS_CREDENTIALS} | jq -r '.Credentials.AccessKeyId'
