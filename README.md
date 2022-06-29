@@ -41,9 +41,6 @@ This section describes how to deploy the cloud infrastructure that runs the Form
     - `env/prod/account.hcl`
     - `env/prod/env.hcl`
 
-### Deploy new cloud infrastructure
-to do
-
 ### Deploy new images to the existing cloud infrastructure in Forms Service v1.2
 This section describes how to deploy the latest image to Fargate Elastic Container Service (ECS) in Forms Service v1.2.
 
@@ -98,6 +95,73 @@ This section describes how to deploy the latest image to Fargate Elastic Contain
         - After running `terragrunt apply`, we expect there to be at least ***four*** running tasks for the service
         - Eventually, we expect the original two running tasks to be marked for termination
 1. Run smoke tests on the application
+
+### Certificates
+We manage three categories of certificates: domain-validated TLS certificates, database certificates, and container TLS certificates
+
+- we only update database certificates when amazon expires them
+
+### Create or replace container certificates
+For each task in ECS, we have three running containers:
+    - a container running an nginx-proxy
+    - a container running the service (either an api-server for each tenant or the pdf-server)
+    - a container running TwistlockDefender, our security vulnerability scanning software
+
+We use self-signed container TLS certificates to encrypt traffic between the nginx-proxy container and the respective service (api-server or pdf-server), and the nginx-proxy and the Application Load Balancer (ALB)
+
+1. Generate a Certificate Signing Request (CSR) and private key for each environment: dev, test, prod
+    1. Connect to the prod-mgmt-server and navigate to the `/home/ssm-user/certs/container/` directory
+        - this directory is backed up to s3 on an hourly basis
+    1. Run the following command to generate the CSR and private key for each environment: dev, test, and prod
+        - `openssl req -new -newkey rsa:4096 -nodes -out <YYYYMMDD>_<domain>.csr -keyout <YYYYMMDD>_<domain>.key -subj "/C=US/ST=District of Columbia/L=Washington/O=GSA/CN=<domain>"`
+        - for container certificates, use the following domains for each environment:
+            - dev.local
+                - `openssl req -new -newkey rsa:4096 -nodes -out 20220629_dev_local.csr -keyout 20220629_dev_local.key -subj "/C=US/ST=District of Columbia/L=Washington/O=GSA/CN=dev.local"`
+            - test.local
+                - `openssl req -new -newkey rsa:4096 -nodes -out 20220629_test_local.csr -keyout 20220629_test_local.key -subj "/C=US/ST=District of Columbia/L=Washington/O=GSA/CN=test.local"`
+            - prod.local
+                - `openssl req -new -newkey rsa:4096 -nodes -out 20220629_prod_local.csr -keyout 20220629_prod_local.key -subj "/C=US/ST=District of Columbia/L=Washington/O=GSA/CN=prod.local"`
+1. Create a self-signed certificate using the newly generated CSR and private key
+    1. Run the following command to create a self-signed certificate for each environment: dev, test, prod
+        - `openssl x509 -signkey <YYYYMMDD>_<domain>.key -in <YYYYMMDD>_<domain>.csr -req -days 365 -out <YYYYMMDD>_<domain>.crt`
+        - dev.local
+            - `openssl x509 -signkey 20220629_dev_local.key -in 20220629_dev_local.csr -req -days 365 -out 20220629_dev_local.crt`
+        - test.local
+            - `openssl x509 -signkey 20220629_test_local.key -in 20220629_test_local.csr -req -days 365 -out 20220629_test_local.crt`
+        - prod.local
+            - `openssl x509 -signkey 20220629_prod_local.key -in 20220629_prod_local.csr -req -days 365 -out 20220629_prod_local.crt`
+
+1. Upload the artifacts to s3
+    - we should now have a CSR, a private key, and a certificate for each environment in the `/home/ssm-user/certs/container/` directory:
+        - ```
+        20220629_dev_local.crt
+        20220629_dev_local.csr
+        20220629_dev_local.key
+        20220629_prod_local.crt
+        20220629_prod_local.csr
+        20220629_prod_local.key
+        20220629_test_local.crt
+        20220629_test_local.csr
+        20220629_test_local.key
+        ```
+    - the directory `/home/ssm-user/certs/` on the `prod-mgmt-server` is backed up to `s3://faas-prod-mgmt-bucket` on an hourly basis
+1. Enter the private key and certificate into AWS Secrets Manager in each AWS environment (dev, test, prod) for each service
+    1. Navigate to `AWS Secrets Manager > Secrets` in the AWS Console
+        - there are secrets for each service (each tenant api-server and the pdf-server)
+        - repeat the following steps for each service
+    1. Click on the secret for the appropriate service
+    1. Click **Retrieve secret value** to display the secrets
+    1. Click **Edit** to edit the secrets
+    1. Click the **Plaintext** tab to edit the secrets in a minified json format
+    1. Replace the secret values of the `SSL_KEY` and `SSL_CERT`
+        - each secret value needs to be on one line, not in originally generated multiline format
+        - in a text editor, replace all invisible new lines with the newline character (`\n`)
+    1. Click the **Save** button
+
+
+
+
+1. Replace the
 
 ### Deploy bastion host mgmt-server
 We use an EC2 instance as a bastion host for miscellaneous management of the cloud infrastructure.
