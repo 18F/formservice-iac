@@ -33,7 +33,7 @@ dependency "sns"  { config_path = "../../../../../mgmt/alerts-sns-topic" }
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
   name_prefix            = "${local.name_prefix}"
-  task_secrets           = "faas-test-hub-formio-enterprise-secrets"
+  task_secrets           = "faas-prod-hub-formio-epa-enterprise-secrets"
   aws_region             = "us-gov-west-1"
   log_stream_prefix      = "enterprise"
 
