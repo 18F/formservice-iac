@@ -24,7 +24,7 @@ include {
 # dependencies
 dependencies      { paths = ["../../vpc"] }
 dependency "this_vpc"  { config_path = "../../vpc" }
-dependency "mgmt_vpc"  { config_path = "../../prod/mgmt/vpc" }
+dependency "mgmt_vpc"  { config_path = "../../../mgmt/vpc" }
 
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
