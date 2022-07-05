@@ -46,7 +46,7 @@ jobs:
             ./docker.sh
   terragrunt-plan:
     docker:
-      - image: ubuntu:latest
+      - image: ubuntu:latest # let's create a golden ami and push to ecr
     steps:
       - checkout
       - run:
@@ -137,6 +137,12 @@ jobs:
 
                 # list environment variables
                 # env | sort
+
+                # get current user
+                echo $(aws sts get-caller-identity)
+
+                # list terraform state bucket
+                aws s3 ls faas-terraform-state
 
                 # simple terragrunt plan
                 terragrunt plan
