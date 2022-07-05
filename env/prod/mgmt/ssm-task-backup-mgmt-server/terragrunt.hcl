@@ -49,7 +49,8 @@ inputs = {
       "aws s3 sync /home/ssm-user/.aws s3://faas-prod-mgmt-bucket/mgmt-server/.aws/ --region us-gov-west-1",
       "aws s3 sync /home/ssm-user/.ssh s3://faas-prod-mgmt-bucket/mgmt-server/.ssh/ --region us-gov-west-1",
       "aws s3 sync /home/ssm-user/certs s3://faas-prod-mgmt-bucket/mgmt-server/certs/ --region us-gov-west-1",
-      "aws s3 sync /home/ssm-user/documentDB s3://faas-prod-mgmt-bucket/mgmt-server/documentDB/ --region us-gov-west-1"
+      "aws s3 sync /home/ssm-user/documentDB s3://faas-prod-mgmt-bucket/mgmt-server/documentDB/ --region us-gov-west-1",
+      "aws s3 sync /home/ssm-user/efs-files s3://faas-prod-mgmt-bucket/mgmt-server/efs-files/ --region us-gov-west-1"
     ]
   }
 }

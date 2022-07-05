@@ -41,9 +41,6 @@ This section describes how to deploy the cloud infrastructure that runs the Form
     - `env/prod/account.hcl`
     - `env/prod/env.hcl`
 
-### Deploy new cloud infrastructure
-to do
-
 ### Deploy new images to the existing cloud infrastructure in Forms Service v1.2
 This section describes how to deploy the latest image to Fargate Elastic Container Service (ECS) in Forms Service v1.2.
 
@@ -129,6 +126,88 @@ We use an EC2 instance as a bastion host for miscellaneous management of the clo
     1. Verify the Prisma Cloud container defender is scanning our Elastic Container Registry
         1. Navigate to `Compute > Vulnerabilities > Images tab > Registries tab`
         1. Click **Scan** to scan our Elastic Container Registry for vulnerabilities
+
+## Certificates
+We manage three categories of certificates: domain-validated TLS certificates, container TLS certificates, and database certificates
+
+### Replace domain-validated TLS certificates
+We encrypt our domains with TLS certificates verified by DigitCert, and purchased/managed by GSA
+
+### Replace container TLS certificates
+For each task in ECS, we have three running containers:
+  - a container running an nginx-proxy
+  - a container running the service (either an api-server for each tenant or the pdf-server)
+  - a container running TwistlockDefender, our security vulnerability scanning software
+
+We use self-signed container TLS certificates to encrypt traffic between the nginx-proxy container and the respective service container (each tenant api-server or pdf-server), and the nginx-proxy and the Application Load Balancer (ALB). The nginx-proxy container pulls the certificate and private key from Elastic File System (EFS); the service container pulls the certificate and private key from AWS Secrets Manager.
+
+1. Generate a Certificate Signing Request (CSR) and private key for each environment: dev, test, prod
+    1. Connect to the prod-mgmt-server and navigate to the `/home/ssm-user/certs/container/` directory
+        - this directory is backed up to s3 on an hourly basis
+    1. Run the following command to generate the CSR and private key for each environment: dev, test, and prod
+        - `openssl req -new -newkey rsa:4096 -nodes -out <YYYYMMDD>_<domain>.csr -keyout <YYYYMMDD>_<domain>.key -subj "/C=US/ST=District of Columbia/L=Washington/O=GSA/CN=<domain>"`
+        - for container certificates, use the following domains for each environment:
+            - dev.local
+                - `openssl req -new -newkey rsa:4096 -nodes -out 20220629_dev_local.csr -keyout 20220629_dev_local.key -subj "/C=US/ST=District of Columbia/L=Washington/O=GSA/CN=dev.local"`
+            - test.local
+                - `openssl req -new -newkey rsa:4096 -nodes -out 20220629_test_local.csr -keyout 20220629_test_local.key -subj "/C=US/ST=District of Columbia/L=Washington/O=GSA/CN=test.local"`
+            - prod.local
+                - `openssl req -new -newkey rsa:4096 -nodes -out 20220629_prod_local.csr -keyout 20220629_prod_local.key -subj "/C=US/ST=District of Columbia/L=Washington/O=GSA/CN=prod.local"`
+1. Create a self-signed certificate using the newly generated CSR and private key
+    1. Run the following command to create a self-signed certificate for each environment: dev, test, prod
+        - `openssl x509 -signkey <YYYYMMDD>_<domain>.key -in <YYYYMMDD>_<domain>.csr -req -days 365 -out <YYYYMMDD>_<domain>.crt`
+        - dev.local
+            - `openssl x509 -signkey 20220629_dev_local.key -in 20220629_dev_local.csr -req -days 365 -out 20220629_dev_local.crt`
+        - test.local
+            - `openssl x509 -signkey 20220629_test_local.key -in 20220629_test_local.csr -req -days 365 -out 20220629_test_local.crt`
+        - prod.local
+            - `openssl x509 -signkey 20220629_prod_local.key -in 20220629_prod_local.csr -req -days 365 -out 20220629_prod_local.crt`
+1. Upload the artifacts to s3
+      - we should now have a CSR, a private key, and a certificate for each environment in the `/home/ssm-user/certs/container/` directory:
+        ```
+        20220629_dev_local.crt
+        20220629_dev_local.csr
+        20220629_dev_local.key
+        20220629_prod_local.crt
+        20220629_prod_local.csr
+        20220629_prod_local.key
+        20220629_test_local.crt
+        20220629_test_local.csr
+        20220629_test_local.key
+        ```
+      - the directory `/home/ssm-user/certs/` on the `prod-mgmt-server` is backed up to `s3://faas-prod-mgmt-bucket` on an hourly basis
+1. Enter the private key and certificate into AWS Secrets Manager in each AWS environment (dev, test, prod); each service container (each tenant api-server or the pdf-server) pulls the certificate and private key from AWS Secrets Manager
+    1. Navigate to `AWS Secrets Manager > Secrets` in the AWS Console
+        - there are secrets for each service (each tenant api-server and the pdf-server)
+        - repeat the following steps for each service
+    1. Click on the secret for the appropriate service
+    1. Click **Retrieve secret value** to display the secrets
+    1. Click **Edit** to edit the secrets
+    1. Click the **Plaintext** tab to edit the secrets in a minified json format
+    1. Replace the secret values of the `SSL_KEY` and `SSL_CERT`
+        - each secret value needs to be on one line, not in originally generated multiline format
+        - in a text editor, replace all invisible new lines with the newline character (`\n`)
+    1. Click the **Save** button
+    1. Stop the container task in ECS; when the api-server/pdf-server containers start up, they should pull the newly generated certificate and private key from Secrets Manager
+1. Replace the certificates on the Elastic File System (EFS) mount in each environment: dev, test, prod
+    1. Copy the newly generated certificate and private key to the appropriate EFS mount; the following commands copy the dev certificate and the dev private key from s3 to the dev Elastic File System, which is mounted to the dev-mgmt-server
+        ```
+        aws s3 cp --recursive --region us-gov-west-1 s3://faas-prod-mgmt-bucket/mgmt-server/certs/container/20220629_dev_local.crt /mnt/efs/nginx/certs/
+
+        aws s3 cp --recursive --region us-gov-west-1  s3://faas-prod-mgmt-bucket/mgmt-server/certs/container/20220629_dev_local.key /mnt/efs/nginx/certs/
+        ```
+    1. Update the nginx configuration for the api-server and pdf-server to use the newly generated certificate and private key
+        - `vi /mnt/efs/nginx/api-conf/default.conf`
+        ```
+        server {
+          listen 8443 ssl;
+          ssl_certificate      /src/certs/20220629_dev_local.crt;
+          ssl_certificate_key  /src/certs/20220629_dev_local.key;
+        ```
+    1. Stop the container task in ECS; when the nginx-proxy containers start up, they should pull the newly generated certificate and private key from the respective Elastic File System
+
+### Replace database certificates
+AWS replaces their service-level database certificates every several years for miscellaneous purposes. A notice with instructions will be sent to the following email distribution list several months before action is required: forms-devops@gsa.gov
 
 ## AWS Systems Manager (SSM)
 We use [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html) (formerly known as *Amazon Simple Systems Manager (SSM)*) to run automated tasks on the ec2 instances that host the running formio containers.
