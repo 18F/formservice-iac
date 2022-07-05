@@ -23,7 +23,7 @@ generate "provider" {
   contents  = <<EOF
 provider "aws" {
   region = "${local.aws_region}"
-  
+
   endpoints {
     networkfirewall = "https://network-firewall-fips.us-gov-west-1.amazonaws.com"
   }
@@ -40,7 +40,7 @@ remote_state {
     key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = local.aws_region
     dynamodb_table = "${local.project}-terraform-state-locks"
-    profile        = "FAAS-tf-bot-account"
+    // profile        = "FAAS-tf-bot-account"
   }
   generate = {
     path      = "backend.tf"
