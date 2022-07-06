@@ -78,7 +78,7 @@ jobs:
             CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r $SHORT_GIT_HASH)
 
             echo "The following files were changed in this commit:"
-            echo "${CHANGED_FILES[*]}" | tr “ “ “\n”
+            echo "${CHANGED_FILES[*]}" | tr " " "\n"
 
             # list our deployment files
             DEPLOYMENT_FILES=(
