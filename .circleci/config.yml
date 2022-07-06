@@ -77,6 +77,9 @@ jobs:
             # show all files changed with this current git commit
             CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r $SHORT_GIT_HASH)
 
+            echo "The following files were changed in this commit:"
+            echo "${CHANGED_FILES[*]}" | tr “ “ “\n”
+
             # list our deployment files
             DEPLOYMENT_FILES=(
               env/dev/hub/formio/tenants/epa/service/terragrunt.hcl
@@ -92,11 +95,8 @@ jobs:
             # for each changed file in this current commit
             for CHANGED_FILE in $CHANGED_FILES; do
 
-              echo "The following files were changed in this commit:"
-              echo "${DEPLOYMENT_FILES[*]}\n"
-
               echo "Running 'terragrunt plan' on the following file:"
-              echo $CHANGED_FILE
+              echo -e "${CHANGED_FILE}\n"
 
               # if any our deployment files were commited, change to that directory and run terragrunt plan
               if [[ " ${DEPLOYMENT_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
