@@ -46,7 +46,7 @@ jobs:
             ./docker.sh
   terragrunt-plan:
     docker:
-      - image: ubuntu:latest # let's create a golden ami and push to ecr
+      - image: ubuntu:latest # todo: use an ami here with dependencies installed
     steps:
       - checkout
       - run:
@@ -92,9 +92,11 @@ jobs:
             # for each changed file in this current commit
             for CHANGED_FILE in $CHANGED_FILES; do
 
-              # echo "${DEPLOYMENT_FILES[*]}"
+              echo "The following files were changed in this commit:"
+              echo "${DEPLOYMENT_FILES[*]}\n"
 
-              # echo $CHANGED_FILE
+              echo "Running 'terragrunt plan' on the following file:"
+              echo $CHANGED_FILE
 
               # if any our deployment files were commited, change to that directory and run terragrunt plan
               if [[ " ${DEPLOYMENT_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
@@ -132,32 +134,12 @@ jobs:
                 # change into directory of changed file
                 cd $DIRECTORY
 
-                # list present working directory
-                pwd
-
-                # list environment variables
-                # env | sort
-
-                # get current user
-                echo $(aws sts get-caller-identity)
-
-                # list terraform state bucket
-                aws s3 ls faas-terraform-state
-
-                # simple terragrunt plan
-                terragrunt plan
-
                 # make directory and file for terragrunt plan
                 mkdir -p /tmp/workspace/
                 touch /tmp/workspace/plan.tf
 
                 # run terragrunt plan
                 terragrunt plan -out /tmp/workspace/plan.tf
-
-                cat /tmp/workspace/plan.tf
-
-              else
-                echo "not in if statement"
               fi
             done
       - persist_to_workspace:
@@ -171,7 +153,9 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run: |
-          cat /tmp/workspace/plan.tf
+
+          # run terragrunt apply
+          terragrunt apply /tmp/workspace/plan.tf
 
 workflows:
   docker:
