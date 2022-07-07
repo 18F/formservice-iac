@@ -149,6 +149,14 @@ jobs:
           root: /tmp/workspace
           paths:
             - plan.tf
+  simple-job:
+    docker:
+      - image: ubuntu:latest
+    steps:
+      - run:
+          name: Simple job
+          command: |
+            echo "Hello world"
   terragrunt-apply:
     docker:
       - image: ubuntu:latest
@@ -170,10 +178,14 @@ workflows:
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
+      - simple-job:
+          filters:
+            branches:
+              only: circleci # only run circleci pipeline on the circleci github branch    
       - terragrunt-apply:
-          type: approval # this sets the job to a status of "On Hold" and requires manual approval in the CircleCI web application
-          requires:
-            - terragrunt-plan # only run the job terragrunt-apply if the job terragrunt-plan succeeds
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
+          # type: approval # this sets the job to a status of "On Hold" and requires manual approval in the CircleCI web application
+          # requires:
+          #   - terragrunt-plan # only run the job terragrunt-apply if the job terragrunt-plan succeeds
