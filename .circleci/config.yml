@@ -158,7 +158,8 @@ jobs:
       - run: |
 
           # run terragrunt apply
-          terragrunt apply --auto-approve /tmp/workspace/plan.tf
+          # terragrunt apply /tmp/workspace/plan.tf
+          terragrunt plan
 
 workflows:
   docker:
