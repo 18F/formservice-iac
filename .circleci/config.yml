@@ -159,7 +159,7 @@ jobs:
 
           # run terragrunt apply
           # terragrunt apply /tmp/workspace/plan.tf
-          terragrunt plan
+          echo "Hello world"
 
 workflows:
   docker:
