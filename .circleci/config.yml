@@ -181,7 +181,8 @@ workflows:
       - simple-job:
           filters:
             branches:
-              only: circleci # only run circleci pipeline on the circleci github branch    
+              only: circleci # only run circleci pipeline on the circleci github branch
+          type: approval # this sets the job to a status of "On Hold" and requires manual approval in the CircleCI web application
       - terragrunt-apply:
           filters:
             branches:
