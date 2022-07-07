@@ -155,11 +155,12 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - run: |
-
-          # run terragrunt apply
-          # terragrunt apply /tmp/workspace/plan.tf
-          echo "Hello world"
+      - run:
+          name: Run terragrunt apply
+          command: |
+            # run terragrunt apply
+            # terragrunt apply /tmp/workspace/plan.tf
+            echo "Hello world"
 
 workflows:
   docker:
@@ -171,8 +172,8 @@ workflows:
               only: circleci # only run circleci pipeline on the circleci github branch
       - terragrunt-apply:
           type: approval # this sets the job to a status of "On Hold" and requires manual approval in the CircleCI web application
-          # requires:
-          #   - terragrunt-plan # only run the job terragrunt-apply if the job terragrunt-plan succeeds
+          requires:
+            - terragrunt-plan # only run the job terragrunt-apply if the job terragrunt-plan succeeds
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
