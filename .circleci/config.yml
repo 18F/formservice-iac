@@ -261,6 +261,8 @@ workflows:
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
+          requires:
+            - mount-workspace # only run this if the job mount-workspace succeeds
       - review-plan:
           filters:
             branches:
