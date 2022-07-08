@@ -54,8 +54,7 @@ jobs:
           command: |
 
             # install dependencies
-            apk add git
-            # apt update && apt install -y git wget unzip curl jq
+            apt update && apt install -y git wget unzip curl jq
 
             # install terraform
             wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.4/terraform_1.2.4_linux_amd64.zip && unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod uo+x /usr/bin/terraform
@@ -169,8 +168,7 @@ jobs:
           command: |
 
             # install dependencies
-            apk add git
-            # apt update && apt install -y git wget unzip curl jq
+            apt update && apt install -y git wget unzip curl jq
 
             # install terraform
             wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.4/terraform_1.2.4_linux_amd64.zip && unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod uo+x /usr/bin/terraform
