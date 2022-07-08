@@ -154,14 +154,6 @@ jobs:
                 # change into directory of changed file
                 cd $DIRECTORY
 
-                # # make directory and file for terragrunt plan
-                # mkdir -p /tmp/workspace/
-                # touch /tmp/workspace/plan.tf
-
-                # apply the previously generated terragrunt plan, if it exists
-                cat /tmp/workspace/plan.tf
-                # terragrunt apply /tmp/workspace/plan.tf
-
                 # run terragrunt plan
                 terragrunt plan -out /tmp/workspace/plan.tf
               fi
@@ -186,27 +178,76 @@ jobs:
           at: /tmp/workspace
       - checkout
       - run:
-          name: Install dependencies
-          command: |
-
-            # install dependencies
-            apt update && apt install -y git wget unzip curl jq
-
-            # install terraform
-            wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.4/terraform_1.2.4_linux_amd64.zip && unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod uo+x /usr/bin/terraform
-
-            # install terragrunt
-            wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.8/terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt && chmod uo+x /usr/bin/terragrunt
-
-            # install aws cli
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            ./aws/install
-      - run:
           name: Run terragrunt apply
           command: |
-            # run terragrunt apply
-            terragrunt apply /tmp/workspace/plan.tf
+
+            # get current git commit
+            SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
+
+            # show all files changed with this current git commit
+            CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r $SHORT_GIT_HASH)
+
+            echo "The following files were changed in this commit:"
+            echo "${CHANGED_FILES[*]}" | tr " " "\n"
+
+            # list our deployment files
+            DEPLOYMENT_FILES=(
+              env/dev/hub/formio/tenants/epa/service/terragrunt.hcl
+              env/dev/hub/formio/tenants/irs/service/terragrunt.hcl
+              env/dev/hub/formio/tenants/portal/service/terragrunt.hcl
+              env/dev/hub/formio/pdf-server/service/terragrunt.hcl
+            )
+
+            # for each changed file in this current commit
+            for CHANGED_FILE in $CHANGED_FILES; do
+
+              echo -e "\nRunning 'terragrunt apply' on the following file:"
+              echo -e "${CHANGED_FILE}\n"
+
+              # if any our deployment files were commited, change to that directory and run terragrunt plan
+              if [[ " ${DEPLOYMENT_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
+
+                # get directory of changed file
+                DIRECTORY=$(dirname "${CHANGED_FILE}")
+
+                # get environment name from directory of changed file
+                ENVIRONMENT_NAME=$(echo ${DIRECTORY} | awk -F/ '{ print $2 }')
+
+                # get account number
+                AWS_ACCOUNT_ID=$(awk 'FNR == 5 { print }' env/${ENVIRONMENT_NAME}/account.hcl | awk -F '=' '{ print $2 }' | awk -F '"' '{ print $2 }')
+
+                echo "AWS account ID: ${AWS_ACCOUNT_ID}"
+
+                # set aws credentials for each environment
+                ## if prod
+                if [[ $ENVIRONMENT_NAME == "prod" ]]; then
+                  AWS_CREDENTIALS=$(aws sts get-session-token)
+                fi
+
+                ## if test
+                if [[ $ENVIRONMENT_NAME == "test" ]]; then
+                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306851503416:role/circleci-apply-terraform" --role-session-name "credentials")
+                fi
+
+                ## if dev
+                if [[ $ENVIRONMENT_NAME == "dev" ]]; then
+                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform" --role-session-name "credentials")
+                  export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform"
+                fi
+
+                # extract and export aws credentials
+                export AWS_ACCESS_KEY_ID=$(echo ${AWS_CREDENTIALS} | jq -r '.Credentials.AccessKeyId')
+                export AWS_SECRET_ACCESS_KEY=$(echo ${AWS_CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')
+                export AWS_SESSION_TOKEN=$(echo ${AWS_CREDENTIALS} | jq -r '.Credentials.SessionToken')
+
+                # change into directory of changed file
+                cd $DIRECTORY
+
+                # run terragrunt plan
+                terragrunt apply /tmp/workspace/plan.tf
+
+              fi
+            done
 
 workflows:
   docker:
@@ -227,7 +268,7 @@ workflows:
           type: approval # this sets the job to a status of "On Hold" and requires manual approval in the CircleCI web application
           requires:
             - terragrunt-plan # only run this if the job terragrun-plan succeeds
-      - terragrunt-plan:
+      - terragrunt-apply:
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
