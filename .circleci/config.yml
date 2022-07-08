@@ -44,10 +44,27 @@ jobs:
 
             # run docker.sh
             ./docker.sh
+  mount-workspace:
+    docker:
+      - image: ubuntu:latest # todo: use an ami here with dependencies installed
+    steps:
+      - checkout
+      - run:
+          name: Mount workspace
+          command: |
+            # make directory and file for terragrunt plan
+            mkdir -p /tmp/workspace/
+            touch /tmp/workspace/plan.tf
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - plan.tf
   terragrunt-plan:
     docker:
       - image: ubuntu:latest # todo: use an ami here with dependencies installed
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - checkout
       - run:
           name: Install dependencies
@@ -137,9 +154,13 @@ jobs:
                 # change into directory of changed file
                 cd $DIRECTORY
 
-                # make directory and file for terragrunt plan
-                mkdir -p /tmp/workspace/
-                touch /tmp/workspace/plan.tf
+                # # make directory and file for terragrunt plan
+                # mkdir -p /tmp/workspace/
+                # touch /tmp/workspace/plan.tf
+
+                # apply the previously generated terragrunt plan, if it exists
+                cat /tmp/workspace/plan.tf
+                # terragrunt apply /tmp/workspace/plan.tf
 
                 # run terragrunt plan
                 terragrunt plan -out /tmp/workspace/plan.tf
@@ -163,6 +184,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
+      - checkout
       - run:
           name: Install dependencies
           command: |
@@ -190,6 +212,10 @@ workflows:
   docker:
     jobs:
       # - push-image
+      - mount-workspace:
+          filters:
+            branches:
+              only: circleci # only run circleci pipeline on the circleci github branch
       - terragrunt-plan:
           filters:
             branches:
@@ -201,7 +227,7 @@ workflows:
           type: approval # this sets the job to a status of "On Hold" and requires manual approval in the CircleCI web application
           requires:
             - terragrunt-plan # only run this if the job terragrun-plan succeeds
-      - terragrunt-apply:
+      - terragrunt-plan:
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
