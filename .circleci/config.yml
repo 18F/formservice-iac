@@ -167,8 +167,7 @@ jobs:
           name: Run terragrunt apply
           command: |
             # run terragrunt apply
-            # terragrunt apply /tmp/workspace/plan.tf
-            echo "Hello world2"
+            terragrunt apply /tmp/workspace/plan.tf
 
 workflows:
   docker:
