@@ -69,8 +69,8 @@ jobs:
           aws_access_key_id: ${AWS_ACCESS_KEY_ID}
           aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY}
     steps:
-      - attach_workspace:
-          at: /tmp/workspace
+      # - attach_workspace:
+      #     at: /tmp/workspace
       - checkout
       # - run:
       #     name: Install dependencies
@@ -89,6 +89,12 @@ jobs:
       #       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
       #       unzip awscliv2.zip
       #       ./aws/install
+      - run:
+          name: Mount workspace
+          command: |
+            # make directory and file for terragrunt plan
+            mkdir -p /tmp/workspace/
+            touch /tmp/workspace/plan.tf
       - run:
           name: Run terragrunt plan
           command: |
@@ -281,16 +287,16 @@ workflows:
   docker:
     jobs:
       # - push-image
-      - mount-workspace:
-          filters:
-            branches:
-              only: circleci # only run circleci pipeline on the circleci github branch
+      # - mount-workspace:
+      #     filters:
+      #       branches:
+      #         only: circleci # only run circleci pipeline on the circleci github branch
       - terragrunt-plan:
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
-          requires:
-            - mount-workspace # only run this if the job mount-workspace succeeds
+          # requires:
+          #   - mount-workspace # only run this if the job mount-workspace succeeds
       - review-plan:
           filters:
             branches:
