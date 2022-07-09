@@ -46,7 +46,7 @@ jobs:
             ./docker.sh
   mount-workspace:
     docker:
-      - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu
+      - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu:22.10
         aws_auth:
           aws_access_key_id: ${AWS_ACCESS_KEY_ID}
           aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY}
@@ -169,7 +169,7 @@ jobs:
             - plan.tf
   review-plan:
     docker:
-      - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu
+      - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu:22.10
         aws_auth:
           aws_access_key_id: ${AWS_ACCESS_KEY_ID}
           aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY}
@@ -180,7 +180,7 @@ jobs:
             echo "Hello world1"
   terragrunt-apply:
     docker:
-      - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu
+      - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu:22.10
         aws_auth:
           aws_access_key_id: ${AWS_ACCESS_KEY_ID}
           aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY}
