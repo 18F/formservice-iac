@@ -136,7 +136,7 @@ jobs:
           root: /tmp/workspace
           paths:
             - plan.tf
-  review-that-↑-plan:
+  manually-review-terragrunt-plan-then-cancel-or-approve-this-job-to-run-terragrunt-apply:
     docker:
       - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu:22.10
         aws_auth:
@@ -144,7 +144,7 @@ jobs:
           aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY}
     steps:
       - run:
-          name: Manually review the terragrunt plan, then cancel or approve the plan to initiate the terragrunt apply
+          name: Manually review the terragrunt plan, then cancel or approve this job to initiate the terragrunt apply job
   run-terragrunt-apply:
     docker:
       - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu:22.10
@@ -252,7 +252,7 @@ workflows:
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
-      - review-that-↑-plan:
+      - manually-review-terragrunt-plan-then-cancel-or-approve-this-job-to-run-terragrunt-apply:
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
