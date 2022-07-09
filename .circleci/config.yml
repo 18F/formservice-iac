@@ -44,7 +44,7 @@ jobs:
 
             # run docker.sh
             ./docker.sh
-  mount-workspace:
+  run-terragrunt-plan:
     docker:
       - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu:22.10
         aws_auth:
@@ -52,43 +52,6 @@ jobs:
           aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY}
     steps:
       - checkout
-      - run:
-          name: Mount workspace
-          command: |
-            # make directory and file for terragrunt plan
-            mkdir -p /tmp/workspace/
-            touch /tmp/workspace/plan.tf
-      - persist_to_workspace:
-          root: /tmp/workspace
-          paths:
-            - plan.tf
-  terragrunt-plan:
-    docker:
-      - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu:22.10
-        aws_auth:
-          aws_access_key_id: ${AWS_ACCESS_KEY_ID}
-          aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY}
-    steps:
-      # - attach_workspace:
-      #     at: /tmp/workspace
-      - checkout
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #
-      #       # install dependencies
-      #       apt update && apt install -y git wget unzip curl jq
-      #
-      #       # install terraform
-      #       wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.4/terraform_1.2.4_linux_amd64.zip && unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod uo+x /usr/bin/terraform
-      #
-      #       # install terragrunt
-      #       wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.8/terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt && chmod uo+x /usr/bin/terragrunt
-      #
-      #       # install aws cli
-      #       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      #       unzip awscliv2.zip
-      #       ./aws/install
       - run:
           name: Mount workspace
           command: |
@@ -173,7 +136,7 @@ jobs:
           root: /tmp/workspace
           paths:
             - plan.tf
-  review-plan:
+  review-that-↑-plan:
     docker:
       - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu:22.10
         aws_auth:
@@ -181,10 +144,8 @@ jobs:
           aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY}
     steps:
       - run:
-          name: Review plan
-          command: |
-            echo "Hello world1"
-  terragrunt-apply:
+          name: Manually review the terragrunt plan, then cancel or approve the plan to initiate the terragrunt apply
+  run-terragrunt-apply:
     docker:
       - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu:22.10
         aws_auth:
@@ -287,24 +248,18 @@ workflows:
   docker:
     jobs:
       # - push-image
-      # - mount-workspace:
-      #     filters:
-      #       branches:
-      #         only: circleci # only run circleci pipeline on the circleci github branch
-      - terragrunt-plan:
+      - run-terragrunt-plan:
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
-          # requires:
-          #   - mount-workspace # only run this if the job mount-workspace succeeds
-      - review-plan:
+      - review-that-↑-plan:
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
           type: approval # this sets the job to a status of "On Hold" and requires manual approval in the CircleCI web application
           requires:
             - terragrunt-plan # only run this if the job terragrun-plan succeeds
-      - terragrunt-apply:
+      - run-terragrunt-apply:
           filters:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
