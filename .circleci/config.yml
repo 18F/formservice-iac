@@ -144,7 +144,9 @@ jobs:
           aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY}
     steps:
       - run:
-          name: Manually review the terragrunt plan, then cancel or approve this job to initiate the terragrunt apply job
+          name: Manually review terragrunt plan
+          command: |
+            echo "Manually review the terragrunt plan, then cancel or approve this job to initiate the terragrunt apply job"
   run-terragrunt-apply:
     docker:
       - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu:22.10
@@ -155,23 +157,6 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - checkout
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #
-      #       # install dependencies
-      #       apt update && apt install -y git wget unzip curl jq
-      #
-      #       # install terraform
-      #       wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.4/terraform_1.2.4_linux_amd64.zip && unzip terraform.zip && rm terraform.zip && mv terraform /usr/bin/terraform && chmod uo+x /usr/bin/terraform
-      #
-      #       # install terragrunt
-      #       wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.8/terragrunt_linux_amd64 && mv terragrunt_linux_amd64 /usr/bin/terragrunt && chmod uo+x /usr/bin/terragrunt
-      #
-      #       # install aws cli
-      #       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      #       unzip awscliv2.zip
-      #       ./aws/install
       - run:
           name: Run terragrunt apply
           command: |
