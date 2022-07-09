@@ -64,7 +64,7 @@ jobs:
             - plan.tf
   terragrunt-plan:
     docker:
-      - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu
+      - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu:22.10
         aws_auth:
           aws_access_key_id: ${AWS_ACCESS_KEY_ID}
           aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY}
