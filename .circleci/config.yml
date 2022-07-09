@@ -264,4 +264,4 @@ workflows:
             branches:
               only: circleci # only run circleci pipeline on the circleci github branch
           requires:
-            - review-plan # only run this if the job review-plan succeeds
+            - manually-review-terragrunt-plan-then-cancel-or-approve-this-job-to-run-terragrunt-apply # only run this if manual approval of previous job
