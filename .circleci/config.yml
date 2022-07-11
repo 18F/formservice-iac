@@ -188,7 +188,7 @@ jobs:
 workflows:
   docker:
     jobs:
-      - run-terragrunt-plan:
+      - run-terragrunt-plan
           # filters:
           #   branches:
           #     only: circleci # only run circleci pipeline on the circleci github branch
