@@ -1,49 +1,5 @@
 version: 2.1
 jobs:
-  push-image:
-    docker:
-      - image: docker:dind
-        environment:
-          ACCOUNT: "306811362825"
-          REGION: "us-gov-west-1"
-    steps:
-      - checkout
-      - run:
-          name: "Log in to prod aws ecr"
-          command: |
-            # install dependencies
-            apk add py3-pip
-            pip3 install awscli
-
-            # configure aws credentials file
-            mkdir -p ~/.aws/
-            touch ~/.aws/credentials
-            echo '
-            [default]
-            aws_access_key_id=${AWS_ACCESS_KEY_ID}
-            aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}
-            ' >> ~/.aws/credentials
-
-            # configure aws config file
-            mkdir -p ~/.aws/
-            touch ~/.aws/config
-            echo '
-            [default]
-            region=us-gov-west-1
-            ' >> ~/.aws/config
-
-            # log in to prod aws ecr
-            aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com
-      - setup_remote_docker:
-          version: 19.03.13
-      - run:
-          name: "Docker pull, build, tag, push"
-          command: |
-            # install dependencies
-            apk update && apk add bash
-
-            # run docker.sh
-            ./docker.sh
   run-terragrunt-plan:
     docker:
       - image: 306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/circleci/ubuntu:22.10
@@ -232,7 +188,6 @@ jobs:
 workflows:
   docker:
     jobs:
-      # - push-image
       - run-terragrunt-plan:
           filters:
             branches:
