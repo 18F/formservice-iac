@@ -23,7 +23,7 @@ dependencies {
 
 ## MODULE
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//tgw-routes"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//tgw-routes?ref=test"
 }
 
 ## MAIN

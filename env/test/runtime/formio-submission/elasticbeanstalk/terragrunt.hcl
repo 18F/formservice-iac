@@ -15,7 +15,7 @@ locals {
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//elastic-beanstalk-sub"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//elastic-beanstalk-sub?ref=test"
 }
 
 # Include all settings from the root terragrunt.hcl file
