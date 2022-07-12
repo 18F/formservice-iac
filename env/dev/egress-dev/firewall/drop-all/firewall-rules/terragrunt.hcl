@@ -11,7 +11,7 @@ locals {
 
 // specifiy module source
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//network-fw-drop-rule"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//network-fw-drop-rule?ref=dev"
 }
 
 // include all settings from the root terragrunt.hcl file

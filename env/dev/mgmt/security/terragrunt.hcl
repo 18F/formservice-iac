@@ -16,7 +16,7 @@ locals {
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//acct-mgmt-security"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//acct-mgmt-security?ref=dev"
 }
 
 # Include all settings from the root terragrunt.hcl file

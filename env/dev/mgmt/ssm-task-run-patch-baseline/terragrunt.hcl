@@ -10,7 +10,7 @@ locals {
 
 // specify module source
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//ssm-task"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//ssm-task?ref=dev"
 }
 
 // include all settings from the root terragrunt.hcl file

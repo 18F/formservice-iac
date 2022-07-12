@@ -22,7 +22,7 @@ dependencies {
 
 ## MODULE
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//dns-logging"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//dns-logging?ref=dev"
 }
 
 ## MAIN

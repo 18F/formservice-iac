@@ -22,7 +22,7 @@ locals {
 
 ## MODULE
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//egress-vpc"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//egress-vpc?ref=dev"
 }
 
 ## MAIN

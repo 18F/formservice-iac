@@ -11,7 +11,7 @@ locals {
 
 // specifiy module source
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//network-fw"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//network-fw?ref=dev"
 }
 
 dependencies         { paths = [ "../policy", "../../egress-vpc"] }

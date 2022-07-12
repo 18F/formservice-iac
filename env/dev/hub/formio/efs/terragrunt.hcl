@@ -13,7 +13,7 @@ locals {
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//efs"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//efs?ref=dev"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -33,7 +33,7 @@ inputs = {
   creation_token     = "${local.name_prefix}"
   vpc_id             = dependency.this_vpc.outputs.vpc_id
   private_subnet_ids = dependency.this_vpc.outputs.private_subnet_ids
-  kms_key_id         = "" 
+  kms_key_id         = ""
   efs_allowed_subnet_cidrs = concat(dependency.this_vpc.outputs.private_subnets_cidr_blocks, dependency.mgmt_vpc.outputs.private_subnets_cidr_blocks)
   #dependency.security.outputs.documentdb_key_arn
 

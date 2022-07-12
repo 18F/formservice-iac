@@ -11,7 +11,7 @@ locals {
 
 // specifiy module source
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//network-fw-policy"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//network-fw-policy?ref=dev"
 }
 
 dependencies      { paths = [ "../dev/hub/firewall-rules", "../dev/mgmt/firewall-rules", "../dev/runtime/firewall-rules", "../drop-all/firewall-rules" ] }

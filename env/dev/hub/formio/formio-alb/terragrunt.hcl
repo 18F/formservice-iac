@@ -15,7 +15,7 @@ locals {
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//formio-alb"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//formio-alb?ref=dev"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -39,7 +39,7 @@ inputs = {
 
   vpc_id  = dependency.vpc.outputs.vpc_id
   public_subnet_ids = dependency.vpc.outputs.public_subnet_ids
-  
+
   enable_deletion_protection = false
   enable_access_logs = true
   access_logs_bucket_name = dependency.alb-logs.outputs.bucket_name
@@ -53,5 +53,5 @@ inputs = {
   unhealthy_threshold = 3
   health_timeout = 5
   health_interval = 30
-  
+
 }

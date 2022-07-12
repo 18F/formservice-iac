@@ -25,7 +25,7 @@ dependencies {
 
 ## MODULE
 terraform {
-  source = "git::https://github.com/18F/formservice-iac-modules.git//core-vpc"
+  source = "git::https://github.com/18F/formservice-iac-modules.git//core-vpc?ref=dev"
 }
 
 ## MAIN
