@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- 2022-07-11 FORMS-934 deployed formio-enterprise:7.4.0 to forms 1.1 and forms 1.2 in dev environment
+- 2022-07-11 FORMS-980 deployed nginx:1.23.0-alpine-nonroot-user to all services in FS 1.2 dev environment
 
 ## [1.1.7] - 2022-06-09
 ### Changed
