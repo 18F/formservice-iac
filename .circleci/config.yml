@@ -65,15 +65,18 @@ jobs:
                   AWS_CREDENTIALS=$(aws sts get-session-token)
                 fi
 
+                ## if dev or test
+
                 ## if test
                 if [[ $ENVIRONMENT_NAME == "test" ]]; then
-                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306851503416:role/circleci-apply-terraform" --role-session-name "credentials")
+                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::${AWS_ACCOUNT_ID}:role/circleci-apply-terraform" --role-session-name "credentials")
+                  export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::${AWS_ACCOUNT_ID}:role/circleci-apply-terraform"
                 fi
 
                 ## if dev
                 if [[ $ENVIRONMENT_NAME == "dev" ]]; then
-                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform" --role-session-name "credentials")
-                  export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform"
+                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::${AWS_ACCOUNT_ID}:role/circleci-apply-terraform" --role-session-name "credentials")
+                  export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::${AWS_ACCOUNT_ID}:role/circleci-apply-terraform"
                 fi
 
                 # extract and export aws credentials
@@ -160,15 +163,18 @@ jobs:
                   AWS_CREDENTIALS=$(aws sts get-session-token)
                 fi
 
+                ## if dev or test
+
                 ## if test
                 if [[ $ENVIRONMENT_NAME == "test" ]]; then
-                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306851503416:role/circleci-apply-terraform" --role-session-name "credentials")
+                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::${AWS_ACCOUNT_ID}:role/circleci-apply-terraform" --role-session-name "credentials")
+                  export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::${AWS_ACCOUNT_ID}:role/circleci-apply-terraform"
                 fi
 
                 ## if dev
                 if [[ $ENVIRONMENT_NAME == "dev" ]]; then
-                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform" --role-session-name "credentials")
-                  export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::306881650362:role/circleci-apply-terraform"
+                  AWS_CREDENTIALS=$(aws sts assume-role --role-arn "arn:aws-us-gov:iam::${AWS_ACCOUNT_ID}:role/circleci-apply-terraform" --role-session-name "credentials")
+                  export TERRAGRUNT_IAM_ROLE="arn:aws-us-gov:iam::${AWS_ACCOUNT_ID}:role/circleci-apply-terraform"
                 fi
 
                 # extract and export aws credentials
