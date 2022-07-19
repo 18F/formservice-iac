@@ -24,11 +24,6 @@ dependency "ssm-window-thurs-7am-et" {
 }
 
 // depends on maintenance window target
-dependency "ssm-target-ecs-thurs-7am-et" {
-  config_path = "../ssm-target-ecs-thurs-7am-et"
-}
-
-// depends on maintenance window target
 dependency "ssm-target-mgmt-server-thurs-7am-et" {
   config_path = "../ssm-target-mgmt-server-thurs-7am-et"
 }
