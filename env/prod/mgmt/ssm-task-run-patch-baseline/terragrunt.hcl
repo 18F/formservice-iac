@@ -24,11 +24,6 @@ dependency "ssm-window-thurs-7am-et" {
 }
 
 // depends on maintenance window target
-dependency "ssm-target-ecs-thurs-7am-et" {
-  config_path = "../ssm-target-ecs-thurs-7am-et"
-}
-
-// depends on maintenance window target
 dependency "ssm-target-mgmt-server-thurs-7am-et" {
   config_path = "../ssm-target-mgmt-server-thurs-7am-et"
 }
@@ -47,7 +42,6 @@ inputs = {
   window_id                 = dependency.ssm-window-thurs-7am-et.outputs.id
   target_type               = "WindowTargetIds"
   target_ids                = [
-    dependency.ssm-target-ecs-thurs-7am-et.outputs.id,
     dependency.ssm-target-mgmt-server-thurs-7am-et.outputs.id
   ]
   timeout_seconds           = 600
