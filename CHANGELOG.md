@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Removed
 - 2022-07-21 FORMS-1004 Removed epa and irs portals in FS 1.2 dev
+
 ### Changed
 - 2022-07-14 FORMS-935 Deployed formio-enterprise:7.4.0 to forms 1.2 in test environment
 - 2022-07-14 FORMS-981 Deployed nginx:1.23.0 to all services in FS 1.2 test environment
