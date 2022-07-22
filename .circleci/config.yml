@@ -29,10 +29,12 @@ jobs:
 
             # list our deployment files
             DEPLOYMENT_FILES=(
-              env/dev/hub/formio/tenants/epa/service/terragrunt.hcl
-              env/dev/hub/formio/tenants/irs/service/terragrunt.hcl
               env/dev/hub/formio/tenants/portal/service/terragrunt.hcl
               env/dev/hub/formio/pdf-server/service/terragrunt.hcl
+              env/test/hub/formio/tenants/portal/service/terragrunt.hcl
+              env/test/hub/formio/pdf-server/service/terragrunt.hcl
+              env/prod/hub/formio/tenants/portal/service/terragrunt.hcl
+              env/prod/hub/formio/pdf-server/service/terragrunt.hcl
             )
 
             # make directory and file for terragrunt plan
