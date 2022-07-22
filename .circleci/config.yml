@@ -172,7 +172,13 @@ jobs:
                 # set aws credentials for each environment
                 ## if prod
                 if [[ $ENVIRONMENT_NAME == "prod" ]]; then
-                  AWS_CREDENTIALS=$(aws sts get-session-token)
+                  # change into directory of changed file
+                  cd $DIRECTORY
+
+                  # run terragrunt plan
+                  terragrunt apply /tmp/workspace/plan.tf
+                  
+                  # AWS_CREDENTIALS=$(aws sts get-session-token)
                 fi
 
                 ## if dev or test
