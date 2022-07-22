@@ -33,7 +33,8 @@ jobs:
               env/dev/hub/formio/pdf-server/service/terragrunt.hcl
               env/test/hub/formio/tenants/portal/service/terragrunt.hcl
               env/test/hub/formio/pdf-server/service/terragrunt.hcl
-              env/prod/hub/formio/tenants/portal/service/terragrunt.hcl
+              env/prod/hub/formio/tenants/epa/service/terragrunt.hcl
+              env/prod/hub/formio/tenants/omb/service/terragrunt.hcl
               env/prod/hub/formio/pdf-server/service/terragrunt.hcl
             )
 
@@ -143,7 +144,8 @@ jobs:
               env/dev/hub/formio/pdf-server/service/terragrunt.hcl
               env/test/hub/formio/tenants/portal/service/terragrunt.hcl
               env/test/hub/formio/pdf-server/service/terragrunt.hcl
-              env/prod/hub/formio/tenants/portal/service/terragrunt.hcl
+              env/prod/hub/formio/tenants/epa/service/terragrunt.hcl
+              env/prod/hub/formio/tenants/omb/service/terragrunt.hcl
               env/prod/hub/formio/pdf-server/service/terragrunt.hcl
             )
 
