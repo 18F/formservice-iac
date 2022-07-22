@@ -48,11 +48,17 @@ jobs:
               # if any our deployment files were commited, change to that directory and run terragrunt plan
               if [[ " ${DEPLOYMENT_FILES[*]} " =~ " ${CHANGED_FILE} " ]]; then
 
+                echo 1
+
                 # get directory of changed file
                 DIRECTORY=$(dirname "${CHANGED_FILE}")
 
+                echo ${DIRECTORY}
+
                 # get environment name from directory of changed file
                 ENVIRONMENT_NAME=$(echo ${DIRECTORY} | awk -F/ '{ print $2 }')
+
+                echo ${ENVIRONMENT_NAME}
 
                 # get account number
                 AWS_ACCOUNT_ID=$(awk 'FNR == 5 { print }' env/${ENVIRONMENT_NAME}/account.hcl | awk -F '=' '{ print $2 }' | awk -F '"' '{ print $2 }')
