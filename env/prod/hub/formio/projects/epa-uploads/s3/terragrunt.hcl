@@ -34,4 +34,7 @@ inputs = {
   kms_key_arn = dependency.security.outputs.s3_bucket_key_arn
   aws_account_id = local.aws_account_id
   kms_key_policy_arn = dependency.security.outputs.s3_kms_key_policy_arn
+
+  retention      = true
+  retention_days = 150
 }
