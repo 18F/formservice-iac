@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- 2022-08-11 FORMS-1037 Deployed nginx:1.23.1-alpine-nonroot-user to pdf-server in the forms 1.2 dev environment
+- 2022-08-10 FORMS-1037 Deployed nginx:1.23.1-alpine-nonroot-user to api-server in the forms 1.2 dev environment
 - 2022-07-14 FORMS-935 Deployed formio-enterprise:7.4.0 to forms 1.2 in test environment
 - 2022-07-14 FORMS-981 Deployed nginx:1.23.0 to all services in FS 1.2 test environment
 - 2022-07-14 FORMS-987 Deployed pdf-server:3.3.9 to FS 1.2 test environment
