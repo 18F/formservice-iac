@@ -41,7 +41,7 @@ inputs = {
   enterprise_task_memory      = 9216
   enterprise_image            = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/enterprise:7.4.0"
   nginx_image                 = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/nginx:1.23.1-alpine-nonroot-user"
-  tw_image                    = "registry-auth.twistlock.com/tw_luffe4fptzg0s6epk8cem9vzuxcqrzib/twistlock/defender:defender_22_01_882"
+  tw_image                    = "registry-auth.twistlock.com/tw_luffe4fptzg0s6epk8cem9vzuxcqrzib/twistlock/defender:defender_22_06_197"
   enterpise_ephemeral_storage = 25
 
   efs_file_system_id              = dependency.efs.outputs.fs_id
