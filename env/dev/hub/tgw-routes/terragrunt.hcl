@@ -18,7 +18,7 @@ locals {
 dependencies {
    paths = ["../../../prod/mgmt/transit-gateway", "../vpc"]
  }
- dependency "transit" { config_path = "../../../prod/mgmt/transit-gateway-dev" }
+ dependency "transit" { config_path = "../../../prod/mgmt/transit-gateway" }
  dependency "vpc" { config_path = "../vpc" }
 
 ## MODULE
