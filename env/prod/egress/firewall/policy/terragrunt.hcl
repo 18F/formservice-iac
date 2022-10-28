@@ -20,6 +20,7 @@ dependency "prod_runtime"  { config_path = "../prod/runtime/firewall-rules" }
 dependency "prod_mgmt"  { config_path = "../prod/mgmt/firewall-rules" }
 dependency "test_hub"  { config_path = "../test/hub/firewall-rules" }
 dependency "test_runtime"  { config_path = "../test/runtime/firewall-rules" }
+dependency "dev_hub"  { config_path = "../dev/hub/firewall-rules" }
 dependency "drop"  { config_path = "../drop-all/firewall-rules" }
 
 // include all settings from the root terragrunt.hcl file
@@ -44,6 +45,9 @@ inputs = {
                   },
                   {
                   rule_arn = "${dependency.test_runtime.outputs.rule_arn}"
+                  },
+                  {
+                  rule_arn = "${dependency.dev_hub.outputs.rule_arn}"
                   },
                   {
                   rule_arn = "${dependency.drop.outputs.rule_arn}"
