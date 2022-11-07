@@ -40,6 +40,7 @@ remote_state {
     key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = local.aws_region
     dynamodb_table = "${local.project}-terraform-state-locks"
+    disable_bucket_update = true
     // profile        = "FAAS-tf-bot-account"
   }
   generate = {
