@@ -96,6 +96,9 @@ jobs:
                 # change into directory of changed file
                 cd $DIRECTORY
 
+                # run terragrunt init
+                terragrunt init
+
                 # run terragrunt plan
                 terragrunt plan -out /tmp/workspace/plan.tf
               fi
@@ -202,9 +205,6 @@ jobs:
 
                 # change into directory of changed file
                 cd $DIRECTORY
-
-                # run terragrunt init
-                terragrunt init
 
                 # run terragrunt plan
                 terragrunt apply /tmp/workspace/plan.tf
