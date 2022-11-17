@@ -21,7 +21,7 @@ RUN wget -O terraform.zip https://releases.hashicorp.com/terraform/1.2.4/terrafo
 && chmod uo+x /usr/bin/terraform
 
 # install terragrunt
-RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.8/terragrunt_linux_amd64 \
+RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.40.0/terragrunt_linux_amd64 \
 && mv terragrunt_linux_amd64 /usr/bin/terragrunt \
 && chmod uo+x /usr/bin/terragrunt
 
