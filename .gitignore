@@ -50,4 +50,4 @@ terraform.rc
 
 # terragrunt
 .terragrunt*
-kubectl*
+kubectl*.git/
