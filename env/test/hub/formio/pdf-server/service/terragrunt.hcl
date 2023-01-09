@@ -39,7 +39,7 @@ inputs = {
 
   pdf_task_cpu          = 1024
   pdf_task_memory       = 3072
-  pdf_image             = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/pdf-server:3.3.9"
+  pdf_image             = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/pdf-server:3.4.0"
   nginx_image           = "306811362825.dkr.ecr.us-gov-west-1.amazonaws.com/formio/nginx:1.23.3-alpine-nonroot-user"
   tw_image              = "registry-auth.twistlock.com/tw_luffe4fptzg0s6epk8cem9vzuxcqrzib/twistlock/defender:defender_22_06_197"
   pdf_ephemeral_storage = 25
