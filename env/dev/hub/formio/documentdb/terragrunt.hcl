@@ -30,7 +30,7 @@ dependency "security" { config_path = "../security" }
 inputs = {
   name_prefix = "${local.name_prefix}-docdb"
 
-  cluster_size            = 3
+  cluster_size            = 1
   master_username         = get_env("doc_db_master_username")
   master_password         = get_env("doc_db_master_password")
   instance_class          = "db.t3.medium"
